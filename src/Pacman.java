@@ -1,5 +1,7 @@
+import javax.swing.*;
+
 public class Pacman {
     public static void main(String[] args) {
-//  jgv hvyv yv
+        MainMenu mainMenu = new MainMenu();
     }
 }
