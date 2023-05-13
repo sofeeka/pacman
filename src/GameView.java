@@ -10,8 +10,56 @@ class TableResizer extends ComponentAdapter {
         this.table = table;
     }
 
+    @Override
+    public void componentResized(ComponentEvent e){
+        //source: https://stackoverflow.com/questions/63378007/make-jtable-cells-perfectly-square
+
+        Dimension size = table.getSize();
+
+        int rowCount = table.getRowCount();
+        int colCount = table.getColumnCount();
+
+        int cellSize;
+
+        if (size.height / rowCount > size.width / colCount){
+            cellSize = size.width / colCount;
+        }
+        else{
+            cellSize = size.height / rowCount;
+        }
+
+        table.setRowHeight(cellSize);
+
+        for (int i = 0; i < colCount; i++){
+            table.getColumnModel().getColumn(i).setMaxWidth(cellSize);
+        }
+
+    }
+
 }
 
+class GameTableModel extends AbstractTableModel {
+    private Element[][] data;
+
+    GameTableModel(Element[][] data) {
+        this.data = data;
+    }
+
+    @Override
+    public int getRowCount() {
+        return data.length;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return data[0].length;
+    }
+
+    @Override
+    public Element getValueAt(int rowIndex, int columnIndex) {
+        return data[rowIndex][columnIndex];
+    }
+}
 public class GameView extends JFrame
 {
     private JTable table;
