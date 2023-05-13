@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class NewGameFrame extends JFrame {
-    private MenuFrame menuFrame;
+public class NewGameFrame extends JDialog {
     private int dimX;
     private int dimY;
+
+    private boolean okClicked;
 
     private void setDimensions(int x, int y)
     {
@@ -12,10 +13,27 @@ public class NewGameFrame extends JFrame {
         dimY = y;
         System.out.println(x + " <- x, y -> " + y);
     }
-    NewGameFrame(MenuFrame menuFrame)
+
+    public int getDimX()
     {
-        this.menuFrame = menuFrame;
+        return dimX;
+    }
+    public int getDimY()
+    {
+        return dimY;
+    }
+
+    boolean wasOkClicked()
+    {
+        return okClicked;
+    }
+    NewGameFrame()
+    {
         setTitle("New Game");
+        setModal(true);
+        dimX = 15;
+        dimY = 15;
+        okClicked = false;
 
         JPanel outerPanel = new JPanel();
         outerPanel.setLayout(new BorderLayout());
@@ -25,13 +43,17 @@ public class NewGameFrame extends JFrame {
         JLabel labelX = new JLabel("Enter width");
         labelX.setBackground(Color.BLACK);
         textPanel.add(labelX);
+
         JTextField textFieldX = new JTextField(5);
+        textFieldX.setText(dimX + "");
         textPanel.add(textFieldX);
 
-        JTextField textFieldY = new JTextField(5);
         JLabel labelY = new JLabel("Enter height");
         labelY.setBackground(Color.BLACK);
         textPanel.add(labelY);
+
+        JTextField textFieldY = new JTextField(5);
+        textFieldY.setText(dimY + "");
         textPanel.add(textFieldY);
 
         outerPanel.add(textPanel, BorderLayout.CENTER);
@@ -43,10 +65,9 @@ public class NewGameFrame extends JFrame {
         okButton.setBackground(Color.YELLOW);
         buttonPanel.add(okButton);
 
-//todo: розкоментити
-/*
-        okButton.addActionListener(actionEvent -> {
+        okButton.addActionListener(event -> {
             try {
+                okClicked = true;
                 int dimX = Integer.parseInt(textFieldX.getText().trim());
                 int dimY = Integer.parseInt(textFieldY.getText().trim());
                 setDimensions(dimX, dimY);
@@ -54,16 +75,13 @@ public class NewGameFrame extends JFrame {
             { }
             dispose();
         });
-*/
-        setDimensions(15,15);
 
         JButton cancelButton = new JButton("cancel");
         cancelButton.setBackground(Color.YELLOW);
         buttonPanel.add(cancelButton);
 
-        cancelButton.addActionListener(actionEvent -> {
+        cancelButton.addActionListener(event -> {
             dispose();
-            menuFrame.setVisible(true);
         });
 
         //todo add gridBagLayout
@@ -71,6 +89,5 @@ public class NewGameFrame extends JFrame {
 
         //todo figure out the size
         pack();
-        dispose();
     }
 }

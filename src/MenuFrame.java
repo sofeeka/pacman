@@ -15,21 +15,22 @@ public class MenuFrame extends JFrame {
 
     private void handleNewGameButton()
     {
-        setVisible(false);
-        NewGameFrame frame = new NewGameFrame(this);
+        NewGameFrame frame = new NewGameFrame();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        if(frame.wasOkClicked())
+        {
+            Game game = new Game();
+            game.startNewGame(frame.getDimX(), frame.getDimY());
+        }
     }
     private void handleHighScoresButton()
     {
-        setVisible(false);
         // todo: figure out how to use JList
-        setVisible(true);
     }
     private void handleExitButton()
     {
-        setVisible(false);
         dispose();
     }
 
