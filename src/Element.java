@@ -12,9 +12,14 @@ public enum Element {
 
     private static final Random RAND = new Random();
 
-    public static Element randomFieldElement()  {
+    public static Element getRandomElement()  {
         Element[] elements = values();
         return elements[RAND.nextInt(elements.length)];
+    }
+
+    public String getMessage()
+    {
+        return name();
     }
 
 }

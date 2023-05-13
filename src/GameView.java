@@ -1,8 +1,11 @@
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+
 class TableResizer extends ComponentAdapter {
     private JTable table;
 
@@ -37,7 +40,6 @@ class TableResizer extends ComponentAdapter {
     }
 
 }
-
 class GameTableModel extends AbstractTableModel {
     private Element[][] data;
 
@@ -56,10 +58,12 @@ class GameTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Element getValueAt(int rowIndex, int columnIndex) {
-        return data[rowIndex][columnIndex];
+    public String getValueAt(int rowIndex, int columnIndex) {
+        Element e = data[rowIndex][columnIndex];
+        return e.getMessage();
     }
 }
+
 public class GameView extends JFrame
 {
     private JTable table;
@@ -80,6 +84,9 @@ public class GameView extends JFrame
 
     public void renderModel(GameModel gameModel)
     {
+        Element[][] gameBoard = gameModel.getGameBoard();
+        GameTableModel tableModel = new GameTableModel(gameBoard);
+        table.setModel(tableModel);
 
     }
-    }
+}
