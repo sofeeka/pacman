@@ -123,10 +123,10 @@ class myCellRenderer extends DefaultTableCellRenderer {
         String path;
         switch (element)
         {
-            case POINT -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\point.png";
-            case WALL -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\wall.png";
-            case FOOD -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\food.png";
-            default -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\black.png";
+            case POINT -> path = "images\\point.png";
+            case WALL -> path = "images\\wall.png";
+            case FOOD -> path = "images\\food.png";
+            default -> path = "images\\black.png";
         }
         return new ImageIcon(path);
     }

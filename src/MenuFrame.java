@@ -40,7 +40,7 @@ public class MenuFrame extends JFrame {
         setTitle("Pacman Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        ImageIcon introImage = new ImageIcon("C:\\PJATK\\2 semester\\GUI\\Pacman\\pacman_intro.png");
+        ImageIcon introImage = new ImageIcon("images\\pacman_intro.png");
         Image image = introImage.getImage().getScaledInstance(-1,-1, Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon = new ImageIcon(image);
         imageLabel = new JLabel(scaledImageIcon);
