@@ -1,5 +1,34 @@
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+enum Direction
+{
+    STILL,
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT;
+}
+class PacmanModel
+{
+    private int x;
+    private int y;
+    private Direction direction;
+
+    PacmanModel(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+        direction = Direction.STILL;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+}
 
 public class GameModel {
     private int width; // x
@@ -7,6 +36,7 @@ public class GameModel {
     private Element[][] gameBoard;
     private int userScore;
     private int lives;
+    private PacmanModel pacman;
 
     GameModel(int x, int y)
     {
@@ -16,6 +46,7 @@ public class GameModel {
         initGameBoard();
         userScore = 0;
         lives = 3;
+        pacman = new PacmanModel(3, 3);
     }
 
     private void initGameBoard()
@@ -58,4 +89,7 @@ public class GameModel {
         return lives;
     }
 
+    public PacmanModel getPacman() {
+        return pacman;
+    }
 }

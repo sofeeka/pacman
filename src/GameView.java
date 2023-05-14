@@ -124,17 +124,53 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer {
     }
 
 }
+
+class ViewTable extends JTable
+{
+    private GameModel gameModel;
+    ViewTable(GameModel gameModel)
+    {
+        this.gameModel = gameModel;
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        renderPacman(gameModel.getPacman(), g);
+
+    }
+    private void renderPacman(PacmanModel pacman, Graphics g)
+    {
+        Rectangle cellRect = getCellRect(pacman.getY(), pacman.getX(), true);
+
+        ImageIcon icon = new ImageIcon("images\\pacman.png");
+        Image im = icon.getImage();
+        int x = cellRect.x;
+        int y = cellRect.y;
+//        Point cellLocation = cellRect.getLocationOnScreen();
+
+        Image resizedImage = im.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(resizedImage);
+
+        icon.paintIcon(this, g, x, y);
+
+    }
+
+}
 public class GameView extends JFrame
 {
-    private JTable table;
+    private ViewTable table;
     private JLabel scoreLabel;
     private JLabel livesLabel;
     private JLabel timeLabel;
     private GameView_Stopwatch stopwatch;
+    private GameModel gameModel;
 
     private ViewTableCellRenderer viewTableCellRenderer;
-    GameView(int dimX, int dimY)
+    GameView(GameModel gameModel)
     {
+        this.gameModel = gameModel;
+
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new WindowAdapter() {
@@ -156,7 +192,7 @@ public class GameView extends JFrame
         add(upperPanel, BorderLayout.PAGE_START);
 
         JPanel tablePanel = new JPanel(new BorderLayout());
-        table = new JTable(dimY, dimX);
+        table = new ViewTable(gameModel);
         viewTableCellRenderer = new ViewTableCellRenderer();
 
         table.addComponentListener(new ViewTableResizer(this));
@@ -177,7 +213,7 @@ public class GameView extends JFrame
 
     }
 
-    public void renderModel(GameModel gameModel)
+    public void renderModel()
     {
         Element[][] gameBoard = gameModel.getGameBoard();
         ViewTableModel tableModel = new ViewTableModel(gameBoard);
@@ -189,9 +225,8 @@ public class GameView extends JFrame
 
         scoreLabel.setText( "Score: " + gameModel.getUserScore() );
         livesLabel.setText( "Lives: " + gameModel.getLives() );
-//        timeLabel;
-    }
 
+    }
 
     public JTable getTable()
     {

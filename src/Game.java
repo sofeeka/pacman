@@ -10,12 +10,12 @@ public class Game
 
     public void startNewGame(int x, int y)
     {
-        GameView gameView = new GameView(x, y);
-        gameView.renderModel(new GameModel(x, y));
-//        model
+        GameModel gameModel = new GameModel(x, y);
+        GameView gameView = new GameView(gameModel);
+        gameView.renderModel();
+        GameController gameController = new GameController(gameModel);
         //frame
 //        view
-//        contr
     }
 
 }
