@@ -39,11 +39,11 @@ public class EndGameFrame extends JDialog
 
         JPanel buttonPanel = new JPanel();
 
-        JButton okButton = new JButton("OK");
-        okButton.setBackground(Color.YELLOW);
-        buttonPanel.add(okButton);
+        JButton saveButton = new JButton("save");
+        saveButton.setBackground(Color.YELLOW);
+        buttonPanel.add(saveButton);
 
-        okButton.addActionListener(event -> {
+        saveButton.addActionListener(event -> {
             try {
 
                 okClicked = true;
@@ -58,11 +58,11 @@ public class EndGameFrame extends JDialog
             dispose();
         });
 
-        JButton cancelButton = new JButton("cancel");
-        cancelButton.setBackground(Color.YELLOW);
-        buttonPanel.add(cancelButton);
+        JButton exitButton = new JButton("exit");
+        exitButton.setBackground(Color.YELLOW);
+        buttonPanel.add(exitButton);
 
-        cancelButton.addActionListener(event -> dispose());
+        exitButton.addActionListener(event -> dispose());
 
         outerPanel.add(buttonPanel, BorderLayout.SOUTH);
 

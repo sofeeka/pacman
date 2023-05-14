@@ -30,7 +30,7 @@ public class MenuFrame extends JFrame {
     }
     private void handleHighScoresButton()
     {
-        // todo: figure out how to use JList
+        HighScoreFrame highScoreFrame = new HighScoreFrame();
     }
     private void handleExitButton()
     {
@@ -109,9 +109,7 @@ public class MenuFrame extends JFrame {
         highScoresButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MenuFrame.this, "High Scores button clicked");
-                // todo:
-                handleHighScoresButton();
+               handleHighScoresButton();
             }
         });
 

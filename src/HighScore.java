@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 
-public class HighScore implements Serializable {
+public class HighScore implements Serializable { // todo: відцентувати, збільшити шрифт тд
     private ArrayList<HighScoreRecord> highScores;
     private static final long serialVersionUID = 8574982327062808366L;
 
@@ -12,6 +12,7 @@ public class HighScore implements Serializable {
     public void addUserScore(String userName, int score) {
         highScores.add(new HighScoreRecord(userName, score));
         saveHighScores();
+//        highScores.sort();
         System.out.println("Record was written.");
     }
 
