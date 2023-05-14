@@ -28,6 +28,10 @@ class PacmanModel
     public int getY() {
         return y;
     }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 }
 
 public class GameModel {
