@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 public class GameModel {
     private int width; // x
     private int height; // y
@@ -42,6 +44,5 @@ public class GameModel {
     public int getLives() {
         return lives;
     }
-
 
 }

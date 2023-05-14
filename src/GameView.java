@@ -7,6 +7,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 class ViewTableResizer extends ComponentAdapter {
     private JTable table;
@@ -131,18 +132,19 @@ public class GameView extends JFrame
     private JLabel highScoreLabel;
     private JLabel livesLabel;
     private JLabel timeLabel;
+    private GameView_Stopwatch stopwatch;
 
     private ViewTableCellRenderer viewTableCellRenderer;
     GameView(int dimX, int dimY)
     {
         JPanel upperPanel = new JPanel();
         highScoreLabel = new JLabel();
-        livesLabel = new JLabel();
         timeLabel = new JLabel();
+        livesLabel = new JLabel();
 
-        upperPanel.add(highScoreLabel); //todo align properly
-        upperPanel.add(livesLabel);
+        upperPanel.add(highScoreLabel); //todo align properly (gridBagLayout)
         upperPanel.add(timeLabel);
+        upperPanel.add(livesLabel);
 
         add(upperPanel, BorderLayout.PAGE_START);
 
@@ -160,6 +162,10 @@ public class GameView extends JFrame
 //        pack();
         setSize(500, 500);
         setLocationRelativeTo(null);
+
+        stopwatch = new GameView_Stopwatch(timeLabel);
+        stopwatch.start();
+
         setVisible(true);
 
     }
@@ -176,8 +182,9 @@ public class GameView extends JFrame
 
         highScoreLabel.setText( "Score: " + gameModel.getUserScore() );
         livesLabel.setText( "Lives: " + gameModel.getLives() );
-//        timeLabel.setText( "Time: " + gameModel.getTime());
+//        timeLabel;
     }
+
 
     public JTable getTable()
     {
@@ -185,6 +192,6 @@ public class GameView extends JFrame
     }
     public ViewTableCellRenderer getTableCellRenderer()
     {
-        return  this.viewTableCellRenderer;
+        return this.viewTableCellRenderer;
     }
 }
