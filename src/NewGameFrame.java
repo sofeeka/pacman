@@ -11,7 +11,6 @@ public class NewGameFrame extends JDialog {
     {
         dimX = x;
         dimY = y;
-        System.out.println(x + " <- x, y -> " + y);
     }
 
     public int getDimX()

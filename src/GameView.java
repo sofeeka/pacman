@@ -3,11 +3,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 class ViewTableResizer extends ComponentAdapter {
     private JTable table;
@@ -129,7 +127,7 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer {
 public class GameView extends JFrame
 {
     private JTable table;
-    private JLabel highScoreLabel;
+    private JLabel scoreLabel;
     private JLabel livesLabel;
     private JLabel timeLabel;
     private GameView_Stopwatch stopwatch;
@@ -137,12 +135,21 @@ public class GameView extends JFrame
     private ViewTableCellRenderer viewTableCellRenderer;
     GameView(int dimX, int dimY)
     {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                EndGameFrame endGameFrame = new EndGameFrame();
+            }
+        });
+
         JPanel upperPanel = new JPanel();
-        highScoreLabel = new JLabel();
+        scoreLabel = new JLabel();
         timeLabel = new JLabel();
         livesLabel = new JLabel();
 
-        upperPanel.add(highScoreLabel); //todo align properly (gridBagLayout)
+        upperPanel.add(scoreLabel); //todo align properly (gridBagLayout)
         upperPanel.add(timeLabel);
         upperPanel.add(livesLabel);
 
@@ -180,7 +187,7 @@ public class GameView extends JFrame
             table.getColumnModel().getColumn(i).setCellRenderer(viewTableCellRenderer);
         }
 
-        highScoreLabel.setText( "Score: " + gameModel.getUserScore() );
+        scoreLabel.setText( "Score: " + gameModel.getUserScore() );
         livesLabel.setText( "Lives: " + gameModel.getLives() );
 //        timeLabel;
     }
