@@ -20,14 +20,27 @@ public class GameModel {
 
     private void initGameBoard()
     {
-        for (int i = 0; i < gameBoard.length; i++)
-        {
-            for (int j = 0; j < gameBoard[0].length; j++)
-            {
-                gameBoard[i][j] = Element.getRandomElement();
+        MazeGenerator generator = new MazeGenerator();
+        int[][] maze = generator.getMaze( height, width );
+
+        gameBoard = new Element[height][width];
+
+        for (int row = 0; row < height - 1; row++) {
+            for (int col = 0; col < width - 1; col++) {
+                gameBoard[row][col] = ( maze[row][col] == 1 ) ? Element.WALL : Element.POINT;
             }
         }
+
+
+//        for (int i = 0; i < gameBoard.length; i++)
+//        {
+//            for (int j = 0; j < gameBoard[0].length; j++)
+//            {
+//                gameBoard[i][j] = Element.getRandomElement();
+//            }
+//        }
     }
+
     public void setDimensions(int x, int y)
     {
         this.width = x;
