@@ -9,23 +9,29 @@ import java.util.Map;
 
 class PacmanView
 {
-    ImageIcon pacmanImage;
+    ImageIcon fullSizeIcon;
+    ImageIcon renderingIcon;
+
+    int width;
+    int height;
+
     PacmanView()
     {
-
+        fullSizeIcon = new ImageIcon("images\\pacman.png");
     }
-    public void renderPacman(Component c,  Graphics g, Rectangle cellRect)
+    public void renderPacman(Component c, Graphics g, Rectangle cellRect)
     {
-        ImageIcon icon = new ImageIcon("images\\pacman.png");
-        Image im = icon.getImage();
+        if(this.width != cellRect.width || this.height != cellRect.height || renderingIcon == null) // todo check direction
+        {
+            Image im = fullSizeIcon.getImage();
+            Image resizedImage = im.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
+            renderingIcon = new ImageIcon(resizedImage);
+        }
+
         int x = cellRect.x;
         int y = cellRect.y;
-//        Point cellLocation = cellRect.getLocationOnScreen();
 
-        Image resizedImage = im.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(resizedImage);
-
-        icon.paintIcon(c, g, x, y);
+        renderingIcon.paintIcon(c, g, x, y);
 
     }
 }
