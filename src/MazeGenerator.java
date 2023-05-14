@@ -24,7 +24,7 @@ public class MazeGenerator {
         return maze;
     }
 
-    void makeMaze(int rows, int columns) {
+    void makeMaze(int rows, int columns) { //souce: https://iq.opengenus.org/maze-generator-in-java/
         // Create a random maze. The strategy is to start with
         // a grid of disconnected "rooms" separated by walls.
         // then look at each of the separating walls, in a random

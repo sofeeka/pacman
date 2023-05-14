@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class HighScore implements Serializable { // todo: відцентувати, збільшити шрифт тд
     private ArrayList<HighScoreRecord> highScores;
@@ -12,7 +12,7 @@ public class HighScore implements Serializable { // todo: відцентуват
     public void addUserScore(String userName, int score) {
         highScores.add(new HighScoreRecord(userName, score));
         saveHighScores();
-//        highScores.sort();
+        Collections.sort(highScores);
         System.out.println("Record was written.");
     }
 
@@ -64,8 +64,9 @@ class HighScoreRecord implements Serializable, Comparable<HighScoreRecord> {
         this.score = score;
     }
 
+    @Override
     public int compareTo(HighScoreRecord other) {
-        return Integer.compare(this.score, other.score);
+        return Integer.compare(other.score, this.score);
     }
 
     @Override
