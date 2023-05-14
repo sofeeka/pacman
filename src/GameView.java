@@ -7,6 +7,28 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
+class PacmanView
+{
+    ImageIcon pacmanImage;
+    PacmanView()
+    {
+
+    }
+    public void renderPacman(Component c,  Graphics g, Rectangle cellRect)
+    {
+        ImageIcon icon = new ImageIcon("images\\pacman.png");
+        Image im = icon.getImage();
+        int x = cellRect.x;
+        int y = cellRect.y;
+//        Point cellLocation = cellRect.getLocationOnScreen();
+
+        Image resizedImage = im.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
+        icon = new ImageIcon(resizedImage);
+
+        icon.paintIcon(c, g, x, y);
+
+    }
+}
 class ViewTableResizer extends ComponentAdapter {
     private JTable table;
     private ViewTableCellRenderer viewTableCellRenderer;
@@ -124,35 +146,21 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer {
     }
 
 }
-
 class ViewTable extends JTable
 {
     private GameModel gameModel;
-    ViewTable(GameModel gameModel)
+    private GameView gameView;
+    ViewTable(GameView gameView)
     {
-        this.gameModel = gameModel;
+        this.gameView = gameView;
+        this.gameModel = gameView.getGameModel();
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        renderPacman(gameModel.getPacman(), g);
-
-    }
-    private void renderPacman(PacmanModel pacman, Graphics g)
-    {
-        Rectangle cellRect = getCellRect(pacman.getY(), pacman.getX(), true);
-
-        ImageIcon icon = new ImageIcon("images\\pacman.png");
-        Image im = icon.getImage();
-        int x = cellRect.x;
-        int y = cellRect.y;
-//        Point cellLocation = cellRect.getLocationOnScreen();
-
-        Image resizedImage = im.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(resizedImage);
-
-        icon.paintIcon(this, g, x, y);
+        PacmanModel pacman = gameModel.getPacman();
+        gameView.getPacmanView().renderPacman(this, g, getCellRect(pacman.getY(), pacman.getX(), true));
 
     }
 
@@ -165,11 +173,13 @@ public class GameView extends JFrame
     private JLabel timeLabel;
     private GameView_Stopwatch stopwatch;
     private GameModel gameModel;
+    private PacmanView pacmanView;
 
     private ViewTableCellRenderer viewTableCellRenderer;
     GameView(GameModel gameModel)
     {
         this.gameModel = gameModel;
+        pacmanView = new PacmanView();
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -192,7 +202,7 @@ public class GameView extends JFrame
         add(upperPanel, BorderLayout.PAGE_START);
 
         JPanel tablePanel = new JPanel(new BorderLayout());
-        table = new ViewTable(gameModel);
+        table = new ViewTable(this);
         viewTableCellRenderer = new ViewTableCellRenderer();
 
         table.addComponentListener(new ViewTableResizer(this));
@@ -235,5 +245,12 @@ public class GameView extends JFrame
     public ViewTableCellRenderer getTableCellRenderer()
     {
         return this.viewTableCellRenderer;
+    }
+    public PacmanView getPacmanView() {
+        return pacmanView;
+    }
+
+    public GameModel getGameModel() {
+        return gameModel;
     }
 }
