@@ -63,15 +63,11 @@ class myCellRenderer extends DefaultTableCellRenderer {
     private int cellWidth;
     private int cellHeight;
 
-    /*@Override
-    protected void setValue(Object value) {
-        if (value instanceof BufferedImage) {
-            ImageIcon imageIcon = new ImageIcon((BufferedImage) value);
-            setIcon(imageIcon);
-        } else {
-            super.setValue(value);
-        }
-    }*/
+    myCellRenderer()
+    {
+        setCellSize(15,15);
+    }
+
 
     public void setCellSize( int w, int h)
     {
@@ -88,11 +84,8 @@ class myCellRenderer extends DefaultTableCellRenderer {
     {
         if (value instanceof Element)
         {
-            int width = table.getColumnModel().getColumn(column).getWidth();
-            int height = table.getRowHeight(row);
-
             Element element = (Element) value;
-            ImageIcon imageIcon = getImageIcon(element, width, height);
+            ImageIcon imageIcon = getImageIcon(element);
 
             setIcon(imageIcon); // todo: resize
         }
@@ -100,7 +93,7 @@ class myCellRenderer extends DefaultTableCellRenderer {
         return this;
     }
 
-    private ImageIcon getImageIcon(Element element, int width, int height)
+    private ImageIcon getImageIcon(Element element)
     {
         ImageIcon imageIcon = imageCache.get(element);
 
@@ -109,7 +102,7 @@ class myCellRenderer extends DefaultTableCellRenderer {
 
         imageIcon = createImageIcon(element);
         Image image = imageIcon.getImage();
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Image resizedImage = image.getScaledInstance(cellWidth, cellHeight, Image.SCALE_SMOOTH);
 
         imageIcon = new ImageIcon(resizedImage);
 
@@ -136,8 +129,12 @@ public class GameView extends JFrame
 {
     private JTable table;
     private myCellRenderer tableCellRenderer;
+
+    private int highScore;
     GameView(int dimX, int dimY)
     {
+        JLabel label = new JLabel("High Score: " );
+
         table = new JTable(dimY, dimX);
         tableCellRenderer = new myCellRenderer();
 
