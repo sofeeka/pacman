@@ -1,10 +1,10 @@
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class GameModel {
     private int width; // x
     private int height; // y
     private Element[][] gameBoard;
-
     private int userScore;
     private int lives;
 

@@ -23,6 +23,9 @@ public class MenuFrame extends JFrame {
         {
             Game game = new Game();
             game.startNewGame(frame.getDimX(), frame.getDimY());
+
+            //
+
         }
     }
     private void handleHighScoresButton()

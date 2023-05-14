@@ -4,8 +4,8 @@ import java.awt.*;
 public class EndGameFrame extends JDialog
 {
     private String userName;
-    private  boolean okClicked;
-    EndGameFrame()
+    private  boolean okClicked; // todo may be useful to exit the whole game
+    EndGameFrame(int score)
     {
         okClicked = false;
 
@@ -30,7 +30,7 @@ public class EndGameFrame extends JDialog
         scoreLabel.setBackground(Color.BLACK);
         textPanel.add(scoreLabel);
 
-        JLabel userScoreLabel = new JLabel("50");
+        JLabel userScoreLabel = new JLabel(score + "");
         userScoreLabel.setBackground(Color.BLACK);
         textPanel.add(userScoreLabel);
 
@@ -48,9 +48,13 @@ public class EndGameFrame extends JDialog
 
                 okClicked = true;
                 setUserName(userTextField.getText().trim());
+                HighScore highScore = new HighScore();
+                highScore.addUserScore(this.userName, score);
 
             } catch (Exception e)
-            { }
+            {
+                e.printStackTrace();
+            }
             dispose();
         });
 
@@ -58,9 +62,7 @@ public class EndGameFrame extends JDialog
         cancelButton.setBackground(Color.YELLOW);
         buttonPanel.add(cancelButton);
 
-        cancelButton.addActionListener(event -> {
-            dispose();
-        });
+        cancelButton.addActionListener(event -> dispose());
 
         outerPanel.add(buttonPanel, BorderLayout.SOUTH);
 

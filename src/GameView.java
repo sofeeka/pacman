@@ -140,7 +140,7 @@ public class GameView extends JFrame
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                EndGameFrame endGameFrame = new EndGameFrame();
+                EndGameFrame endGameFrame = new EndGameFrame((int)Math.random() * 100); //todo add real highscore
             }
         });
 

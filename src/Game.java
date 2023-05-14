@@ -12,8 +12,8 @@ public class Game
     {
         GameView gameView = new GameView(x, y);
         gameView.renderModel(new GameModel(x, y));
-        //frame
 //        model
+        //frame
 //        view
 //        contr
     }
