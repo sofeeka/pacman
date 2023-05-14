@@ -129,14 +129,21 @@ public class GameView extends JFrame
 {
     private JTable table;
     private JLabel highScoreLabel;
+    private JLabel livesLabel;
+    private JLabel timeLabel;
 
     private ViewTableCellRenderer viewTableCellRenderer;
     GameView(int dimX, int dimY)
     {
         JPanel upperPanel = new JPanel();
-        highScoreLabel = new JLabel( );
+        highScoreLabel = new JLabel();
+        livesLabel = new JLabel();
+        timeLabel = new JLabel();
 
-        upperPanel.add(highScoreLabel);
+        upperPanel.add(highScoreLabel); //todo align properly
+        upperPanel.add(livesLabel);
+        upperPanel.add(timeLabel);
+
         add(upperPanel, BorderLayout.PAGE_START);
 
         JPanel tablePanel = new JPanel(new BorderLayout());
@@ -168,6 +175,8 @@ public class GameView extends JFrame
         }
 
         highScoreLabel.setText( "Score: " + gameModel.getUserScore() );
+        livesLabel.setText( "Lives: " + gameModel.getLives() );
+//        timeLabel.setText( "Time: " + gameModel.getTime());
     }
 
     public JTable getTable()

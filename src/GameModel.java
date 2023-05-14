@@ -4,6 +4,7 @@ public class GameModel {
     private Element[][] gameBoard;
 
     private int userScore;
+    private int lives;
 
     GameModel(int x, int y)
     {
@@ -12,6 +13,7 @@ public class GameModel {
         gameBoard = new Element[y][x];
         initGameBoard();
         userScore = 0;
+        lives = 3;
     }
 
     private void initGameBoard()
@@ -37,5 +39,9 @@ public class GameModel {
     public int getUserScore() {
         return userScore;
     }
+    public int getLives() {
+        return lives;
+    }
+
 
 }
