@@ -5,12 +5,16 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 class TableResizer extends ComponentAdapter {
     private JTable table;
+    private myCellRenderer tableCellRenderer;
 
-    TableResizer(JTable table) {
-        this.table = table;
+    TableResizer(GameView gameView) {
+        this.table = gameView.getTable();
+        this.tableCellRenderer = gameView.getTableCellRenderer();
     }
 
     @Override
@@ -22,23 +26,15 @@ class TableResizer extends ComponentAdapter {
         int rowCount = table.getRowCount();
         int colCount = table.getColumnCount();
 
-        int cellSize;
-
-        if (size.height / rowCount > size.width / colCount){
-            cellSize = size.width / colCount;
-        }
-        else{
-            cellSize = size.height / rowCount;
-        }
+        int cellSize = Math.min(size.width / colCount, size.height / rowCount);
 
         table.setRowHeight(cellSize);
+        tableCellRenderer.setCellSize(cellSize, cellSize); // todo
 
         for (int i = 0; i < colCount; i++){
             table.getColumnModel().getColumn(i).setMaxWidth(cellSize);
         }
-
     }
-
 }
 class GameTableModel extends AbstractTableModel {
     private Element[][] data;
@@ -58,20 +54,94 @@ class GameTableModel extends AbstractTableModel {
     }
 
     @Override
-    public String getValueAt(int rowIndex, int columnIndex) {
-        Element e = data[rowIndex][columnIndex];
-        return e.getMessage();
+    public Element getValueAt(int rowIndex, int columnIndex) {
+        return data[rowIndex][columnIndex];
     }
 }
+class myCellRenderer extends DefaultTableCellRenderer {
+    private static Map<Element, ImageIcon> imageCache = new HashMap<>();
+    private int cellWidth;
+    private int cellHeight;
 
+    /*@Override
+    protected void setValue(Object value) {
+        if (value instanceof BufferedImage) {
+            ImageIcon imageIcon = new ImageIcon((BufferedImage) value);
+            setIcon(imageIcon);
+        } else {
+            super.setValue(value);
+        }
+    }*/
+
+    public void setCellSize( int w, int h)
+    {
+        this.cellWidth = w;
+        this.cellHeight = h;
+
+        imageCache.clear();
+    }
+
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                   boolean hasFocus, int row, int column)
+    {
+        if (value instanceof Element)
+        {
+            int width = table.getColumnModel().getColumn(column).getWidth();
+            int height = table.getRowHeight(row);
+
+            Element element = (Element) value;
+            ImageIcon imageIcon = getImageIcon(element, width, height);
+
+            setIcon(imageIcon); // todo: resize
+        }
+
+        return this;
+    }
+
+    private ImageIcon getImageIcon(Element element, int width, int height)
+    {
+        ImageIcon imageIcon = imageCache.get(element);
+
+        if (imageIcon != null)
+            return imageIcon;
+
+        imageIcon = createImageIcon(element);
+        Image image = imageIcon.getImage();
+        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        imageIcon = new ImageIcon(resizedImage);
+
+        imageCache.put(element, imageIcon);
+
+        return imageIcon;
+    }
+
+    private ImageIcon createImageIcon(Element element)
+    {
+        String path;
+        switch (element)
+        {
+            case POINT -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\point.png";
+            case WALL -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\wall.png";
+            case FOOD -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\food.png";
+            default -> path = "C:\\PJATK\\2 semester\\GUI\\Pacman\\black.png";
+        }
+        return new ImageIcon(path);
+    }
+
+}
 public class GameView extends JFrame
 {
     private JTable table;
+    private myCellRenderer tableCellRenderer;
     GameView(int dimX, int dimY)
     {
         table = new JTable(dimY, dimX);
+        tableCellRenderer = new myCellRenderer();
 
-        table.addComponentListener(new TableResizer(table));
+        table.addComponentListener(new TableResizer(this));
 
         add(table, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -88,5 +158,18 @@ public class GameView extends JFrame
         GameTableModel tableModel = new GameTableModel(gameBoard);
         table.setModel(tableModel);
 
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
+        }
+
+    }
+
+    public JTable getTable()
+    {
+        return this.table;
+    }
+    public myCellRenderer getTableCellRenderer()
+    {
+        return  this.tableCellRenderer;
     }
 }

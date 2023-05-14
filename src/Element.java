@@ -1,11 +1,6 @@
 import java.util.Random;
 
 public enum Element {
-    PACMAN,
-    RED_GHOST,
-    BLUE_GHOST,
-    YELLOW_GHOST,
-    PINK_GHOST,
     WALL,
     POINT,
     FOOD;
