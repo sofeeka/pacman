@@ -13,7 +13,7 @@ public class Game
         GameModel gameModel = new GameModel(x, y);
         GameView gameView = new GameView(gameModel);
         gameView.renderModel();
-        GameController gameController = new GameController(gameModel);
+        GameController gameController = new GameController(gameModel, gameView );
         //frame
 //        view
     }

@@ -1,17 +1,17 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.KeyAdapter;
 
 import static java.awt.event.KeyEvent.VK_UP;
 
-public class GameController implements KeyListener
+class KeysHandler extends KeyAdapter
 {
     private GameModel gameModel;
 
-    GameController(GameModel gameModel)
+    KeysHandler( GameModel gameModel )
     {
         this.gameModel = gameModel;
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -40,17 +40,18 @@ public class GameController implements KeyListener
             System.out.println("Ctrl + Shift + Q pressed");
         }
     }
+}
 
+public class GameController
+{
+    private GameModel gameModel;
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // Handle key released event if needed
+    GameController(GameModel gameModel, GameView gameView) {
+        this.gameModel = gameModel;
+
+        gameView.getTable().addKeyListener(new KeysHandler(gameModel));
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // Handle key typed event if needed
-    }
 }
 
 /*
