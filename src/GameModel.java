@@ -3,12 +3,15 @@ public class GameModel {
     private int height; // y
     private Element[][] gameBoard;
 
+    private int userScore;
+
     GameModel(int x, int y)
     {
         width = x;
         height = y;
         gameBoard = new Element[y][x];
         initGameBoard();
+        userScore = 0;
     }
 
     private void initGameBoard()
@@ -30,6 +33,9 @@ public class GameModel {
     public Element[][] getGameBoard()
     {
         return  this.gameBoard;
+    }
+    public int getUserScore() {
+        return userScore;
     }
 
 }

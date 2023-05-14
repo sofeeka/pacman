@@ -1,20 +1,20 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-class TableResizer extends ComponentAdapter {
+class ViewTableResizer extends ComponentAdapter {
     private JTable table;
-    private myCellRenderer tableCellRenderer;
+    private ViewTableCellRenderer viewTableCellRenderer;
 
-    TableResizer(GameView gameView) {
+    ViewTableResizer(GameView gameView) {
         this.table = gameView.getTable();
-        this.tableCellRenderer = gameView.getTableCellRenderer();
+        this.viewTableCellRenderer = gameView.getTableCellRenderer();
     }
 
     @Override
@@ -29,17 +29,17 @@ class TableResizer extends ComponentAdapter {
         int cellSize = Math.min(size.width / colCount, size.height / rowCount);
 
         table.setRowHeight(cellSize);
-        tableCellRenderer.setCellSize(cellSize, cellSize); // todo
+        viewTableCellRenderer.setCellSize(cellSize, cellSize); // todo
 
         for (int i = 0; i < colCount; i++){
             table.getColumnModel().getColumn(i).setMaxWidth(cellSize);
         }
     }
 }
-class GameTableModel extends AbstractTableModel {
+class ViewTableModel extends AbstractTableModel {
     private Element[][] data;
 
-    GameTableModel(Element[][] data) {
+    ViewTableModel(Element[][] data) {
         this.data = data;
     }
 
@@ -58,12 +58,12 @@ class GameTableModel extends AbstractTableModel {
         return data[rowIndex][columnIndex];
     }
 }
-class myCellRenderer extends DefaultTableCellRenderer {
+class ViewTableCellRenderer extends DefaultTableCellRenderer {
     private static Map<Element, ImageIcon> imageCache = new HashMap<>();
     private int cellWidth;
     private int cellHeight;
 
-    myCellRenderer()
+    ViewTableCellRenderer()
     {
         setCellSize(15,15);
     }
@@ -128,19 +128,27 @@ class myCellRenderer extends DefaultTableCellRenderer {
 public class GameView extends JFrame
 {
     private JTable table;
-    private myCellRenderer tableCellRenderer;
+    private JLabel highScoreLabel;
 
-    private int highScore;
+    private ViewTableCellRenderer viewTableCellRenderer;
     GameView(int dimX, int dimY)
     {
-        JLabel label = new JLabel("High Score: " );
+        JPanel upperPanel = new JPanel();
+        highScoreLabel = new JLabel( );
 
+        upperPanel.add(highScoreLabel);
+        add(upperPanel, BorderLayout.PAGE_START);
+
+        JPanel tablePanel = new JPanel(new BorderLayout());
         table = new JTable(dimY, dimX);
-        tableCellRenderer = new myCellRenderer();
+        viewTableCellRenderer = new ViewTableCellRenderer();
 
-        table.addComponentListener(new TableResizer(this));
+        table.addComponentListener(new ViewTableResizer(this));
 
-        add(table, BorderLayout.CENTER);
+        tablePanel.setBorder(new LineBorder(Color.BLACK, 3));
+        tablePanel.add(table, BorderLayout.CENTER);
+
+        add(tablePanel, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //        pack();
         setSize(500, 500);
@@ -152,21 +160,22 @@ public class GameView extends JFrame
     public void renderModel(GameModel gameModel)
     {
         Element[][] gameBoard = gameModel.getGameBoard();
-        GameTableModel tableModel = new GameTableModel(gameBoard);
+        ViewTableModel tableModel = new ViewTableModel(gameBoard);
         table.setModel(tableModel);
 
         for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(tableCellRenderer);
+            table.getColumnModel().getColumn(i).setCellRenderer(viewTableCellRenderer);
         }
 
+        highScoreLabel.setText( "Score: " + gameModel.getUserScore() );
     }
 
     public JTable getTable()
     {
         return this.table;
     }
-    public myCellRenderer getTableCellRenderer()
+    public ViewTableCellRenderer getTableCellRenderer()
     {
-        return  this.tableCellRenderer;
+        return  this.viewTableCellRenderer;
     }
 }
