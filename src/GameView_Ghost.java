@@ -15,8 +15,8 @@ public class GameView_Ghost
     GameView_Ghost(GameView gameView)
     {
         this.gameView = gameView;
-        fullSizeIconOpen = new ImageIcon("images\\blue_ghost.png");
-        fullSizeIconClosed = new ImageIcon("images\\red_ghost.png");
+        fullSizeIconOpen = new ImageIcon("images\\ghost1.png");
+        fullSizeIconClosed = new ImageIcon("images\\ghost2.png");
         open = true;
     }
     public void render(Component c, Graphics g, Rectangle cellRect)
@@ -30,7 +30,6 @@ public class GameView_Ghost
             Image closed = fullSizeIconClosed.getImage();
             Image resizedClosed = closed.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
             renderingIconClosed = new ImageIcon(resizedClosed);
-
         }
 
         int x = cellRect.x;
@@ -45,7 +44,7 @@ public class GameView_Ghost
         open = !open;
         gameView.renderModel();
     }
-    public ImageIcon getRenderingIcon() {
+    private ImageIcon getRenderingIcon() {
         return open ? renderingIconOpen : renderingIconClosed;
     }
 
