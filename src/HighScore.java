@@ -7,6 +7,7 @@ public class HighScore implements Serializable { // todo: відцентуват
 
     public HighScore() {
         highScores = readHighScores();
+        Collections.sort(highScores);
     }
 
     public void addUserScore(String userName, int score) {
@@ -66,7 +67,7 @@ class HighScoreRecord implements Serializable, Comparable<HighScoreRecord> {
 
     @Override
     public int compareTo(HighScoreRecord other) {
-        return Integer.compare(other.score, this.score);
+        return Integer.compare(other.score, this.score );
     }
 
     @Override
