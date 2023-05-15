@@ -42,14 +42,69 @@ class KeysHandler extends KeyAdapter
     }
 }
 
+class PackmanMover extends Thread
+{
+    GameModel gameModel;
+    PackmanMover( GameModel gameModel )
+    {
+        this.gameModel = gameModel;
+    }
+
+    @Override
+    public void run()
+    {
+        while(true)
+        {
+            try
+            {
+                sleep(200);
+            } catch (Exception e) {}
+
+            int shiftX = 0;
+            int shiftY = 0;
+
+            switch( gameModel.getPacman().getDirection() )
+            {
+                case UP -> shiftY = -1;
+                case DOWN -> shiftY = 1;
+                case LEFT -> shiftX = -1;
+                case RIGHT -> shiftX = 1;
+            }
+
+            if( shiftX == 0 && shiftY == 0 )
+                continue;
+
+            int newX = gameModel.getPacman().getX() + shiftX;
+            int newY = gameModel.getPacman().getY() + shiftY;
+
+            // cannot move outside game board bounds
+            if( newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight() )
+                continue;
+
+            // cannot move to walls
+            if( gameModel.elementIsWall(newX, newY ))
+                continue;
+
+            //
+            gameModel.getPacman().setXY(newX, newY);
+        }
+    }
+}
+
+
 public class GameController
 {
     private GameModel gameModel;
+
+    private PackmanMover packmanMover;
 
     GameController(GameModel gameModel, GameView gameView) {
         this.gameModel = gameModel;
 
         gameView.getTable().addKeyListener(new KeysHandler(gameModel));
+
+        packmanMover = new PackmanMover(gameModel);
+        packmanMover.start();
     }
 
 }

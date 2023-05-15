@@ -241,7 +241,11 @@ public class GameView extends JFrame
 
         scoreLabel.setText( "Score: " + gameModel.getUserScore() );
         livesLabel.setText( "Lives: " + gameModel.getLives() );
+    }
 
+    public void modelChanged()
+    {
+        renderModel();
     }
 
     public JTable getTable()

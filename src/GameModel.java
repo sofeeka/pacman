@@ -10,12 +10,15 @@ enum Direction
 }
 class PacmanModel
 {
+    private GameModel gameModel;
+
     private int x;
     private int y;
     private Direction direction;
 
-    PacmanModel(int x, int y)
+    PacmanModel(GameModel gameModel, int x, int y)
     {
+        this.gameModel = gameModel;
         this.x = x;
         this.y = y;
         direction = Direction.STILL;
@@ -29,12 +32,30 @@ class PacmanModel
         return y;
     }
 
+    public void setXY( int x, int y )
+    {
+        this.x = x;
+        this.y = y;
+
+        modelChanged();
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void modelChanged()
+    {
+        gameModel.modelChanged();
     }
 }
 
 public class GameModel {
+    GameView gameView;
     private int width; // x
     private int height; // y
     private Element[][] gameBoard;
@@ -50,7 +71,12 @@ public class GameModel {
         initGameBoard();
         userScore = 0;
         lives = 3;
-        pacman = new PacmanModel(3, 3);
+        pacman = new PacmanModel( this,3, 3);
+    }
+
+    void setGameView( GameView gameView )
+    {
+        this.gameView = gameView;
     }
 
     private void initGameBoard()
@@ -93,7 +119,30 @@ public class GameModel {
         return lives;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public PacmanModel getPacman() {
         return pacman;
+    }
+
+    public Element getElementAt( int x, int y )
+    {
+        return gameBoard[y][x];
+    }
+
+    public boolean elementIsWall( int x, int y )
+    {
+        return ( getElementAt( x, y ) == Element.WALL );
+    }
+
+    public void modelChanged()
+    {
+        gameView.modelChanged();
     }
 }
