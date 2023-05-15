@@ -36,12 +36,12 @@ class PacmanView
     }
 }
 class ViewTableResizer extends ComponentAdapter {
-    private JTable table;
+    private ViewTable table;
     private ViewTableCellRenderer viewTableCellRenderer;
 
     ViewTableResizer(GameView gameView) {
         this.table = gameView.getTable();
-        this.viewTableCellRenderer = gameView.getTableCellRenderer();
+        this.viewTableCellRenderer = table.getTableCellRenderer();
     }
 
     @Override
@@ -156,10 +156,23 @@ class ViewTable extends JTable
 {
     private GameModel gameModel;
     private GameView gameView;
+    private ViewTableCellRenderer viewTableCellRenderer;
+
     ViewTable(GameView gameView)
     {
         this.gameView = gameView;
         this.gameModel = gameView.getGameModel();
+
+        Element[][] gameBoard = gameModel.getGameBoard();
+        ViewTableModel tableModel = new ViewTableModel(gameBoard);
+        this.setModel(tableModel);
+
+        viewTableCellRenderer = new ViewTableCellRenderer();
+
+        for (int i = 0; i < this.getColumnCount(); i++)
+        {
+            this.getColumnModel().getColumn(i).setCellRenderer(viewTableCellRenderer);
+        }
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -168,6 +181,11 @@ class ViewTable extends JTable
         PacmanModel pacman = gameModel.getPacman();
         gameView.getPacmanView().renderPacman(this, g, getCellRect(pacman.getY(), pacman.getX(), true));
 
+    }
+
+    public ViewTableCellRenderer getTableCellRenderer()
+    {
+        return this.viewTableCellRenderer;
     }
 
 }
@@ -181,7 +199,6 @@ public class GameView extends JFrame
     private GameModel gameModel;
     private PacmanView pacmanView;
 
-    private ViewTableCellRenderer viewTableCellRenderer;
     GameView(GameModel gameModel)
     {
         this.gameModel = gameModel;
@@ -209,7 +226,6 @@ public class GameView extends JFrame
 
         JPanel tablePanel = new JPanel(new BorderLayout());
         table = new ViewTable(this);
-        viewTableCellRenderer = new ViewTableCellRenderer();
 
         table.addComponentListener(new ViewTableResizer(this));
 
@@ -231,16 +247,10 @@ public class GameView extends JFrame
 
     public void renderModel()
     {
-        Element[][] gameBoard = gameModel.getGameBoard();
-        ViewTableModel tableModel = new ViewTableModel(gameBoard);
-        table.setModel(tableModel);
-
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(viewTableCellRenderer);
-        }
-
         scoreLabel.setText( "Score: " + gameModel.getUserScore() );
         livesLabel.setText( "Lives: " + gameModel.getLives() );
+
+        table.repaint();
     }
 
     public void modelChanged()
@@ -248,13 +258,9 @@ public class GameView extends JFrame
         renderModel();
     }
 
-    public JTable getTable()
+    public ViewTable getTable()
     {
         return this.table;
-    }
-    public ViewTableCellRenderer getTableCellRenderer()
-    {
-        return this.viewTableCellRenderer;
     }
     public PacmanView getPacmanView() {
         return pacmanView;
