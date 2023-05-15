@@ -1,8 +1,5 @@
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyAdapter;
-
-import static java.awt.event.KeyEvent.VK_UP;
 
 class KeysHandler extends KeyAdapter
 {
@@ -42,10 +39,10 @@ class KeysHandler extends KeyAdapter
     }
 }
 
-class PackmanMover extends Thread
+class PacmanMover extends Thread
 {
     GameModel gameModel;
-    PackmanMover( GameModel gameModel )
+    PacmanMover(GameModel gameModel )
     {
         this.gameModel = gameModel;
     }
@@ -96,15 +93,15 @@ public class GameController
 {
     private GameModel gameModel;
 
-    private PackmanMover packmanMover;
+    private PacmanMover pacmanMover;
 
     GameController(GameModel gameModel, GameView gameView) {
         this.gameModel = gameModel;
 
         gameView.getTable().addKeyListener(new KeysHandler(gameModel));
 
-        packmanMover = new PackmanMover(gameModel);
-        packmanMover.start();
+        pacmanMover = new PacmanMover(gameModel);
+        pacmanMover.start();
     }
 
 }

@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public enum Element {
+    EMPTY,
     WALL,
     POINT,
     FOOD;

@@ -146,6 +146,7 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer {
             case POINT -> path = "images\\point.png";
             case WALL -> path = "images\\wall.png";
             case FOOD -> path = "images\\food.png";
+//            case EMPTY -> path = "images\\black.png"; //todo change picture
             default -> path = "images\\black.png";
         }
         return new ImageIcon(path);

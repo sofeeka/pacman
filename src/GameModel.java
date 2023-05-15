@@ -18,9 +18,9 @@ class PacmanModel
 
     PacmanModel(GameModel gameModel, int x, int y)
     {
-        this.gameModel = gameModel;
         this.x = x;
         this.y = y;
+        this.gameModel = gameModel;
         direction = Direction.STILL;
     }
 
@@ -36,6 +36,12 @@ class PacmanModel
     {
         this.x = x;
         this.y = y;
+
+        if(gameModel.elementIsPoint(x, y))
+        {
+            gameModel.pointEaten();
+        }
+        gameModel.setElementToEmpty( x, y );
 
         modelChanged();
     }
@@ -62,6 +68,7 @@ public class GameModel {
     private int userScore;
     private int lives;
     private PacmanModel pacman;
+    private int SCORE_PER_POINT = 100;
 
     GameModel(int x, int y)
     {
@@ -71,7 +78,7 @@ public class GameModel {
         initGameBoard();
         userScore = 0;
         lives = 3;
-        pacman = new PacmanModel( this,3, 3);
+        pacman = new PacmanModel( this,3, 3); //todo
     }
 
     void setGameView( GameView gameView )
@@ -140,9 +147,23 @@ public class GameModel {
     {
         return ( getElementAt( x, y ) == Element.WALL );
     }
+    public boolean elementIsPoint( int x, int y )
+    {
+        return ( getElementAt( x, y ) == Element.POINT );
+    }
+
+    public void setElementToEmpty( int x, int y)
+    {
+        gameBoard[y][x] = Element.EMPTY;
+    }
 
     public void modelChanged()
     {
         gameView.modelChanged();
+    }
+
+    public void pointEaten()
+    {
+        this.userScore += SCORE_PER_POINT;
     }
 }
