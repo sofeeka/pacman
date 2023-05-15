@@ -4,29 +4,31 @@ import java.awt.event.KeyAdapter;
 
 class KeysHandler extends KeyAdapter
 {
-    private GameModel gameModel;
+    private GameController gameController;
 
-    KeysHandler( GameModel gameModel )
+    KeysHandler( GameController gameController )
     {
-        this.gameModel = gameModel;
+        this.gameController = gameController;
     }
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
+        GameModel_Pacman pacman = gameController.getGameModel().getPacman();
+
         switch (keyCode)
         {
             case KeyEvent.VK_UP -> {
-                gameModel.getPacman().setDirection(Direction.UP);
+                pacman.setDirection(Direction.UP);
             }
             case KeyEvent.VK_DOWN -> {
-                gameModel.getPacman().setDirection(Direction.DOWN);
+                pacman.setDirection(Direction.DOWN);
             }
             case KeyEvent.VK_LEFT -> {
-                gameModel.getPacman().setDirection(Direction.LEFT);
+                pacman.setDirection(Direction.LEFT);
             }
             case KeyEvent.VK_RIGHT -> {
-                gameModel.getPacman().setDirection(Direction.RIGHT);
+                pacman.setDirection(Direction.RIGHT);
             }
         }
 
@@ -73,6 +75,7 @@ class PacmanIconChanger extends Thread
 class PacmanMover extends Thread
 {
     GameModel gameModel;
+
     PacmanMover(GameModel gameModel )
     {
         this.gameModel = gameModel;
@@ -123,13 +126,15 @@ class PacmanMover extends Thread
 public class GameController
 {
     private GameModel gameModel;
+    private GameView gameView;
     private PacmanMover pacmanMover;
     private PacmanIconChanger pacmanIconChanger;
 
     GameController(GameModel gameModel, GameView gameView) {
         this.gameModel = gameModel;
+        this.gameView = gameView;
 
-        gameView.getTable().addKeyListener(new KeysHandler(gameModel));
+        gameView.getTable().addKeyListener(new KeysHandler(this));
 
         pacmanMover = new PacmanMover(gameModel);
         pacmanMover.start();
@@ -142,6 +147,27 @@ public class GameController
 
     public GameModel getGameModel() {
         return gameModel;
+    }
+
+    public void stopGame()
+    {
+        // stop mover
+        pacmanMover.interrupt();
+
+        try {
+            pacmanMover.join();
+        }
+        catch (InterruptedException e) {}
+
+        // stop icon changer
+        pacmanIconChanger.interrupt();
+
+        try {
+            pacmanIconChanger.join();
+        }
+        catch (InterruptedException e) {}
+
+        gameView.dispose();
     }
 }
 

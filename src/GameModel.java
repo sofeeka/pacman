@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Vector;
 
 enum Direction
 {
@@ -17,57 +16,6 @@ enum Direction
     }
 
 }
-class PacmanModel
-{
-    private GameModel gameModel;
-
-    private int x;
-    private int y;
-    private Direction direction;
-
-    PacmanModel(GameModel gameModel, int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-        this.gameModel = gameModel;
-        direction = Direction.STILL;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setXY( int x, int y )
-    {
-        this.x = x;
-        this.y = y;
-
-        if(gameModel.elementIsPoint(x, y))
-        {
-            gameModel.pointEaten();
-            gameModel.setElementToEmpty( x, y );
-        }
-
-        modelChanged();
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public void modelChanged()
-    {
-        gameModel.modelChanged();
-    }
-}
 
 public class GameModel {
     GameView gameView;
@@ -76,7 +24,7 @@ public class GameModel {
     private Element[][] gameBoard;
     private int userScore;
     private int lives;
-    private PacmanModel pacman;
+    private GameModel_Pacman pacman;
     private GameModel_Ghost ghost;
     private int SCORE_PER_POINT = 100;
 
@@ -84,13 +32,15 @@ public class GameModel {
     {
         width = x;
         height = y;
+
         gameBoard = new Element[y][x];
         initGameBoard();
+
         userScore = 0;
         lives = 3;
 
         Position packmanPosition = this.getRandromPointPosition();
-        pacman = new PacmanModel( this,packmanPosition.getX(), packmanPosition.getY()); //todo
+        pacman = new GameModel_Pacman( this,packmanPosition.getX(), packmanPosition.getY()); //todo
 
         Position ghostPosition = this.getRandromPointPosition();
         ghost = new GameModel_Ghost(this, ghostPosition.getX(), ghostPosition.getY());
@@ -123,15 +73,6 @@ public class GameModel {
         }
 
         MazeImprover.improveMaze( this );
-
-
-//        for (int i = 0; i < gameBoard.length; i++)
-//        {
-//            for (int j = 0; j < gameBoard[0].length; j++)
-//            {
-//                gameBoard[i][j] = Element.getRandomElement();
-//            }
-//        }
     }
 
     public void setDimensions(int x, int y)
@@ -142,7 +83,7 @@ public class GameModel {
 
     public Element[][] getGameBoard()
     {
-        return  this.gameBoard;
+        return this.gameBoard;
     }
     public int getUserScore() {
         return userScore;
@@ -159,7 +100,7 @@ public class GameModel {
         return height;
     }
 
-    public PacmanModel getPacman() {
+    public GameModel_Pacman getPacman() {
         return pacman;
     }
 
@@ -221,6 +162,11 @@ public class GameModel {
 
     public void modelChanged()
     {
+        if( pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY() )
+        {
+            this.lives--;
+        }
+
         gameView.modelChanged();
     }
 
@@ -245,5 +191,4 @@ public class GameModel {
         pos.setXY( x, y );
         return pos;
     }
-
 }
