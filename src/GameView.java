@@ -170,8 +170,21 @@ class ViewTable extends JTable
     {
         return this.viewTableCellRenderer;
     }
-
 }
+
+class GameViewCloseHandler extends WindowAdapter
+{
+    GameModel gameModel;
+    GameViewCloseHandler(GameModel gameModel)
+    {
+        this.gameModel = gameModel;
+    }
+    @Override
+    public void windowClosing(WindowEvent e) {
+        EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
+        endGameFrame.setVisible(true);
+    }}
+
 public class GameView extends JFrame
 {
     private ViewTable table;
@@ -191,13 +204,7 @@ public class GameView extends JFrame
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
-            }
-        });
+        addWindowListener(new GameViewCloseHandler(gameModel));
 
         JPanel upperPanel = new JPanel();
         scoreLabel = new JLabel();
@@ -231,7 +238,6 @@ public class GameView extends JFrame
         stopwatch.start();
 
         setVisible(true);
-
     }
 
     public void renderModel()

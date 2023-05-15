@@ -69,8 +69,6 @@ public class EndGameFrame extends JDialog
         //todo figure out the size
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
-
     }
 
     private void setUserName(String userName)

@@ -1,3 +1,4 @@
+import java.awt.event.WindowEvent;
 import java.util.Random;
 
 public class GameModel {
@@ -161,6 +162,12 @@ public class GameModel {
     private void pacmanEaten()
     {
         this.lives--;
+        if( this.lives == 0 ) {
+            gameView.setVisible(false);
+            gameView.dispatchEvent(new WindowEvent(gameView, WindowEvent.WINDOW_CLOSING));
+            gameView.dispose();
+            return;
+        }
 
         //
         this.pacman.setDirection(Direction.STILL);
