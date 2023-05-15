@@ -1,16 +1,16 @@
-import javax.swing.*;
-import java.awt.*;
-
 public class GameModel_Ghost
 {
-    private GameModel gameModel;
+    private final GameModel gameModel;
     private int x;
     private int y;
-    GameModel_Ghost(GameModel gameModel, int x, int y)
+    GameModel_Ghost(GameModel gameModel)
     {
-        this.x = x;
-        this.y = y;
         this.gameModel = gameModel;
+
+        Position p = gameModel.getRandromPointPosition();
+
+        this.x = p.getX();
+        this.y = p.getY();
     }
     public int getX() {
         return x;

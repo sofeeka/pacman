@@ -22,11 +22,8 @@ public class GameModel {
         userScore = 0;
         lives = 3;
 
-        Position packmanPosition = this.getRandromPointPosition();
-        pacman = new GameModel_Pacman( this,packmanPosition.getX(), packmanPosition.getY()); //todo
-
-        Position ghostPosition = this.getRandromPointPosition();
-        ghost = new GameModel_Ghost(this, ghostPosition.getX(), ghostPosition.getY());
+        pacman = new GameModel_Pacman(this);
+        ghost = new GameModel_Ghost(this);
     }
 
     void setGameView( GameView gameView )

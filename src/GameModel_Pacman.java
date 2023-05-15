@@ -1,16 +1,19 @@
 class GameModel_Pacman
 {
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
     private int x;
     private int y;
     private Direction direction;
 
-    GameModel_Pacman(GameModel gameModel, int x, int y)
+    GameModel_Pacman(GameModel gameModel)
     {
-        this.x = x;
-        this.y = y;
         this.gameModel = gameModel;
+
+        Position p = gameModel.getRandromPointPosition();
+        this.x = p.getX();
+        this.y = p.getY();
+
         direction = Direction.STILL;
     }
 
