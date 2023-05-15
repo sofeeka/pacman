@@ -123,7 +123,6 @@ class PacmanMover extends Thread
 public class GameController
 {
     private GameModel gameModel;
-
     private PacmanMover pacmanMover;
     private PacmanIconChanger pacmanIconChanger;
 
@@ -137,8 +136,13 @@ public class GameController
 
         pacmanIconChanger = new PacmanIconChanger(gameView, gameModel);
         pacmanIconChanger.start();
+
+        GameController_Ghosts gameController_ghosts = new GameController_Ghosts(this);
     }
 
+    public GameModel getGameModel() {
+        return gameModel;
+    }
 }
 
 /*

@@ -1,3 +1,6 @@
+import java.util.Random;
+import java.util.Vector;
+
 enum Direction
 {
     STILL,
@@ -5,6 +8,14 @@ enum Direction
     DOWN,
     LEFT,
     RIGHT;
+
+    private static final Random RAND = new Random();
+
+    public static Direction getRandomDirection()  {
+        Direction[] directions = values();
+        return directions[RAND.nextInt(directions.length)];
+    }
+
 }
 class PacmanModel
 {
@@ -66,6 +77,7 @@ public class GameModel {
     private int userScore;
     private int lives;
     private PacmanModel pacman;
+    private GameModel_Ghost ghost;
     private int SCORE_PER_POINT = 100;
 
     GameModel(int x, int y)
@@ -77,6 +89,7 @@ public class GameModel {
         userScore = 0;
         lives = 3;
         pacman = new PacmanModel( this,3, 3); //todo
+        ghost = new GameModel_Ghost(this, 1, 1); //todo
     }
 
     void setGameView( GameView gameView )
@@ -146,7 +159,11 @@ public class GameModel {
         return pacman;
     }
 
-    public Element getElementAt( int x, int y )
+    public GameModel_Ghost getGhost() {
+        return ghost;
+    }
+
+    public Element getElementAt(int x, int y )
     {
         return gameBoard[y][x];
     }

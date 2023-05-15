@@ -211,6 +211,9 @@ class ViewTable extends JTable
 
         PacmanModel pacman = gameModel.getPacman();
         gameView.getPacmanView().renderPacman(this, g, getCellRect(pacman.getY(), pacman.getX(), true));
+
+        GameModel_Ghost ghost = gameModel.getGhost();
+        gameView.getGameView_Ghost().render(this, g, getCellRect(ghost.getY(), ghost.getX(), true));
     }
 
     public ViewTableCellRenderer getTableCellRenderer()
@@ -229,11 +232,12 @@ public class GameView extends JFrame
     private GameView_Stopwatch stopwatch;
     private GameModel gameModel;
     private PacmanView pacmanView;
-
+    private GameView_Ghost gameView_Ghost;
     GameView(GameModel gameModel)
     {
         this.gameModel = gameModel;
         pacmanView = new PacmanView(this);
+        gameView_Ghost = new GameView_Ghost(this);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -300,6 +304,11 @@ public class GameView extends JFrame
     public PacmanView getPacmanView() {
         return pacmanView;
     }
+
+    public GameView_Ghost getGameView_Ghost() {
+        return gameView_Ghost;
+    }
+
     public GameModel getGameModel() {
         return gameModel;
     }
