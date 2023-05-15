@@ -88,8 +88,12 @@ public class GameModel {
         initGameBoard();
         userScore = 0;
         lives = 3;
-        pacman = new PacmanModel( this,3, 3); //todo
-        ghost = new GameModel_Ghost(this, 1, 1); //todo
+
+        Position packmanPosition = this.getRandromPointPosition();
+        pacman = new PacmanModel( this,packmanPosition.getX(), packmanPosition.getY()); //todo
+
+        Position ghostPosition = this.getRandromPointPosition();
+        ghost = new GameModel_Ghost(this, ghostPosition.getX(), ghostPosition.getY());
     }
 
     void setGameView( GameView gameView )
@@ -224,4 +228,22 @@ public class GameModel {
     {
         this.userScore += SCORE_PER_POINT;
     }
+
+    public Position getRandromPointPosition()
+    {
+        int x;
+        int y = ( int )( Math.random() * ( this.height - 2 ) ) + 1;
+
+        while( true )
+        {
+            x = ( int )( Math.random() * ( this.width - 2 ) ) + 1;
+            if( this.elementIsPoint( x, y ) )
+                break;
+        }
+
+        Position pos = new Position();
+        pos.setXY( x, y );
+        return pos;
+    }
+
 }
