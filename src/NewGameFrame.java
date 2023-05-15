@@ -6,6 +6,7 @@ public class NewGameFrame extends JDialog {
     private int dimY;
 
     private boolean okClicked;
+    private boolean properDimensions;
 
     private void setDimensions(int x, int y)
     {
@@ -33,6 +34,7 @@ public class NewGameFrame extends JDialog {
         dimX = 15;
         dimY = 15;
         okClicked = false;
+        properDimensions = false;
 
         JPanel outerPanel = new JPanel();
         outerPanel.setLayout(new BorderLayout());
@@ -69,13 +71,21 @@ public class NewGameFrame extends JDialog {
                 okClicked = true;
                 int dimX = Integer.parseInt(textFieldX.getText().trim());
                 int dimY = Integer.parseInt(textFieldY.getText().trim());
+
+                if (dimX < 10 || dimX > 100 || dimY < 10 || dimY > 100)
+                {
+                    throw new sizeException(dimX, dimY);
+                }
+
                 setDimensions(dimX, dimY);
             } catch (Exception e)
-            { }
+            {
+                System.out.println(e.getMessage());
+            }
             dispose();
         });
 
-        JButton cancelButton = new JButton("cancel");
+        JButton cancelButton = new JButton("Cancel");
         cancelButton.setBackground(Color.YELLOW);
         buttonPanel.add(cancelButton);
 

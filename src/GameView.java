@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
@@ -9,43 +8,68 @@ import java.util.Map;
 
 class PacmanView
 {
-    ImageIcon fullSizeIcon;
-    ImageIcon renderingIcon;
+    GameView gameView;
+    ImageIcon fullSizeIconOpen;
+    ImageIcon fullSizeIconClosed;
+    ImageIcon renderingIconOpen;
+    ImageIcon renderingIconClosed;
+    private boolean open;
 
     int width;
     int height;
 
-    PacmanView()
+    PacmanView(GameView gameView)
     {
-        fullSizeIcon = new ImageIcon("images\\pacman.png");
+        this.gameView = gameView;
+        fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");
+        fullSizeIconClosed = new ImageIcon("images\\pacman_closed.png");
+        open = true;
     }
     public void renderPacman(Component c, Graphics g, Rectangle cellRect)
     {
-        if(this.width != cellRect.width || this.height != cellRect.height || renderingIcon == null) // todo check direction
+        if(this.width != cellRect.width || this.height != cellRect.height || renderingIconOpen == null) // todo check direction
         {
-            Image im = fullSizeIcon.getImage();
-            Image resizedImage = im.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
-            renderingIcon = new ImageIcon(resizedImage);
+            Image open = fullSizeIconOpen.getImage();
+            Image resizedOpen = open.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
+            renderingIconOpen = new ImageIcon(resizedOpen);
+
+            Image closed = fullSizeIconClosed.getImage();
+            Image resizedClosed = closed.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
+            renderingIconClosed = new ImageIcon(resizedClosed);
+
         }
 
         int x = cellRect.x;
         int y = cellRect.y;
 
-        renderingIcon.paintIcon(c, g, x, y);
+        getRenderingIcon().paintIcon(c, g, x, y);
 
     }
+
+    public void changeIcon()
+    {
+        open = !open;
+        gameView.renderModel();
+    }
+
+    public ImageIcon getRenderingIcon() {
+        return open ? renderingIconOpen : renderingIconClosed;
+    }
 }
-class ViewTableResizer extends ComponentAdapter {
+class ViewTableResizer extends ComponentAdapter
+{
     private ViewTable table;
     private ViewTableCellRenderer viewTableCellRenderer;
 
-    ViewTableResizer(GameView gameView) {
+    ViewTableResizer(GameView gameView)
+    {
         this.table = gameView.getTable();
         this.viewTableCellRenderer = table.getTableCellRenderer();
     }
 
     @Override
-    public void componentResized(ComponentEvent e){
+    public void componentResized(ComponentEvent e)
+    {
         //source: https://stackoverflow.com/questions/63378007/make-jtable-cells-perfectly-square
 
         Dimension size = table.getSize();
@@ -62,8 +86,11 @@ class ViewTableResizer extends ComponentAdapter {
             table.getColumnModel().getColumn(i).setMaxWidth(cellSize);
         }
     }
+
+
 }
-class ViewTableModel extends AbstractTableModel {
+class ViewTableModel extends AbstractTableModel
+{
     GameModel gameModel;
 
     ViewTableModel(GameModel gameModel) {
@@ -85,7 +112,8 @@ class ViewTableModel extends AbstractTableModel {
         return gameModel.getElementAt(columnIndex, rowIndex);
     }
 }
-class ViewTableCellRenderer extends DefaultTableCellRenderer {
+class ViewTableCellRenderer extends DefaultTableCellRenderer
+{
     private GameModel gameModel;
     private static Map<Element, ImageIcon> imageCache = new HashMap<>();
     private int cellWidth;
@@ -159,6 +187,7 @@ class ViewTable extends JTable
     private GameModel gameModel;
     private GameView gameView;
     private ViewTableCellRenderer viewTableCellRenderer;
+    private static int counter = 0;
 
     ViewTable(GameView gameView)
     {
@@ -176,12 +205,12 @@ class ViewTable extends JTable
         }
     }
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
 
         PacmanModel pacman = gameModel.getPacman();
         gameView.getPacmanView().renderPacman(this, g, getCellRect(pacman.getY(), pacman.getX(), true));
-
     }
 
     public ViewTableCellRenderer getTableCellRenderer()
@@ -204,14 +233,15 @@ public class GameView extends JFrame
     GameView(GameModel gameModel)
     {
         this.gameModel = gameModel;
-        pacmanView = new PacmanView();
+        pacmanView = new PacmanView(this);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        addWindowListener(new WindowAdapter() {
+        addWindowListener(new WindowAdapter()
+        {
             @Override
             public void windowClosing(WindowEvent e) {
-                EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore()); //todo add real highscore
+                EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
             }
         });
 
@@ -263,7 +293,6 @@ public class GameView extends JFrame
     {
         renderModel();
     }
-
     public ViewTable getTable()
     {
         return this.table;
@@ -271,7 +300,6 @@ public class GameView extends JFrame
     public PacmanView getPacmanView() {
         return pacmanView;
     }
-
     public GameModel getGameModel() {
         return gameModel;
     }

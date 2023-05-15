@@ -163,7 +163,6 @@ public class GameModel {
     public void setElementToEmpty( int x, int y)
     {
         gameBoard[y][x] = Element.EMPTY;
-//        System.out.println("eaten " + x + " " + y);
     }
 
     public int getRemainingPointsQty()
@@ -176,8 +175,23 @@ public class GameModel {
                     qty++;
             }
         }
+
+        if (qty == 0) //todo: end game frame
+            createWinningFrame(getUserScore());
+            /*addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
+                }
+            });*/
         return qty;
     }
+
+    private void createWinningFrame(int userScore)
+    {
+        WinningFrame winningFrame = new WinningFrame(userScore);
+    }
+
 
     public void modelChanged()
     {

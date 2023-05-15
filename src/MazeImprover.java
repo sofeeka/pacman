@@ -22,7 +22,8 @@ public class MazeImprover {
                     (
                             gameModel.elementIsPoint( col, row - 1 )
                                     && gameModel.elementIsPoint( col, row + 1)
-                                    && ( gameModel.elementIsWall( col - 1, row ) && gameModel.elementIsWall( col + 1, row ) )
+                                    && ( gameModel.elementIsWall( col - 1, row )
+                                    && gameModel.elementIsWall( col + 1, row ) )
                     )
                     {
                         gameModel.setElementToEmpty( col, row );

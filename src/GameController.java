@@ -1,9 +1,9 @@
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
 class KeysHandler extends KeyAdapter
 {
-
     private GameModel gameModel;
 
     KeysHandler( GameModel gameModel )
@@ -38,6 +38,38 @@ class KeysHandler extends KeyAdapter
     }
 }
 
+class PacmanIconChanger extends Thread
+{
+    GameView gameView;
+    GameModel gameModel;
+    PacmanIconChanger(GameView gameView, GameModel gameModel)
+    {
+        this.gameView = gameView;
+        this.gameModel = gameModel;
+    }
+
+    @Override
+    public void run()
+    {
+        while(true)
+        {
+            mySleep(100);
+            gameView.getPacmanView().changeIcon();
+        }
+    }
+
+    private void mySleep(int time)
+    {
+        try
+        {
+            sleep(time);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+}
 class PacmanMover extends Thread
 {
     GameModel gameModel;
@@ -93,6 +125,7 @@ public class GameController
     private GameModel gameModel;
 
     private PacmanMover pacmanMover;
+    private PacmanIconChanger pacmanIconChanger;
 
     GameController(GameModel gameModel, GameView gameView) {
         this.gameModel = gameModel;
@@ -101,6 +134,9 @@ public class GameController
 
         pacmanMover = new PacmanMover(gameModel);
         pacmanMover.start();
+
+        pacmanIconChanger = new PacmanIconChanger(gameView, gameModel);
+        pacmanIconChanger.start();
     }
 
 }
