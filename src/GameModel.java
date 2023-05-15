@@ -182,6 +182,11 @@ public class GameModel {
         gameBoard[y][x] = Element.EMPTY;
     }
 
+    public void setElementToPoint( int x, int y)
+    {
+        gameBoard[y][x] = Element.POINT;
+    }
+
     public int getRemainingPointsQty()
     {
         int qty = 0;

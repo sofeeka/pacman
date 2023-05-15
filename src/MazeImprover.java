@@ -26,7 +26,7 @@ public class MazeImprover {
                                     && gameModel.elementIsWall( col + 1, row ) )
                     )
                     {
-                        gameModel.setElementToEmpty( col, row );
+                        gameModel.setElementToPoint( col, row );
                         break;
                     }
                 }
@@ -54,7 +54,7 @@ public class MazeImprover {
                         && ( gameModel.elementIsWall( col, row - 1 ) && gameModel.elementIsWall( col, row + 1 ) )
                     )
                     {
-                        gameModel.setElementToEmpty( col, row );
+                        gameModel.setElementToPoint( col, row );
                         break;
                     }
                 }
