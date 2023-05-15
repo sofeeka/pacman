@@ -196,6 +196,7 @@ public class GameView extends JFrame
     private JLabel scoreLabel;
     private JLabel livesLabel;
     private JLabel timeLabel;
+    private JLabel pointsLabel;
     private GameView_Stopwatch stopwatch;
     private GameModel gameModel;
     private PacmanView pacmanView;
@@ -218,10 +219,14 @@ public class GameView extends JFrame
         scoreLabel = new JLabel();
         timeLabel = new JLabel();
         livesLabel = new JLabel();
+        pointsLabel = new JLabel();
 
         upperPanel.add(scoreLabel); //todo align properly (gridBagLayout)
         upperPanel.add(timeLabel);
         upperPanel.add(livesLabel);
+        upperPanel.add(pointsLabel);
+
+        upperPanel.setSize(500,50);
 
         add(upperPanel, BorderLayout.PAGE_START);
 
@@ -230,13 +235,12 @@ public class GameView extends JFrame
 
         table.addComponentListener(new ViewTableResizer(this));
 
-        tablePanel.setBorder(new LineBorder(Color.BLACK, 3));
         tablePanel.add(table, BorderLayout.CENTER);
 
         add(tablePanel, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //        pack();
-        setSize(500, 500);
+        setSize(450, 500);
         setLocationRelativeTo(null);
 
         stopwatch = new GameView_Stopwatch(timeLabel);
@@ -250,6 +254,7 @@ public class GameView extends JFrame
     {
         scoreLabel.setText( "Score: " + gameModel.getUserScore() );
         livesLabel.setText( "Lives: " + gameModel.getLives() );
+        pointsLabel.setText("Points left: " + gameModel.getRemainingPointsQty());
 
         table.repaint();
     }

@@ -1,5 +1,3 @@
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 enum Direction
 {
     STILL,
@@ -158,7 +156,7 @@ public class GameModel {
 //        System.out.println("eaten " + x + " " + y);
     }
 
-    public int remainingPointsQty()
+    public int getRemainingPointsQty()
     {
         int qty = 0;
 
