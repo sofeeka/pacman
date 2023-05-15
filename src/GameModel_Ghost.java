@@ -25,12 +25,6 @@ public class GameModel_Ghost
         this.x = x;
         this.y = y;
 
-        if(gameModel.elementIsPoint(x, y))
-        {
-            gameModel.pointEaten();
-            gameModel.setElementToEmpty( x, y );
-        }
-
         modelChanged();
     }
 
