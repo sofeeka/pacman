@@ -101,6 +101,10 @@ public class GameModel {
     {
         return ( getElementAt( x, y ) == Element.POINT );
     }
+    public boolean elementIsEmpty( int x, int y )
+    {
+        return ( getElementAt( x, y ) == Element.EMPTY);
+    }
 
     public void setElementToEmpty( int x, int y)
     {
@@ -139,12 +143,11 @@ public class GameModel {
         WinningFrame winningFrame = new WinningFrame(userScore);
     }
 
-
     public void modelChanged()
     {
         if( pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY() )
         {
-            this.lives--;
+            pacmanEaten();
         }
 
         gameView.modelChanged();
@@ -153,6 +156,29 @@ public class GameModel {
     public void pointEaten()
     {
         this.userScore += SCORE_PER_POINT;
+    }
+
+    private void pacmanEaten()
+    {
+        this.lives--;
+
+        //
+        this.pacman.setDirection(Direction.STILL);
+
+        // set pacman to a new random position
+        Position p = this.getRandromPointPosition();
+        this.pacman.setXY(p.getX(), p.getY() );
+
+        // set all empty elements to POINT
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (elementIsEmpty(i, j))
+                    setElementToPoint(i, j);
+            }
+        }
+
+        //
+        this.userScore = 0;
     }
 
     public Position getRandromPointPosition()
