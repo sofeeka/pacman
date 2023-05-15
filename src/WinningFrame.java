@@ -21,5 +21,9 @@ public class WinningFrame extends JFrame
                 EndGameFrame endGameFrame = new EndGameFrame(score);
             }
         });
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 }
