@@ -105,6 +105,8 @@ public class GameModel {
             }
         }
 
+        MazeImprover.improveMaze( this );
+
 
 //        for (int i = 0; i < gameBoard.length; i++)
 //        {
