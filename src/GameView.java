@@ -6,56 +6,6 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
-class PacmanView
-{
-    GameView gameView;
-    ImageIcon fullSizeIconOpen;
-    ImageIcon fullSizeIconClosed;
-    ImageIcon renderingIconOpen;
-    ImageIcon renderingIconClosed;
-    private boolean open;
-
-    int width;
-    int height;
-
-    PacmanView(GameView gameView)
-    {
-        this.gameView = gameView;
-        fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");
-        fullSizeIconClosed = new ImageIcon("images\\pacman_closed.png");
-        open = true;
-    }
-    public void renderPacman(Component c, Graphics g, Rectangle cellRect)
-    {
-        if(this.width != cellRect.width || this.height != cellRect.height || renderingIconOpen == null) // todo check direction
-        {
-            Image open = fullSizeIconOpen.getImage();
-            Image resizedOpen = open.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
-            renderingIconOpen = new ImageIcon(resizedOpen);
-
-            Image closed = fullSizeIconClosed.getImage();
-            Image resizedClosed = closed.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
-            renderingIconClosed = new ImageIcon(resizedClosed);
-
-        }
-
-        int x = cellRect.x;
-        int y = cellRect.y;
-
-        getRenderingIcon().paintIcon(c, g, x, y);
-
-    }
-
-    public void changeIcon()
-    {
-        open = !open;
-        gameView.renderModel();
-    }
-
-    public ImageIcon getRenderingIcon() {
-        return open ? renderingIconOpen : renderingIconClosed;
-    }
-}
 class ViewTableResizer extends ComponentAdapter
 {
     private ViewTable table;
@@ -231,12 +181,12 @@ public class GameView extends JFrame
     private JLabel pointsLabel;
     private GameView_Stopwatch stopwatch;
     private GameModel gameModel;
-    private PacmanView pacmanView;
+    private GameView_Pacman gameViewPacman;
     private GameView_Ghost gameView_Ghost;
     GameView(GameModel gameModel)
     {
         this.gameModel = gameModel;
-        pacmanView = new PacmanView(this);
+        gameViewPacman = new GameView_Pacman(this);
         gameView_Ghost = new GameView_Ghost(this);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -301,8 +251,8 @@ public class GameView extends JFrame
     {
         return this.table;
     }
-    public PacmanView getPacmanView() {
-        return pacmanView;
+    public GameView_Pacman getPacmanView() {
+        return gameViewPacman;
     }
 
     public GameView_Ghost getGameView_Ghost() {
