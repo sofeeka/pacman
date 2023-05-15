@@ -86,8 +86,16 @@ public class GameModel {
 
     private void initGameBoard()
     {
+        int mazeX = width;
+        int mazeY = height;
+
+        if ( mazeX % 2 == 0 )
+            mazeX++;
+        if ( mazeY % 2 == 0 )
+            mazeY++;
+
         MazeGenerator generator = new MazeGenerator();
-        int[][] maze = generator.getMaze( height, width );
+        int[][] maze = generator.getMaze( mazeY, mazeX );
 
         gameBoard = new Element[height][width];
 
