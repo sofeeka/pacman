@@ -3,6 +3,7 @@ import java.awt.event.KeyAdapter;
 
 class KeysHandler extends KeyAdapter
 {
+
     private GameModel gameModel;
 
     KeysHandler( GameModel gameModel )
@@ -17,11 +18,9 @@ class KeysHandler extends KeyAdapter
         {
             case KeyEvent.VK_UP -> {
                 gameModel.getPacman().setDirection(Direction.UP);
-                System.out.println("up");
             }
             case KeyEvent.VK_DOWN -> {
                 gameModel.getPacman().setDirection(Direction.DOWN);
-                System.out.println("down");
             }
             case KeyEvent.VK_LEFT -> {
                 gameModel.getPacman().setDirection(Direction.LEFT);

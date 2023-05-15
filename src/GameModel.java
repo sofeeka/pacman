@@ -40,8 +40,8 @@ class PacmanModel
         if(gameModel.elementIsPoint(x, y))
         {
             gameModel.pointEaten();
+            gameModel.setElementToEmpty( x, y );
         }
-        gameModel.setElementToEmpty( x, y );
 
         modelChanged();
     }
@@ -93,8 +93,8 @@ public class GameModel {
 
         gameBoard = new Element[height][width];
 
-        for (int row = 0; row < height - 1; row++) {
-            for (int col = 0; col < width - 1; col++) {
+        for (int row = 0; row < height ; row++) {
+            for (int col = 0; col < width ; col++) {
                 gameBoard[row][col] = ( maze[row][col] == 1 ) ? Element.WALL : Element.POINT;
             }
         }
@@ -155,6 +155,20 @@ public class GameModel {
     public void setElementToEmpty( int x, int y)
     {
         gameBoard[y][x] = Element.EMPTY;
+//        System.out.println("eaten " + x + " " + y);
+    }
+
+    public int remainingPointsQty()
+    {
+        int qty = 0;
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (elementIsPoint(i, j))
+                    qty++;
+            }
+        }
+        return qty;
     }
 
     public void modelChanged()

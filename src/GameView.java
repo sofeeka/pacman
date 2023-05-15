@@ -64,34 +64,36 @@ class ViewTableResizer extends ComponentAdapter {
     }
 }
 class ViewTableModel extends AbstractTableModel {
-    private Element[][] data;
+    GameModel gameModel;
 
-    ViewTableModel(Element[][] data) {
-        this.data = data;
+    ViewTableModel(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
     @Override
     public int getRowCount() {
-        return data.length;
+        return gameModel.getHeight();
     }
 
     @Override
     public int getColumnCount() {
-        return data[0].length;
+        return gameModel.getWidth();
     }
 
     @Override
     public Element getValueAt(int rowIndex, int columnIndex) {
-        return data[rowIndex][columnIndex];
+        return gameModel.getElementAt(columnIndex, rowIndex);
     }
 }
 class ViewTableCellRenderer extends DefaultTableCellRenderer {
+    private GameModel gameModel;
     private static Map<Element, ImageIcon> imageCache = new HashMap<>();
     private int cellWidth;
     private int cellHeight;
 
-    ViewTableCellRenderer()
+    ViewTableCellRenderer(GameModel gameModel)
     {
+        this.gameModel = gameModel;
         setCellSize(15,15);
     }
 
@@ -109,14 +111,13 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                                                    boolean hasFocus, int row, int column)
     {
-        if (value instanceof Element)
+        if (value != null)
         {
-            Element element = (Element) value;
+            Element element = gameModel.getElementAt(column, row);
             ImageIcon imageIcon = getImageIcon(element);
 
             setIcon(imageIcon); // todo: resize
         }
-
         return this;
     }
 
@@ -164,13 +165,12 @@ class ViewTable extends JTable
         this.gameView = gameView;
         this.gameModel = gameView.getGameModel();
 
-        Element[][] gameBoard = gameModel.getGameBoard();
-        ViewTableModel tableModel = new ViewTableModel(gameBoard);
+        ViewTableModel tableModel = new ViewTableModel(gameModel);
         this.setModel(tableModel);
 
-        viewTableCellRenderer = new ViewTableCellRenderer();
+        viewTableCellRenderer = new ViewTableCellRenderer(gameModel);
 
-        for (int i = 0; i < this.getColumnCount(); i++)
+        for (int i = 0; i < gameModel.getWidth(); i++)
         {
             this.getColumnModel().getColumn(i).setCellRenderer(viewTableCellRenderer);
         }
