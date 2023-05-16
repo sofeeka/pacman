@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.WindowEvent;
 
 class KeysHandler extends KeyAdapter
 {
@@ -35,7 +36,8 @@ class KeysHandler extends KeyAdapter
         int modifiers = e.getModifiers();
         if (keyCode == KeyEvent.VK_Q && (modifiers & KeyEvent.CTRL_MASK) != 0 && (modifiers & KeyEvent.SHIFT_MASK) != 0)
         {
-            System.out.println("Ctrl + Shift + Q pressed");
+            gameController.stopGame();
+//            System.out.println("Ctrl + Shift + Q pressed");
         }
     }
 }
@@ -44,7 +46,6 @@ public class GameController
 {
     private GameModel gameModel;
     private GameView gameView;
-//    private PacmanMover pacmanMover;
     private GameController_Pacman gameController_pacman;
     private GameController_Ghosts gameController_ghosts;
 
@@ -67,6 +68,15 @@ public class GameController
         gameController_pacman.shutDown();
         gameController_ghosts.shutDown();
         gameView.shutDown();
+    }
+
+    public void stopGame()
+    {
+        shutDown();
+
+        gameView.setVisible(false);
+        gameView.dispatchEvent(new WindowEvent(gameView, WindowEvent.WINDOW_CLOSING));
+        gameView.dispose();
     }
 }
 
