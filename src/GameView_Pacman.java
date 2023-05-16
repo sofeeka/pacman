@@ -1,6 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
 
+class PacmanIconChanger extends Thread
+{
+    GameView_Pacman gameView_Pacman;
+    PacmanIconChanger(GameView_Pacman gameView_Pacman )
+    {
+        this.gameView_Pacman = gameView_Pacman;
+    }
+
+    @Override
+    public void run()
+    {
+        while(true)
+        {
+            Game.mySleep(150);
+            gameView_Pacman.changeIcon();
+        }
+    }
+}
+
+
 class GameView_Pacman
 {
     GameView gameView;
@@ -9,6 +29,7 @@ class GameView_Pacman
     ImageIcon renderingIconOpen;
     ImageIcon renderingIconClosed;
     private boolean open;
+    private PacmanIconChanger pacmanIconChanger;
 
     int width;
     int height;
@@ -19,6 +40,9 @@ class GameView_Pacman
         fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");
         fullSizeIconClosed = new ImageIcon("images\\pacman_closed.png");
         open = true;
+
+        pacmanIconChanger = new PacmanIconChanger(this);
+        pacmanIconChanger.start();
     }
     public void renderPacman(Component c, Graphics g, Rectangle cellRect)
     {
@@ -53,5 +77,6 @@ class GameView_Pacman
 
     public void shutDown()
     {
+        pacmanIconChanger.interrupt();
     }
 }

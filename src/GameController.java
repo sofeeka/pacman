@@ -40,33 +40,11 @@ class KeysHandler extends KeyAdapter
     }
 }
 
-class PacmanIconChanger extends Thread
-{
-    GameView gameView;
-    GameModel gameModel;
-    PacmanIconChanger(GameView gameView, GameModel gameModel)
-    {
-        this.gameView = gameView;
-        this.gameModel = gameModel;
-    }
-
-    @Override
-    public void run()
-    {
-        while(true)
-        {
-            Game.mySleep(100);
-            gameView.getPacmanView().changeIcon();
-        }
-    }
-}
-
 public class GameController
 {
     private GameModel gameModel;
     private GameView gameView;
-    private PacmanMover pacmanMover;
-    private PacmanIconChanger pacmanIconChanger;
+//    private PacmanMover pacmanMover;
     private GameController_Pacman gameController_pacman;
     private GameController_Ghosts gameController_ghosts;
 
@@ -75,9 +53,6 @@ public class GameController
         this.gameView = gameView;
 
         gameView.getTable().addKeyListener(new KeysHandler(this));
-
-        pacmanIconChanger = new PacmanIconChanger(gameView, gameModel);
-        pacmanIconChanger.start();
 
         gameController_pacman = new GameController_Pacman(this);
         gameController_ghosts = new GameController_Ghosts(this);
@@ -89,9 +64,7 @@ public class GameController
 
     public void shutDown()
     {
-        pacmanMover.interrupt();
-        pacmanIconChanger.interrupt();
-
+        gameController_pacman.shutDown();
         gameController_ghosts.shutDown();
         gameView.shutDown();
     }
