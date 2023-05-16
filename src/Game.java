@@ -2,8 +2,8 @@ import javax.swing.*;
 
 class GameRunner extends Thread
 {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     GameRunner( int x, int y)
     {
@@ -17,7 +17,9 @@ class GameRunner extends Thread
         GameModel gameModel = new GameModel(x, y);
         GameView gameView = new GameView(gameModel);
         gameModel.setGameView( gameView );
+
         GameController gameController = new GameController(gameModel, gameView );
+        gameModel.setGameController( gameController );
     }
 }
 

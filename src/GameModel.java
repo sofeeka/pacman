@@ -2,6 +2,7 @@ import java.awt.event.WindowEvent;
 
 public class GameModel {
     GameView gameView;
+    GameController gameController;
     private int width; // x
     private int height; // y
     private Element[][] gameBoard;
@@ -31,6 +32,10 @@ public class GameModel {
     void setGameView( GameView gameView )
     {
         this.gameView = gameView;
+    }
+
+    public void setGameController(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public GameView getGameView() {
@@ -145,11 +150,6 @@ public class GameModel {
         return qty;
     }
 
-    private void createWinningFrame(int userScore)
-    {
-        WinningFrame winningFrame = new WinningFrame(userScore);
-    }
-
     public void modelChanged()
     {
         if( pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY() )
@@ -169,7 +169,7 @@ public class GameModel {
 
         if( getRemainingPointsQty() == 0)
         {
-            createWinningFrame( this.userScore );
+            gameController.userWon();
         }
     }
 

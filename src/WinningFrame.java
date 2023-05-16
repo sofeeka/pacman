@@ -3,11 +3,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class WinningFrame extends JFrame
+public class WinningFrame extends JDialog
 {
     WinningFrame(int score)
     {
         setTitle("Winning Frame");
+        setModal( true );
 
         JLabel label = new JLabel("Congratulations!");
 
@@ -24,6 +25,5 @@ public class WinningFrame extends JFrame
 
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
     }
 }

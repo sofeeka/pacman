@@ -78,6 +78,19 @@ public class GameController
         gameView.dispatchEvent(new WindowEvent(gameView, WindowEvent.WINDOW_CLOSING));
         gameView.dispose();
     }
+
+    public void userWon()
+    {
+        showWinningFrame();
+        stopGame();
+    }
+
+    private void showWinningFrame()
+    {
+        WinningFrame winningFrame = new WinningFrame(gameModel.getUserScore());
+        winningFrame.setVisible(true);
+        winningFrame.dispose();
+    }
 }
 
 /*
