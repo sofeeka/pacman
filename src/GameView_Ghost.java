@@ -25,16 +25,19 @@ class GhostIconChanger extends Thread
 
 public class GameView_Ghost
 {
+    GameModel_Ghost ghost;
     GameView gameView;
     ArrayList<ImageIcon> fullSizeIcons;
     ArrayList<ImageIcon> renderingIcons;
     private int iconIndex;
+    private boolean iconFlashing;
     int width;
     int height;
     GhostIconChanger ghostIconChanger;
 
-    GameView_Ghost(GameView gameView)
+    GameView_Ghost(GameModel_Ghost ghost, GameView gameView)
     {
+        this.ghost = ghost;
         this.gameView = gameView;
 
         fullSizeIcons = new ArrayList<>();
@@ -48,6 +51,9 @@ public class GameView_Ghost
     }
     public void render(Component c, Graphics g, Rectangle cellRect)
     {
+        if( iconIndex == -1 ) // frightened ghost is flashing
+            return;
+
         if(this.width != cellRect.width || this.height != cellRect.height || renderingIcons == null) // todo check direction
         {
             renderingIcons = new ArrayList<>();
@@ -71,6 +77,9 @@ public class GameView_Ghost
         iconIndex++;
         if( iconIndex >= fullSizeIcons.size())
             iconIndex = 0;
+
+        if( ghost.isFrightened() && iconIndex > 0 )
+            iconIndex = -1;
 
         gameView.renderModel();
     }

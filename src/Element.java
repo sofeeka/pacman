@@ -4,6 +4,7 @@ public enum Element {
     EMPTY,
     WALL,
     POINT,
+    POWER_PELLET,
     FOOD;
 
     private static final Random RAND = new Random();

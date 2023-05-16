@@ -10,12 +10,20 @@ class GhostMover extends Thread
     public void run()
     {
         GameModel gameModel = ghost.getGameModel();
+
+        final int SLEEP_TIME = 200;
+
         while(true)
         {
             try
             {
-                sleep(200);
+                sleep(SLEEP_TIME);
             } catch (Exception e) {}
+
+            if( ghost.isFrightened() )
+            {
+                ghost.decreaseRemainingFrightened( SLEEP_TIME );
+            }
 
             int shiftX = 0;
             int shiftY = 0;
@@ -44,7 +52,6 @@ class GhostMover extends Thread
 
             //
             ghost.setXY(newX, newY);
-
         }
     }
 }

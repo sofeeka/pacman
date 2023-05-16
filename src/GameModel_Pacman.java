@@ -35,6 +35,12 @@ class GameModel_Pacman
             gameModel.setElementToEmpty( x, y );
         }
 
+        if(gameModel.elementIs(x, y, Element.POWER_PELLET))
+        {
+            gameModel.powerPelletEaten();
+            gameModel.setElementToEmpty( x, y );
+        }
+
         modelChanged();
     }
 

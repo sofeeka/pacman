@@ -1,5 +1,4 @@
 import java.awt.event.WindowEvent;
-import java.util.Random;
 
 public class GameModel {
     GameView gameView;
@@ -8,9 +7,11 @@ public class GameModel {
     private Element[][] gameBoard;
     private int userScore;
     private int lives;
-    private GameModel_Pacman pacman;
-    private GameModel_Ghost ghost;
-    private int SCORE_PER_POINT = 100;
+    private final GameModel_Pacman pacman;
+    private final GameModel_Ghost ghost;
+    private final int SCORE_PER_POINT = 100;
+    private final int SCORE_PER_POWER_PELLET = 200;
+    private final int SCORE_PER_GHOST = 400;
 
     GameModel(int x, int y)
     {
@@ -58,6 +59,7 @@ public class GameModel {
         }
 
         MazeImprover.improveMaze( this );
+        restartBoard();
     }
 
     public void setDimensions(int x, int y)
@@ -98,27 +100,35 @@ public class GameModel {
         return gameBoard[y][x];
     }
 
+    public boolean elementIs( int x, int y, Element element )
+    {
+        return ( getElementAt( x, y ) == element );
+    }
     public boolean elementIsWall( int x, int y )
     {
-        return ( getElementAt( x, y ) == Element.WALL );
+        return elementIs( x, y, Element.WALL );
     }
     public boolean elementIsPoint( int x, int y )
     {
-        return ( getElementAt( x, y ) == Element.POINT );
+        return elementIs( x, y, Element.POINT );
     }
     public boolean elementIsEmpty( int x, int y )
     {
-        return ( getElementAt( x, y ) == Element.EMPTY);
+        return elementIs( x, y, Element.EMPTY);
     }
 
+    public void setElementTo(int x, int y, Element element )
+    {
+        gameBoard[y][x] = element;
+    }
     public void setElementToEmpty( int x, int y)
     {
-        gameBoard[y][x] = Element.EMPTY;
+        setElementTo(x, y, Element.EMPTY);
     }
 
     public void setElementToPoint( int x, int y)
     {
-        gameBoard[y][x] = Element.POINT;
+        setElementTo(x, y, Element.POINT);
     }
 
     public int getRemainingPointsQty()
@@ -152,7 +162,10 @@ public class GameModel {
     {
         if( pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY() )
         {
-            pacmanEaten();
+            if( ghost.isFrightened() )
+                ghostEaten( ghost );
+            else
+                pacmanEaten();
         }
 
         gameView.modelChanged();
@@ -161,6 +174,21 @@ public class GameModel {
     public void pointEaten()
     {
         this.userScore += SCORE_PER_POINT;
+    }
+
+    public void ghostEaten( GameModel_Ghost ghost )
+    {
+        this.userScore += SCORE_PER_GHOST;
+
+        Position p = this.getRandromPointPosition();
+        ghost.setXY( p.getX(), p.getY() );
+        ghost.setAsNotFrightened();
+    }
+
+    public void powerPelletEaten()
+    {
+        this.userScore += SCORE_PER_POWER_PELLET;
+        this.ghost.setAsFrightened();
     }
 
     private void pacmanEaten()
@@ -181,12 +209,7 @@ public class GameModel {
         this.pacman.setXY(p.getX(), p.getY() );
 
         // set all empty elements to POINT
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (elementIsEmpty(i, j))
-                    setElementToPoint(i, j);
-            }
-        }
+        this.restartBoard();
 
         //
         this.userScore = 0;
@@ -207,5 +230,29 @@ public class GameModel {
         Position pos = new Position();
         pos.setXY( x, y );
         return pos;
+    }
+
+    void restartBoard()
+    {
+        // set all empty elements to POINT
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (elementIsEmpty(i, j) || elementIs(i, j, Element.POWER_PELLET))
+                    setElementToPoint(i, j);
+            }
+        }
+
+        //
+        int pointsQty = getRemainingPointsQty();
+
+        int pelletsQty = pointsQty / 25;
+        if( pelletsQty < 1 )
+            pelletsQty = 1;
+
+        //
+        for( int i = 0; i < pelletsQty; i++ ) {
+            Position p = this.getRandromPointPosition();
+            setElementTo(p.getX(), p.getY(), Element.POWER_PELLET);
+        }
     }
 }

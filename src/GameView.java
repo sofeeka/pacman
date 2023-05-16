@@ -125,6 +125,7 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
             case POINT -> path = "images\\point.png";
             case WALL -> path = "images\\wall.png";
             case FOOD -> path = "images\\food.png";
+            case POWER_PELLET -> path = "images\\pellet.png";
 //            case EMPTY -> path = "images\\black.png"; //todo change picture
             default -> path = "images\\black.png";
         }
@@ -202,7 +203,7 @@ public class GameView extends JFrame
     {
         this.gameModel = gameModel;
         gameViewPacman = new GameView_Pacman(this);
-        gameView_Ghost = new GameView_Ghost(this);
+        gameView_Ghost = new GameView_Ghost(gameModel.getGhost(), this);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); // DO_NOTHING_ON_CLOSE
 
