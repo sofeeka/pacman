@@ -40,7 +40,6 @@ public class GameView_Ghost
     ArrayList<ImageIcon> fullSizeIcons;
     ArrayList<ImageIcon> renderingIcons;
     private int iconIndex;
-    private boolean iconFlashing;
     int width;
     int height;
     GhostIconChanger ghostIconChanger;
@@ -58,7 +57,7 @@ public class GameView_Ghost
         ghostIconChanger = new GhostIconChanger(this);
         ghostIconChanger.start();
     }
-    public void render(Component c, Graphics g, Rectangle cellRect)
+    synchronized public void render(Component c, Graphics g, Rectangle cellRect)
     {
         if( iconIndex == -1 ) // frightened ghost is flashing
             return;
@@ -81,7 +80,7 @@ public class GameView_Ghost
         getRenderingIcon().paintIcon(c, g, x, y);
     }
 
-    public void changeIcon()
+    synchronized public void changeIcon()
     {
         iconIndex++;
         if( iconIndex >= fullSizeIcons.size())
@@ -92,7 +91,7 @@ public class GameView_Ghost
 
         ghost.getGame().getView().renderModel();
     }
-    private ImageIcon getRenderingIcon() {
+    synchronized private ImageIcon getRenderingIcon() {
         return this.renderingIcons.get(iconIndex);
     }
 
