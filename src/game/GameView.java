@@ -46,8 +46,6 @@ class ViewTableResizer extends ComponentAdapter
             table.getColumnModel().getColumn(i).setMaxWidth(cellSize);
         }
     }
-
-
 }
 class ViewTableModel extends AbstractTableModel
 {
@@ -194,9 +192,11 @@ class GameViewCloseHandler extends WindowAdapter
     }
     @Override
     public void windowClosing(WindowEvent e) {
-        gameModel.getGameView().shutDown();
+        int userScore = gameModel.getUserScore();
 
-        EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
+        gameModel.getGame().shutDown();
+
+        EndGameFrame endGameFrame = new EndGameFrame(userScore);
         endGameFrame.setVisible(true);
     }}
 

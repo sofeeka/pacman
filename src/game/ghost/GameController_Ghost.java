@@ -66,7 +66,7 @@ class GhostMover extends Thread
                 m_ghost.decreaseRemainingFrightened( SLEEP_TIME );
             }
 
-            if (direction == Game.Direction.STILL || Math.random() > 0.75) // continue with the prior move direction with some probability
+            if (direction == Game.Direction.STILL || Math.random() > 0.25) // continue with the prior move direction with some probability
                 direction = Game.Direction.getRandomDirection();
 
             if( !canGoInDirection( direction )) {

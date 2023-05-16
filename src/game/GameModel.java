@@ -200,10 +200,10 @@ public class GameModel {
         this.game.getPacman().getModel().setXY(p.getX(), p.getY() );
 
         // set all empty elements to POINT
-        this.restartBoard();
+//        this.restartBoard();
 
         //
-        this.userScore = 0;
+        // this.userScore = 0;
     }
 
     public Position getRandromPointPosition()
