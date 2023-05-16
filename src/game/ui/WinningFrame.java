@@ -1,4 +1,4 @@
-package game;
+package game.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class WinningFrame extends JDialog
 {
-    WinningFrame(int score)
+    public WinningFrame(int score)
     {
         setTitle("Winning Frame");
         setModal( true );

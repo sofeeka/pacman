@@ -20,7 +20,9 @@ class PacmanMover extends Thread
             try
             {
                 sleep(200);
-            } catch (Exception e) {}
+            } catch( InterruptedException e ) {
+                return;
+            }
 
             int shiftX = 0;
             int shiftY = 0;

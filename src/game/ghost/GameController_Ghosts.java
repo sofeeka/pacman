@@ -23,8 +23,10 @@ class GhostMover extends Thread
         {
             try
             {
-                sleep(SLEEP_TIME);
-            } catch (Exception e) {}
+                Thread.sleep(SLEEP_TIME);
+            } catch (InterruptedException e) {
+                return;
+            }
 
             if( ghost.isFrightened() )
             {
@@ -63,8 +65,8 @@ class GhostMover extends Thread
 }
 public class GameController_Ghosts
 {
-    GameController gameController;
-    GhostMover ghostMover;
+    final GameController gameController;
+    final GhostMover ghostMover;
 
     public GameController_Ghosts(GameController gameController)
     {

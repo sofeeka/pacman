@@ -41,9 +41,9 @@ public class HighScoreFrame extends JFrame
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                                                       boolean cellHasFocus)
         {
-            if (value instanceof HighScoreRecord) {
-                String record = (String) value;
-            }
+//            if (value instanceof HighScoreRecord) {
+//                String record = (String) value;
+//            }
             return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
         }

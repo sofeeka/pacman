@@ -19,7 +19,13 @@ class PacmanIconChanger extends Thread
     {
         while(true)
         {
-            Game.mySleep(150);
+            try {
+                Thread.sleep(150);
+            }
+            catch(InterruptedException e){
+                return;
+            }
+
             gameView_Pacman.changeIcon();
         }
     }
@@ -34,7 +40,7 @@ public class GameView_Pacman
     ImageIcon renderingIconOpen;
     ImageIcon renderingIconClosed;
     private boolean open;
-    private PacmanIconChanger pacmanIconChanger;
+    private final PacmanIconChanger pacmanIconChanger;
 
     int width;
     int height;

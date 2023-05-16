@@ -22,21 +22,22 @@ public class GameView_Stopwatch extends Thread
             try
             {
                 sleep(1000);
-            } catch (Exception e) {}
+            } catch(InterruptedException e) {
+                return;
+            }
         }
     }
 
     public String getTime()
     {
-            long timePassed = System.currentTimeMillis() - startTime;
+        long timePassed = System.currentTimeMillis() - startTime;
 
-            long minutes = TimeUnit.MILLISECONDS.toMinutes(timePassed);
-            long seconds =
-                    TimeUnit.MILLISECONDS.toSeconds(timePassed)
-                            - TimeUnit.MINUTES.toSeconds(minutes);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(timePassed);
+        long seconds =
+                TimeUnit.MILLISECONDS.toSeconds(timePassed)
+                        - TimeUnit.MINUTES.toSeconds(minutes);
 
-            String stopwatchTime = String.format("Time: %02d:%02d", minutes, seconds);
-
+        String stopwatchTime = String.format("Time: %02d:%02d", minutes, seconds);
         return stopwatchTime;
     }
 

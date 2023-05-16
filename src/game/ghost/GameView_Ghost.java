@@ -22,7 +22,13 @@ class GhostIconChanger extends Thread
     {
         while(true)
         {
-            Game.mySleep(200);
+            try {
+                Thread.sleep(200);
+            }
+            catch(InterruptedException e){
+                return;
+            }
+
             gameView_Ghost.changeIcon();
         }
     }

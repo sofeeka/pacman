@@ -16,8 +16,8 @@ import java.util.Map;
 
 class ViewTableResizer extends ComponentAdapter
 {
-    private ViewTable table;
-    private ViewTableCellRenderer viewTableCellRenderer;
+    private final ViewTable table;
+    private final ViewTableCellRenderer viewTableCellRenderer;
 
     ViewTableResizer(GameView gameView)
     {
@@ -72,7 +72,7 @@ class ViewTableModel extends AbstractTableModel
 }
 class ViewTableCellRenderer extends DefaultTableCellRenderer
 {
-    private GameModel gameModel;
+    private final GameModel gameModel;
     private static Map<Game.Element, ImageIcon> imageCache = new HashMap<>();
     private int cellWidth;
     private int cellHeight;
@@ -143,10 +143,9 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
 }
 class ViewTable extends JTable
 {
-    private GameModel gameModel;
-    private GameView gameView;
-    private ViewTableCellRenderer viewTableCellRenderer;
-    private static int counter = 0;
+    private final GameModel gameModel;
+    private final GameView gameView;
+    private final ViewTableCellRenderer viewTableCellRenderer;
 
     ViewTable(GameView gameView)
     {
@@ -198,15 +197,15 @@ class GameViewCloseHandler extends WindowAdapter
 
 public class GameView extends JFrame
 {
-    private ViewTable table;
-    private JLabel scoreLabel;
-    private JLabel livesLabel;
-    private JLabel timeLabel;
-    private JLabel pointsLabel;
-    private GameView_Stopwatch stopwatch;
-    private GameModel gameModel;
-    private GameView_Pacman gameViewPacman;
-    private GameView_Ghost gameView_Ghost;
+    private final ViewTable table;
+    private final JLabel scoreLabel;
+    private final JLabel livesLabel;
+    private final JLabel timeLabel;
+    private final JLabel pointsLabel;
+    private final GameView_Stopwatch stopwatch;
+    private final GameModel gameModel;
+    private final GameView_Pacman gameViewPacman;
+    private final GameView_Ghost gameView_Ghost;
     GameView(GameModel gameModel)
     {
         this.gameModel = gameModel;

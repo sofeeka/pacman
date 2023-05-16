@@ -5,6 +5,7 @@ import java.util.*;
 
 public class HighScore implements Serializable { // todo: відцентувати, збільшити шрифт тд
     private ArrayList<HighScoreRecord> highScores;
+    @Serial
     private static final long serialVersionUID = 8574982327062808366L;
 
     public HighScore() {

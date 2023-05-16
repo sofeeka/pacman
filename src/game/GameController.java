@@ -3,15 +3,15 @@ package game;
 import game.ghost.GameController_Ghosts;
 import game.pacman.GameController_Pacman;
 import game.pacman.GameModel_Pacman;
+import game.ui.WinningFrame;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.WindowEvent;
 
 class KeysHandler extends KeyAdapter
 {
-    private GameController gameController;
+    private final GameController gameController;
 
     KeysHandler( GameController gameController )
     {
@@ -25,18 +25,10 @@ class KeysHandler extends KeyAdapter
 
         switch (keyCode)
         {
-            case KeyEvent.VK_UP -> {
-                pacman.setDirection(Game.Direction.UP);
-            }
-            case KeyEvent.VK_DOWN -> {
-                pacman.setDirection(Game.Direction.DOWN);
-            }
-            case KeyEvent.VK_LEFT -> {
-                pacman.setDirection(Game.Direction.LEFT);
-            }
-            case KeyEvent.VK_RIGHT -> {
-                pacman.setDirection(Game.Direction.RIGHT);
-            }
+            case KeyEvent.VK_UP -> pacman.setDirection(Game.Direction.UP);
+            case KeyEvent.VK_DOWN -> pacman.setDirection(Game.Direction.DOWN);
+            case KeyEvent.VK_LEFT -> pacman.setDirection(Game.Direction.LEFT);
+            case KeyEvent.VK_RIGHT -> pacman.setDirection(Game.Direction.RIGHT);
         }
 
         int modifiers = e.getModifiers();
@@ -50,10 +42,10 @@ class KeysHandler extends KeyAdapter
 
 public class GameController
 {
-    private GameModel gameModel;
-    private GameView gameView;
-    private GameController_Pacman gameController_pacman;
-    private GameController_Ghosts gameController_ghosts;
+    private final GameModel gameModel;
+    private final GameView gameView;
+    private final GameController_Pacman gameController_pacman;
+    private final GameController_Ghosts gameController_ghosts;
 
     GameController(GameModel gameModel, GameView gameView) {
         this.gameModel = gameModel;
