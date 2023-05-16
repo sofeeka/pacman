@@ -3,6 +3,26 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
+class GhostIconChanger extends Thread
+{
+    GameView_Ghost gameView_Ghost;
+
+    GhostIconChanger( GameView_Ghost gameView_Ghost )
+    {
+        this.gameView_Ghost = gameView_Ghost;
+    }
+
+    @Override
+    public void run()
+    {
+        while(true)
+        {
+            Game.mySleep(200);
+            gameView_Ghost.changeIcon();
+        }
+    }
+}
+
 public class GameView_Ghost
 {
     GameView gameView;
@@ -11,6 +31,7 @@ public class GameView_Ghost
     private int iconIndex;
     int width;
     int height;
+    GhostIconChanger ghostIconChanger;
 
     GameView_Ghost(GameView gameView)
     {
@@ -21,6 +42,9 @@ public class GameView_Ghost
         fullSizeIcons.add(new ImageIcon("images\\ghost2.png"));
 
         iconIndex = 0;
+
+        ghostIconChanger = new GhostIconChanger(this);
+        ghostIconChanger.start();
     }
     public void render(Component c, Graphics g, Rectangle cellRect)
     {
@@ -52,6 +76,11 @@ public class GameView_Ghost
     }
     private ImageIcon getRenderingIcon() {
         return this.renderingIcons.get(iconIndex);
+    }
+
+    public void shutDown()
+    {
+        ghostIconChanger.interrupt();
     }
 
 }
