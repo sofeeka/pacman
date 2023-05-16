@@ -31,14 +31,14 @@ class GameModel_Pacman
 
         if(gameModel.elementIsPoint(x, y))
         {
-            gameModel.pointEaten();
             gameModel.setElementToEmpty( x, y );
+            gameModel.pointEaten();
         }
 
         if(gameModel.elementIs(x, y, Element.POWER_PELLET))
         {
-            gameModel.powerPelletEaten();
             gameModel.setElementToEmpty( x, y );
+            gameModel.powerPelletEaten();
         }
 
         modelChanged();

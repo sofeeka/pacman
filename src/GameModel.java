@@ -142,14 +142,6 @@ public class GameModel {
             }
         }
 
-        if (qty == 0) //todo: end game frame
-            createWinningFrame(getUserScore());
-            /*addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
-                }
-            });*/
         return qty;
     }
 
@@ -174,6 +166,11 @@ public class GameModel {
     public void pointEaten()
     {
         this.userScore += SCORE_PER_POINT;
+
+        if( getRemainingPointsQty() == 0)
+        {
+            createWinningFrame( this.userScore );
+        }
     }
 
     public void ghostEaten( GameModel_Ghost ghost )
