@@ -4,6 +4,7 @@ import game.ghost.GameModel_Ghost;
 import game.ghost.GameView_Ghost;
 import game.pacman.GameModel_Pacman;
 import game.pacman.GameView_Pacman;
+import game.ui.EndGameFrame;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;

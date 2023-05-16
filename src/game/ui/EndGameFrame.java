@@ -1,4 +1,4 @@
-package game;
+package game.ui;
 
 import ui.HighScore;
 
@@ -9,7 +9,7 @@ public class EndGameFrame extends JDialog
 {
     private String userName;
     private  boolean okClicked; // todo may be useful to exit the whole game
-    EndGameFrame(int score)
+    public EndGameFrame(int score)
     {
         okClicked = false;
 
