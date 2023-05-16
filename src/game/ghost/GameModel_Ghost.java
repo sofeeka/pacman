@@ -1,38 +1,31 @@
 package game.ghost;
 
-import game.GameModel;
 import game.Position;
 
 public class GameModel_Ghost
 {
     Ghost ghost;
-    private int x;
-    private int y;
-    private int remainingFrightened;
+    private Position pos;
+    private int remainingFrightened; // milliseconds
 
     public GameModel_Ghost(Ghost ghost)
     {
         this.ghost = ghost;
 
+        this.pos = ghost.getGame().getModel().getRandromPointPosition();
         this.remainingFrightened = 0;
-
-        Position p = ghost.getGame().getModel().getRandromPointPosition();
-
-        this.x = p.getX();
-        this.y = p.getY();
     }
     public int getX() {
-        return x;
+        return pos.getX();
     }
 
     public int getY() {
-        return y;
+        return pos.getY();
     }
 
     public void setXY( int x, int y )
     {
-        this.x = x;
-        this.y = y;
+        this.pos.setXY( x, y );
 
         modelChanged();
     }
