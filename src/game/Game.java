@@ -82,9 +82,11 @@ public class Game
 
     private void createGhosts()
     {
-        ghosts = new ArrayList<>();
+        final int ghostsQty = Math.max( getModel().getRemainingPointsQty() / 50, 1 );
 
-        ghosts.add( new Ghost(this) );
+        ghosts = new ArrayList<>();
+        for( int i = 0; i < ghostsQty; i++ )
+            ghosts.add( new Ghost(this) );
     }
 
     public GameModel getModel() {

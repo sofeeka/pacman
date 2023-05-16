@@ -1,7 +1,5 @@
 package game.pacman;
 
-import game.Game;
-import game.GameController;
 import game.GameModel;
 
 class PacmanMover extends Thread

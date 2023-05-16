@@ -145,14 +145,14 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
 }
 class ViewTable extends JTable
 {
-    private final GameModel gameModel;
     private final GameView gameView;
     private final ViewTableCellRenderer viewTableCellRenderer;
 
     ViewTable(GameView gameView)
     {
         this.gameView = gameView;
-        this.gameModel = gameView.getGameModel();
+
+        GameModel gameModel = gameView.getGameModel();
 
         ViewTableModel tableModel = new ViewTableModel(gameModel);
         this.setModel(tableModel);
@@ -170,11 +170,11 @@ class ViewTable extends JTable
         super.paintComponent(g);
 
         // Paint pacman
-        Pacman pacman = gameModel.getGame().getPacman();
+        Pacman pacman = gameView.getGame().getPacman();
         pacman.getView().render( pacman.getModel(), this, g, getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), true));
 
         // Paint ghosts
-        for( Ghost ghost : gameModel.getGame().getGhosts() ) {
+        for( Ghost ghost : gameView.getGame().getGhosts() ) {
             ghost.getView().render(this, g, getCellRect(ghost.getModel().getY(), ghost.getModel().getX(), true));
         }
     }
@@ -203,7 +203,6 @@ class GameViewCloseHandler extends WindowAdapter
 public class GameView extends JFrame
 {
     Game game;
-    private final GameModel gameModel;
     private final ViewTable table;
     private final JLabel scoreLabel;
     private final JLabel livesLabel;
@@ -213,11 +212,10 @@ public class GameView extends JFrame
     GameView(Game game)
     {
         this.game = game;
-        this.gameModel = game.getModel();
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); // DO_NOTHING_ON_CLOSE
 
-        addWindowListener(new GameViewCloseHandler(gameModel));
+        addWindowListener(new GameViewCloseHandler(game.getModel()));
 
         JPanel upperPanel = new JPanel();
         scoreLabel = new JLabel();
@@ -255,9 +253,9 @@ public class GameView extends JFrame
 
     public void renderModel()
     {
-        scoreLabel.setText( "Score: " + gameModel.getUserScore() );
-        livesLabel.setText( "Lives: " + gameModel.getLives() );
-        pointsLabel.setText("Points left: " + gameModel.getRemainingPointsQty());
+        scoreLabel.setText( "Score: " + game.getModel().getUserScore() );
+        livesLabel.setText( "Lives: " + game.getModel().getLives() );
+        pointsLabel.setText("Points left: " + game.getModel().getRemainingPointsQty());
 
         table.repaint();
     }
@@ -272,11 +270,15 @@ public class GameView extends JFrame
     }
 
     public GameModel getGameModel() {
-        return gameModel;
+        return game.getModel();
     }
 
     public void shutDown()
     {
         stopwatch.shutDown();
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

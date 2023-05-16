@@ -37,7 +37,6 @@ class GhostIconChanger extends Thread
 public class GameView_Ghost
 {
     Ghost ghost;
-    GameView gameView;
     ArrayList<ImageIcon> fullSizeIcons;
     ArrayList<ImageIcon> renderingIcons;
     private int iconIndex;
@@ -49,7 +48,6 @@ public class GameView_Ghost
     public GameView_Ghost(Ghost ghost)
     {
         this.ghost = ghost;
-        this.gameView = ghost.getGame().getView();
 
         fullSizeIcons = new ArrayList<>();
         fullSizeIcons.add(new ImageIcon("images\\ghost1.png"));
@@ -92,7 +90,7 @@ public class GameView_Ghost
         if( ghost.getModel().isFrightened() && iconIndex > 0 )
             iconIndex = -1;
 
-        gameView.renderModel();
+        ghost.getGame().getView().renderModel();
     }
     private ImageIcon getRenderingIcon() {
         return this.renderingIcons.get(iconIndex);
@@ -102,5 +100,4 @@ public class GameView_Ghost
     {
         ghostIconChanger.interrupt();
     }
-
 }

@@ -1,7 +1,5 @@
 package game;
 
-import java.awt.event.WindowEvent;
-
 import game.ghost.Ghost;
 import game.maze.*;
 import game.ghost.GameModel_Ghost;
