@@ -1,3 +1,8 @@
+package game.ghost;
+
+import game.GameModel;
+import game.Position;
+
 public class GameModel_Ghost
 {
     private final GameModel gameModel;
@@ -6,7 +11,7 @@ public class GameModel_Ghost
 
     private int remainingFrightened;
 
-    GameModel_Ghost(GameModel gameModel)
+    public GameModel_Ghost(GameModel gameModel)
     {
         this.gameModel = gameModel;
 

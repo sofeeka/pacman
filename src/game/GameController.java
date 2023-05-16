@@ -1,3 +1,9 @@
+package game;
+
+import game.ghost.GameController_Ghosts;
+import game.pacman.GameController_Pacman;
+import game.pacman.GameModel_Pacman;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
@@ -20,16 +26,16 @@ class KeysHandler extends KeyAdapter
         switch (keyCode)
         {
             case KeyEvent.VK_UP -> {
-                pacman.setDirection(Direction.UP);
+                pacman.setDirection(Game.Direction.UP);
             }
             case KeyEvent.VK_DOWN -> {
-                pacman.setDirection(Direction.DOWN);
+                pacman.setDirection(Game.Direction.DOWN);
             }
             case KeyEvent.VK_LEFT -> {
-                pacman.setDirection(Direction.LEFT);
+                pacman.setDirection(Game.Direction.LEFT);
             }
             case KeyEvent.VK_RIGHT -> {
-                pacman.setDirection(Direction.RIGHT);
+                pacman.setDirection(Game.Direction.RIGHT);
             }
         }
 

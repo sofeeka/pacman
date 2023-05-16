@@ -1,3 +1,8 @@
+package game.pacman;
+
+import game.Game;
+import game.GameView;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,7 +26,7 @@ class PacmanIconChanger extends Thread
 }
 
 
-class GameView_Pacman
+public class GameView_Pacman
 {
     GameView gameView;
     ImageIcon fullSizeIconOpen;
@@ -34,7 +39,7 @@ class GameView_Pacman
     int width;
     int height;
 
-    GameView_Pacman(GameView gameView)
+    public GameView_Pacman(GameView gameView)
     {
         this.gameView = gameView;
         fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");

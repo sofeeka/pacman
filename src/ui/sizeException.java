@@ -1,3 +1,5 @@
+package ui;
+
 public class sizeException extends Exception
 {
     sizeException(int x, int y)

@@ -1,3 +1,5 @@
+import ui.MenuFrame;
+
 import javax.swing.*;
 
 public class Pacman {

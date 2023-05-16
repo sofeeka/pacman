@@ -1,11 +1,14 @@
-class GameModel_Pacman
+package game.pacman;
+
+import game.*;
+public class GameModel_Pacman
 {
     private final GameModel gameModel;
     private int x;
     private int y;
-    private Direction direction;
+    private Game.Direction direction;
 
-    GameModel_Pacman(GameModel gameModel)
+    public GameModel_Pacman(GameModel gameModel)
     {
         this.gameModel = gameModel;
 
@@ -13,7 +16,7 @@ class GameModel_Pacman
         this.x = p.getX();
         this.y = p.getY();
 
-        direction = Direction.STILL;
+        direction = Game.Direction.STILL;
     }
 
     public int getX() {
@@ -35,7 +38,7 @@ class GameModel_Pacman
             gameModel.pointEaten();
         }
 
-        if(gameModel.elementIs(x, y, Element.POWER_PELLET))
+        if(gameModel.elementIs(x, y, Game.Element.POWER_PELLET))
         {
             gameModel.setElementToEmpty( x, y );
             gameModel.powerPelletEaten();
@@ -44,11 +47,11 @@ class GameModel_Pacman
         modelChanged();
     }
 
-    public void setDirection(Direction direction) {
+    public void setDirection(Game.Direction direction) {
         this.direction = direction;
     }
 
-    public Direction getDirection() {
+    public Game.Direction getDirection() {
         return direction;
     }
 

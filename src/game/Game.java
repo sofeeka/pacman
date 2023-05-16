@@ -1,4 +1,7 @@
+package game;
+
 import javax.swing.*;
+import java.util.Random;
 
 class GameRunner extends Thread
 {
@@ -25,7 +28,43 @@ class GameRunner extends Thread
 
 public class Game
 {
-    Game()
+    public enum Element {
+        EMPTY,
+        WALL,
+        POINT,
+        POWER_PELLET,
+        FOOD;
+
+        private static final Random RAND = new Random();
+
+        public static Element getRandomElement()  {
+            Element[] elements = values();
+            return elements[RAND.nextInt(elements.length)];
+        }
+
+        public String getMessage()
+        {
+            return name();
+        }
+    }
+
+    public enum Direction
+    {
+        STILL,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
+
+        private static final Random RAND = new Random();
+
+        public static Game.Direction getRandomDirection()  {
+            Game.Direction[] directions = values();
+            return directions[RAND.nextInt(directions.length)];
+        }
+    }
+
+    public Game()
     {
     }
 

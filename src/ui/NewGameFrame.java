@@ -1,3 +1,5 @@
+package ui;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,7 +25,7 @@ public class NewGameFrame extends JDialog {
         return dimY;
     }
 
-    boolean wasOkClicked()
+    public boolean wasOkClicked()
     {
         return okClicked;
     }

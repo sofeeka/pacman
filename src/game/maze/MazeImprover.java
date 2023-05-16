@@ -1,7 +1,10 @@
+package game.maze;
+
+import game.GameModel;
 import java.lang.Math;
 
 public class MazeImprover {
-    static void improveMaze( GameModel gameModel )
+    public static void improveMaze(GameModel gameModel)
     {
         for( int row = 1; row < gameModel.getHeight() - 2; row++)
         {

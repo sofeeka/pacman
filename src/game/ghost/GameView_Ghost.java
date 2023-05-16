@@ -1,3 +1,8 @@
+package game.ghost;
+
+import game.Game;
+import game.GameView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -35,7 +40,7 @@ public class GameView_Ghost
     int height;
     GhostIconChanger ghostIconChanger;
 
-    GameView_Ghost(GameModel_Ghost ghost, GameView gameView)
+    public GameView_Ghost(GameModel_Ghost ghost, GameView gameView)
     {
         this.ghost = ghost;
         this.gameView = gameView;

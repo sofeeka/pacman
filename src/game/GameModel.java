@@ -1,11 +1,18 @@
+package game;
+
 import java.awt.event.WindowEvent;
+
+import game.maze.*;
+import game.ghost.GameModel_Ghost;
+import game.pacman.GameController_Pacman;
+import game.pacman.GameModel_Pacman;
 
 public class GameModel {
     GameView gameView;
     GameController gameController;
     private int width; // x
     private int height; // y
-    private Element[][] gameBoard;
+    private Game.Element[][] gameBoard;
     private int userScore;
     private int lives;
     private final GameModel_Pacman pacman;
@@ -19,7 +26,7 @@ public class GameModel {
         width = x;
         height = y;
 
-        gameBoard = new Element[y][x];
+        gameBoard = new Game.Element[y][x];
         initGameBoard();
 
         userScore = 0;
@@ -55,11 +62,11 @@ public class GameModel {
         MazeGenerator generator = new MazeGenerator();
         int[][] maze = generator.getMaze( mazeY, mazeX );
 
-        gameBoard = new Element[height][width];
+        gameBoard = new Game.Element[height][width];
 
         for (int row = 0; row < height ; row++) {
             for (int col = 0; col < width ; col++) {
-                gameBoard[row][col] = ( maze[row][col] == 1 ) ? Element.WALL : Element.POINT;
+                gameBoard[row][col] = ( maze[row][col] == 1 ) ? Game.Element.WALL : Game.Element.POINT;
             }
         }
 
@@ -73,7 +80,7 @@ public class GameModel {
         this.height = y;
     }
 
-    public Element[][] getGameBoard()
+    public Game.Element[][] getGameBoard()
     {
         return this.gameBoard;
     }
@@ -100,40 +107,40 @@ public class GameModel {
         return ghost;
     }
 
-    public Element getElementAt(int x, int y )
+    public Game.Element getElementAt(int x, int y )
     {
         return gameBoard[y][x];
     }
 
-    public boolean elementIs( int x, int y, Element element )
+    public boolean elementIs( int x, int y, Game.Element element )
     {
         return ( getElementAt( x, y ) == element );
     }
     public boolean elementIsWall( int x, int y )
     {
-        return elementIs( x, y, Element.WALL );
+        return elementIs( x, y, Game.Element.WALL );
     }
     public boolean elementIsPoint( int x, int y )
     {
-        return elementIs( x, y, Element.POINT );
+        return elementIs( x, y, Game.Element.POINT );
     }
     public boolean elementIsEmpty( int x, int y )
     {
-        return elementIs( x, y, Element.EMPTY);
+        return elementIs( x, y, Game.Element.EMPTY);
     }
 
-    public void setElementTo(int x, int y, Element element )
+    public void setElementTo(int x, int y, Game.Element element )
     {
         gameBoard[y][x] = element;
     }
     public void setElementToEmpty( int x, int y)
     {
-        setElementTo(x, y, Element.EMPTY);
+        setElementTo(x, y, Game.Element.EMPTY);
     }
 
     public void setElementToPoint( int x, int y)
     {
-        setElementTo(x, y, Element.POINT);
+        setElementTo(x, y, Game.Element.POINT);
     }
 
     public int getRemainingPointsQty()
@@ -199,7 +206,7 @@ public class GameModel {
         }
 
         //
-        this.pacman.setDirection(Direction.STILL);
+        this.pacman.setDirection(Game.Direction.STILL);
 
         // set pacman to a new random position
         Position p = this.getRandromPointPosition();
@@ -234,7 +241,7 @@ public class GameModel {
         // set all empty elements to POINT
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (elementIsEmpty(i, j) || elementIs(i, j, Element.POWER_PELLET))
+                if (elementIsEmpty(i, j) || elementIs(i, j, Game.Element.POWER_PELLET))
                     setElementToPoint(i, j);
             }
         }
@@ -249,7 +256,7 @@ public class GameModel {
         //
         for( int i = 0; i < pelletsQty; i++ ) {
             Position p = this.getRandromPointPosition();
-            setElementTo(p.getX(), p.getY(), Element.POWER_PELLET);
+            setElementTo(p.getX(), p.getY(), Game.Element.POWER_PELLET);
         }
     }
 }

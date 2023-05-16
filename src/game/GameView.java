@@ -1,3 +1,10 @@
+package game;
+
+import game.ghost.GameModel_Ghost;
+import game.ghost.GameView_Ghost;
+import game.pacman.GameModel_Pacman;
+import game.pacman.GameView_Pacman;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -58,14 +65,14 @@ class ViewTableModel extends AbstractTableModel
     }
 
     @Override
-    public Element getValueAt(int rowIndex, int columnIndex) {
+    public Game.Element getValueAt(int rowIndex, int columnIndex) {
         return gameModel.getElementAt(columnIndex, rowIndex);
     }
 }
 class ViewTableCellRenderer extends DefaultTableCellRenderer
 {
     private GameModel gameModel;
-    private static Map<Element, ImageIcon> imageCache = new HashMap<>();
+    private static Map<Game.Element, ImageIcon> imageCache = new HashMap<>();
     private int cellWidth;
     private int cellHeight;
 
@@ -91,7 +98,7 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
     {
         if (value != null)
         {
-            Element element = gameModel.getElementAt(column, row);
+            Game.Element element = gameModel.getElementAt(column, row);
             ImageIcon imageIcon = getImageIcon(element);
 
             setIcon(imageIcon); // todo: resize
@@ -99,7 +106,7 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
         return this;
     }
 
-    private ImageIcon getImageIcon(Element element)
+    private ImageIcon getImageIcon(Game.Element element)
     {
         ImageIcon imageIcon = imageCache.get(element);
 
@@ -117,7 +124,7 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
         return imageIcon;
     }
 
-    private ImageIcon createImageIcon(Element element)
+    private ImageIcon createImageIcon(Game.Element element)
     {
         String path;
         switch (element)

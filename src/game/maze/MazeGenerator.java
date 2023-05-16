@@ -1,3 +1,5 @@
+package game.maze;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,10 +15,10 @@ public class MazeGenerator {
     final static int emptyCode = 3;
     final static int visitedCode = 4;
 
-    MazeGenerator(){
+    public MazeGenerator(){
     }
 
-    int[][] getMaze( int rows, int columns )
+    public int[][] getMaze( int rows, int columns )
     {
         maze = null;
         makeMaze( rows, columns );

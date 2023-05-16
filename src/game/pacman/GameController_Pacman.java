@@ -1,34 +1,31 @@
-class GhostMover extends Thread
+package game.pacman;
+
+import game.GameController;
+import game.GameModel;
+
+class PacmanMover extends Thread
 {
-    GameModel_Ghost ghost;
-    GhostMover(GameModel_Ghost ghost)
+    GameModel_Pacman pacman;
+
+    PacmanMover( GameModel_Pacman pacman )
     {
-        this.ghost = ghost;
+        this.pacman = pacman;
     }
 
     @Override
     public void run()
     {
-        GameModel gameModel = ghost.getGameModel();
-
-        final int SLEEP_TIME = 200;
-
         while(true)
         {
             try
             {
-                sleep(SLEEP_TIME);
+                sleep(200);
             } catch (Exception e) {}
-
-            if( ghost.isFrightened() )
-            {
-                ghost.decreaseRemainingFrightened( SLEEP_TIME );
-            }
 
             int shiftX = 0;
             int shiftY = 0;
 
-            switch( Direction.getRandomDirection() )
+            switch( pacman.getDirection() )
             {
                 case UP -> shiftY = -1;
                 case DOWN -> shiftY = 1;
@@ -39,8 +36,11 @@ class GhostMover extends Thread
             if( shiftX == 0 && shiftY == 0 )
                 continue;
 
-            int newX = ghost.getX() + shiftX;
-            int newY = ghost.getY() + shiftY;
+            int newX = pacman.getX() + shiftX;
+            int newY = pacman.getY() + shiftY;
+
+            //
+            GameModel gameModel = pacman.getGameModel();
 
             // cannot move outside game board bounds
             if( newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight() )
@@ -51,24 +51,26 @@ class GhostMover extends Thread
                 continue;
 
             //
-            ghost.setXY(newX, newY);
+            gameModel.getPacman().setXY(newX, newY);
         }
     }
 }
-public class GameController_Ghosts
+
+public class GameController_Pacman
 {
     GameController gameController;
-    GhostMover ghostMover;
+    PacmanMover mover;
 
-    GameController_Ghosts(GameController gameController)
+    public GameController_Pacman(GameController gameController)
     {
         this.gameController = gameController;
-        ghostMover = new GhostMover(gameController.getGameModel().getGhost());
-        ghostMover.start();
+
+        mover = new PacmanMover(gameController.getGameModel().getPacman());
+        mover.start();
     }
 
-    void shutDown()
+    public void shutDown()
     {
-        ghostMover.interrupt();
+        mover.interrupt();
     }
 }
