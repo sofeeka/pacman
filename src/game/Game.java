@@ -51,6 +51,7 @@ public class Game
     private GameModel model;
     private GameView view;
     private GameController controller;
+    private GameUpgradesHandler upgradesHandler;
 
     //
     Pacman pacman;
@@ -64,6 +65,8 @@ public class Game
 
         createPacman();
         createGhosts();
+
+        upgradesHandler = new GameUpgradesHandler(this);
     }
 
     public void stopGame()
@@ -116,6 +119,8 @@ public class Game
 
     void shutDown()
     {
+        upgradesHandler.shutDown();
+
         pacman.shutDown();
 
         for( Ghost ghost : ghosts )

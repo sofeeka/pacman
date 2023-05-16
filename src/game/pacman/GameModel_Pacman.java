@@ -56,6 +56,10 @@ public class GameModel_Pacman
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+    public void speedUp(double multiplier)
+    {
+        setSpeed((int)(getSpeed()/multiplier)); // decrease time needed to move between cells
+    }
 
     public void setDirection(Game.Direction direction) {
         this.direction = direction;
