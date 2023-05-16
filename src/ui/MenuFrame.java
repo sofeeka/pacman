@@ -24,7 +24,7 @@ public class MenuFrame extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        if(frame.wasOkClicked())
+        if(frame.wasOkClicked() && frame.isProperSized())
         {
             GameStarter.startNewGame(frame.getDimX(), frame.getDimY());
         }

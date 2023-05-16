@@ -8,7 +8,7 @@ public class NewGameFrame extends JDialog {
     private int dimY;
 
     private boolean okClicked;
-    private boolean properDimensions;
+    private boolean properSized;
 
     private void setDimensions(int x, int y)
     {
@@ -25,6 +25,10 @@ public class NewGameFrame extends JDialog {
         return dimY;
     }
 
+    public boolean isProperSized() {
+        return properSized;
+    }
+
     public boolean wasOkClicked()
     {
         return okClicked;
@@ -36,7 +40,7 @@ public class NewGameFrame extends JDialog {
         dimX = 15;
         dimY = 15;
         okClicked = false;
-        properDimensions = false;
+        properSized = false;
 
         JPanel outerPanel = new JPanel();
         outerPanel.setLayout(new BorderLayout());
@@ -75,14 +79,18 @@ public class NewGameFrame extends JDialog {
                 int dimY = Integer.parseInt(textFieldY.getText().trim());
 
                 if (dimX < 10 || dimX > 100 || dimY < 10 || dimY > 100)
-                {
                     throw new sizeException(dimX, dimY);
+                else
+                {
+                    setDimensions(dimX, dimY);
+                    properSized = true;
                 }
-
-                setDimensions(dimX, dimY);
-            } catch (Exception e)
+            } catch (sizeException e)
             {
-                System.out.println(e.getMessage());
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Wrong Size", JOptionPane.ERROR_MESSAGE);
+
+                dispose();
+                return;
             }
             dispose();
         });
