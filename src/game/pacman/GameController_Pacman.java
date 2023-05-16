@@ -4,11 +4,11 @@ import game.GameModel;
 
 class PacmanMover extends Thread
 {
-    GameModel_Pacman pacman;
+    GameModel_Pacman m_pacman;
 
     PacmanMover( GameModel_Pacman pacman )
     {
-        this.pacman = pacman;
+        this.m_pacman = pacman;
     }
 
     @Override
@@ -26,7 +26,7 @@ class PacmanMover extends Thread
             int shiftX = 0;
             int shiftY = 0;
 
-            switch( pacman.getDirection() )
+            switch( m_pacman.getDirection() )
             {
                 case UP -> shiftY = -1;
                 case DOWN -> shiftY = 1;
@@ -37,11 +37,11 @@ class PacmanMover extends Thread
             if( shiftX == 0 && shiftY == 0 )
                 continue;
 
-            int newX = pacman.getX() + shiftX;
-            int newY = pacman.getY() + shiftY;
+            int newX = m_pacman.getX() + shiftX;
+            int newY = m_pacman.getY() + shiftY;
 
             //
-            GameModel gameModel = pacman.getGameModel();
+            GameModel gameModel = m_pacman.getPacman().getGame().getModel();
 
             // cannot move outside game board bounds
             if( newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight() )
@@ -52,7 +52,7 @@ class PacmanMover extends Thread
                 continue;
 
             //
-            pacman.setXY(newX, newY);
+            m_pacman.setXY(newX, newY);
         }
     }
 }

@@ -3,36 +3,30 @@ package game.pacman;
 import game.*;
 public class GameModel_Pacman
 {
-    private Pacman pacman;
-    private final GameModel gameModel;
-    private int x;
-    private int y;
+    private final Pacman pacman;
+
+    private Position pos;
     private Game.Direction direction;
 
     public GameModel_Pacman(Pacman pacman)
     {
         this.pacman = pacman;
-        this.gameModel = pacman.getGame().getModel();
 
-        Position p = gameModel.getRandromPointPosition();
-        this.x = p.getX();
-        this.y = p.getY();
-
+        pos = pacman.getGame().getModel().getRandromPointPosition();
         direction = Game.Direction.STILL;
     }
 
-    public int getX() {
-        return x;
-    }
+    public int getX() { return pos.getX(); }
 
     public int getY() {
-        return y;
+        return pos.getY();
     }
 
     public void setXY( int x, int y )
     {
-        this.x = x;
-        this.y = y;
+        pos.setXY( x, y );
+
+        GameModel gameModel = pacman.getGame().getModel();
 
         if(gameModel.elementIsPoint(x, y))
         {
@@ -59,14 +53,14 @@ public class GameModel_Pacman
 
     public void modelChanged()
     {
-        gameModel.modelChanged();
-    }
-
-    public GameModel getGameModel() {
-        return gameModel;
+        pacman.getGame().getModel().modelChanged();
     }
 
     public void shutDown()
     {
+    }
+
+    public Pacman getPacman() {
+        return pacman;
     }
 }
