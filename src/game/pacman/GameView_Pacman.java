@@ -5,6 +5,8 @@ import game.GameView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 class PacmanIconChanger extends Thread
 {
@@ -31,7 +33,6 @@ class PacmanIconChanger extends Thread
     }
 }
 
-
 public class GameView_Pacman
 {
     GameView gameView;
@@ -44,26 +45,66 @@ public class GameView_Pacman
 
     int width;
     int height;
+    Game.Direction direction;
 
     public GameView_Pacman(GameView gameView)
     {
         this.gameView = gameView;
         fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");
         fullSizeIconClosed = new ImageIcon("images\\pacman_closed.png");
+
         open = true;
+        direction = Game.Direction.STILL;
 
         pacmanIconChanger = new PacmanIconChanger(this);
         pacmanIconChanger.start();
     }
-    public void renderPacman(Component c, Graphics g, Rectangle cellRect)
+
+    private Image rotateImagePerDirection( Image originalImage, Game.Direction direction )
     {
-        if(this.width != cellRect.width || this.height != cellRect.height || renderingIconOpen == null) // todo check direction
+        if(direction == Game.Direction.RIGHT)
+            return originalImage;
+
+        int rotationAngle = 0;
+
+        switch( direction )
+        {
+            case UP -> rotationAngle = 270;
+            case LEFT -> rotationAngle = 180;
+            case DOWN -> rotationAngle = 90;
+        }
+
+        int width = originalImage.getWidth(null);
+        int height = originalImage.getHeight(null);
+
+        // Create a new BufferedImage with rotated dimensions
+        BufferedImage rotatedImage = new BufferedImage(height, width, BufferedImage.TYPE_INT_ARGB);
+
+        // Create an AffineTransform to rotate the image
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(Math.toRadians(rotationAngle), height / 2, height / 2);
+
+        // Get the graphics object of the rotated image
+        Graphics2D g2d = rotatedImage.createGraphics();
+
+        // Apply the transformation and draw the original image onto the rotated image
+        g2d.drawImage(originalImage, transform, null);
+        g2d.dispose();
+
+//        return Toolkit.getDefaultToolkit().createImage(rotatedImage.getSource());
+        return rotatedImage;
+    }
+    public void render(GameModel_Pacman pacman, Component c, Graphics g, Rectangle cellRect)
+    {
+        if(this.width != cellRect.width || this.height != cellRect.height || pacman.getDirection() != this.direction || renderingIconOpen == null )
         {
             Image open = fullSizeIconOpen.getImage();
+            open = rotateImagePerDirection( open, pacman.getDirection());
             Image resizedOpen = open.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
             renderingIconOpen = new ImageIcon(resizedOpen);
 
             Image closed = fullSizeIconClosed.getImage();
+            closed = rotateImagePerDirection( closed, pacman.getDirection());
             Image resizedClosed = closed.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
             renderingIconClosed = new ImageIcon(resizedClosed);
 
@@ -73,7 +114,6 @@ public class GameView_Pacman
         int y = cellRect.y;
 
         getRenderingIcon().paintIcon(c, g, x, y);
-
     }
 
     public void changeIcon()

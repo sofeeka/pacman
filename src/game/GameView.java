@@ -168,7 +168,7 @@ class ViewTable extends JTable
         super.paintComponent(g);
 
         GameModel_Pacman pacman = gameModel.getPacman();
-        gameView.getPacmanView().renderPacman(this, g, getCellRect(pacman.getY(), pacman.getX(), true));
+        gameView.getPacmanView().render( pacman, this, g, getCellRect(pacman.getY(), pacman.getX(), true));
 
         GameModel_Ghost ghost = gameModel.getGhost();
         gameView.getGameView_Ghost().render(this, g, getCellRect(ghost.getY(), ghost.getX(), true));
