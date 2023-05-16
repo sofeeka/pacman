@@ -59,4 +59,9 @@ public class GameController_Ghosts
         ghostMover = new GhostMover(gameController.getGameModel().getGhost());
         ghostMover.start();
     }
+
+    void shutDown()
+    {
+        ghostMover.interrupt();
+    }
 }

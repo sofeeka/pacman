@@ -181,6 +181,8 @@ class GameViewCloseHandler extends WindowAdapter
     }
     @Override
     public void windowClosing(WindowEvent e) {
+        gameModel.getGameView().shutDown();
+
         EndGameFrame endGameFrame = new EndGameFrame(gameModel.getUserScore());
         endGameFrame.setVisible(true);
     }}
@@ -202,7 +204,7 @@ public class GameView extends JFrame
         gameViewPacman = new GameView_Pacman(this);
         gameView_Ghost = new GameView_Ghost(this);
 
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); // DO_NOTHING_ON_CLOSE
 
         addWindowListener(new GameViewCloseHandler(gameModel));
 
@@ -267,5 +269,12 @@ public class GameView extends JFrame
 
     public GameModel getGameModel() {
         return gameModel;
+    }
+
+    public void shutDown()
+    {
+        gameView_Ghost.shutDown();
+        gameViewPacman.shutDown();
+        stopwatch.shutDown();
     }
 }

@@ -50,4 +50,8 @@ class GameView_Pacman
     public ImageIcon getRenderingIcon() {
         return open ? renderingIconOpen : renderingIconClosed;
     }
+
+    public void shutDown()
+    {
+    }
 }

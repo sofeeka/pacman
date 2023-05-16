@@ -32,6 +32,10 @@ public class GameModel {
         this.gameView = gameView;
     }
 
+    public GameView getGameView() {
+        return gameView;
+    }
+
     private void initGameBoard()
     {
         int mazeX = width;

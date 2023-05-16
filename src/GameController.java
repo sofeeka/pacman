@@ -55,22 +55,10 @@ class PacmanIconChanger extends Thread
     {
         while(true)
         {
-            mySleep(100);
+            Game.mySleep(100);
             gameView.getPacmanView().changeIcon();
         }
     }
-
-    private void mySleep(int time)
-    {
-        try
-        {
-            sleep(time);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
 }
 class PacmanMover extends Thread
 {
@@ -129,6 +117,7 @@ public class GameController
     private GameView gameView;
     private PacmanMover pacmanMover;
     private PacmanIconChanger pacmanIconChanger;
+    private GameController_Ghosts gameController_ghosts;
 
     GameController(GameModel gameModel, GameView gameView) {
         this.gameModel = gameModel;
@@ -142,32 +131,20 @@ public class GameController
         pacmanIconChanger = new PacmanIconChanger(gameView, gameModel);
         pacmanIconChanger.start();
 
-        GameController_Ghosts gameController_ghosts = new GameController_Ghosts(this);
+        gameController_ghosts = new GameController_Ghosts(this);
     }
 
     public GameModel getGameModel() {
         return gameModel;
     }
 
-    public void stopGame()
+    public void shutDown()
     {
-        // stop mover
         pacmanMover.interrupt();
-
-        try {
-            pacmanMover.join();
-        }
-        catch (InterruptedException e) {}
-
-        // stop icon changer
         pacmanIconChanger.interrupt();
 
-        try {
-            pacmanIconChanger.join();
-        }
-        catch (InterruptedException e) {}
-
-        gameView.dispose();
+        gameController_ghosts.shutDown();
+        gameView.shutDown();
     }
 }
 

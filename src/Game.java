@@ -33,4 +33,14 @@ public class Game
         SwingUtilities.invokeLater( runner );
     }
 
+    public static void mySleep(int time)
+    {
+        try
+        {
+            Thread.sleep(time);
+        } catch (InterruptedException e)
+        {
+            //e.printStackTrace();
+        }
+    }
 }

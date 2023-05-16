@@ -21,10 +21,8 @@ public class GameView_Stopwatch extends Thread
             {
                 sleep(1000);
             } catch (Exception e) {}
-
         }
     }
-
 
     public String getTime()
     {
@@ -38,5 +36,10 @@ public class GameView_Stopwatch extends Thread
             String stopwatchTime = String.format("Time: %02d:%02d", minutes, seconds);
 
         return stopwatchTime;
+    }
+
+    public void shutDown()
+    {
+        this.interrupt();
     }
 }
