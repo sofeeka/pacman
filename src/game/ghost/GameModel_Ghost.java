@@ -23,14 +23,12 @@ public class GameModel_Ghost
         return pos.getY();
     }
 
-    public void setXY( int x, int y )
-    {
-        this.pos.setXY( x, y );
-
+    public void setPos(Position pos) {
+        this.pos = pos;
         modelChanged();
     }
 
-    private void setRemainingFrightened( int value )
+    private void setRemainingFrightened(int value )
     {
         this.remainingFrightened = value;
 

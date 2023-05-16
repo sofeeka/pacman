@@ -170,7 +170,7 @@ public class GameModel {
         this.userScore += SCORE_PER_GHOST;
 
         Position p = this.getRandromPointPosition();
-        ghost.setXY( p.getX(), p.getY() );
+        ghost.setPos( p );
         ghost.setAsNotFrightened();
     }
 
@@ -197,7 +197,7 @@ public class GameModel {
 
         // set pacman to a new random position
         Position p = this.getRandromPointPosition();
-        this.game.getPacman().getModel().setXY(p.getX(), p.getY() );
+        this.game.getPacman().getModel().setPos( p );
 
         // set all empty elements to POINT
 //        this.restartBoard();

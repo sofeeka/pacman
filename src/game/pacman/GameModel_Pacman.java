@@ -7,24 +7,30 @@ public class GameModel_Pacman
 
     private Position pos;
     private Game.Direction direction;
+    private int speed; // how many ms it takes to move from one cell to another
+
 
     public GameModel_Pacman(Pacman pacman)
     {
         this.pacman = pacman;
+        speed = 200;
 
         pos = pacman.getGame().getModel().getRandromPointPosition();
         direction = Game.Direction.STILL;
     }
 
     public int getX() { return pos.getX(); }
-
     public int getY() {
         return pos.getY();
     }
 
-    public void setXY( int x, int y )
+    public void setPos( Position pos )
     {
-        pos.setXY( x, y );
+
+        this.pos = pos;
+
+        int x = pos.getX();
+        int y = pos.getY();
 
         GameModel gameModel = pacman.getGame().getModel();
 
@@ -41,6 +47,14 @@ public class GameModel_Pacman
         }
 
         modelChanged();
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void setDirection(Game.Direction direction) {

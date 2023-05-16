@@ -3,6 +3,7 @@ package game.ghost;
 import game.Game;
 import game.GameController;
 import game.GameModel;
+import game.Position;
 
 class GhostMover extends Thread
 {
@@ -108,7 +109,7 @@ class GhostMover extends Thread
                 continue;
 
             //
-            m_ghost.setXY(newX, newY);
+            m_ghost.setPos(new Position(newX, newY));
         }
     }
 }

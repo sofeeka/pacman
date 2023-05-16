@@ -3,10 +3,11 @@ package game.pacman;
 import game.Game;
 
 public class Pacman {
-    Game game;
-    GameModel_Pacman model;
-    GameView_Pacman view;
-    GameController_Pacman controller;
+    private final Game game;
+    private final GameModel_Pacman model;
+    private final GameView_Pacman view;
+    private final GameController_Pacman controller;
+
     public Pacman(Game game)
     {
         this.game = game;

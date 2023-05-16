@@ -1,6 +1,7 @@
 package game.pacman;
 
 import game.GameModel;
+import game.Position;
 
 class PacmanMover extends Thread
 {
@@ -18,7 +19,7 @@ class PacmanMover extends Thread
         {
             try
             {
-                sleep(200);
+                sleep(m_pacman.getSpeed());
             } catch( InterruptedException e ) {
                 return;
             }
@@ -52,7 +53,7 @@ class PacmanMover extends Thread
                 continue;
 
             //
-            m_pacman.setXY(newX, newY);
+            m_pacman.setPos(new Position(newX, newY));
         }
     }
 }
