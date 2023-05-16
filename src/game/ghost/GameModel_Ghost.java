@@ -5,19 +5,18 @@ import game.Position;
 
 public class GameModel_Ghost
 {
-    private final GameModel gameModel;
+    Ghost ghost;
     private int x;
     private int y;
-
     private int remainingFrightened;
 
-    public GameModel_Ghost(GameModel gameModel)
+    public GameModel_Ghost(Ghost ghost)
     {
-        this.gameModel = gameModel;
+        this.ghost = ghost;
 
         this.remainingFrightened = 0;
 
-        Position p = gameModel.getRandromPointPosition();
+        Position p = ghost.getGame().getModel().getRandromPointPosition();
 
         this.x = p.getX();
         this.y = p.getY();
@@ -68,12 +67,16 @@ public class GameModel_Ghost
         this.setRemainingFrightened( this.remainingFrightened - ms );
     }
 
-    public GameModel getGameModel() {
-        return gameModel;
-    }
-
     public void modelChanged()
     {
-        gameModel.modelChanged();
+        ghost.getGame().getModel().modelChanged();
     }
+
+    public Ghost getGhost() {
+        return ghost;
+    }
+    public void shutDown()
+    {
+    }
+
 }

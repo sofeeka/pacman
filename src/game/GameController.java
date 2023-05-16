@@ -1,6 +1,6 @@
 package game;
 
-import game.ghost.GameController_Ghosts;
+import game.ghost.GameController_Ghost;
 import game.pacman.GameController_Pacman;
 import game.pacman.GameModel_Pacman;
 import game.ui.WinningFrame;
@@ -21,20 +21,20 @@ class KeysHandler extends KeyAdapter
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        GameModel_Pacman pacman = gameController.getGameModel().getPacman();
+        GameModel_Pacman m_pacman = gameController.getGame().getPacman().getModel();
 
         switch (keyCode)
         {
-            case KeyEvent.VK_UP -> pacman.setDirection(Game.Direction.UP);
-            case KeyEvent.VK_DOWN -> pacman.setDirection(Game.Direction.DOWN);
-            case KeyEvent.VK_LEFT -> pacman.setDirection(Game.Direction.LEFT);
-            case KeyEvent.VK_RIGHT -> pacman.setDirection(Game.Direction.RIGHT);
+            case KeyEvent.VK_UP -> m_pacman.setDirection(Game.Direction.UP);
+            case KeyEvent.VK_DOWN -> m_pacman.setDirection(Game.Direction.DOWN);
+            case KeyEvent.VK_LEFT -> m_pacman.setDirection(Game.Direction.LEFT);
+            case KeyEvent.VK_RIGHT -> m_pacman.setDirection(Game.Direction.RIGHT);
         }
 
         int modifiers = e.getModifiers();
         if (keyCode == KeyEvent.VK_Q && (modifiers & KeyEvent.CTRL_MASK) != 0 && (modifiers & KeyEvent.SHIFT_MASK) != 0)
         {
-            gameController.stopGame();
+            gameController.getGame().stopGame();
 //            System.out.println("Ctrl + Shift + Q pressed");
         }
     }
@@ -42,19 +42,16 @@ class KeysHandler extends KeyAdapter
 
 public class GameController
 {
+    Game game;
     private final GameModel gameModel;
     private final GameView gameView;
-    private final GameController_Pacman gameController_pacman;
-    private final GameController_Ghosts gameController_ghosts;
 
-    GameController(GameModel gameModel, GameView gameView) {
-        this.gameModel = gameModel;
-        this.gameView = gameView;
+    GameController(Game game) {
+        this.game = game;
+        this.gameModel = game.getModel();
+        this.gameView = game.getView();
 
         gameView.getTable().addKeyListener(new KeysHandler(this));
-
-        gameController_pacman = new GameController_Pacman(this);
-        gameController_ghosts = new GameController_Ghosts(this);
     }
 
     public GameModel getGameModel() {
@@ -63,31 +60,10 @@ public class GameController
 
     public void shutDown()
     {
-        gameController_pacman.shutDown();
-        gameController_ghosts.shutDown();
-        gameView.shutDown();
     }
 
-    public void stopGame()
-    {
-        shutDown();
-
-        gameView.setVisible(false);
-        gameView.dispatchEvent(new WindowEvent(gameView, WindowEvent.WINDOW_CLOSING));
-        gameView.dispose();
-    }
-
-    public void userWon()
-    {
-        showWinningFrame();
-        stopGame();
-    }
-
-    private void showWinningFrame()
-    {
-        WinningFrame winningFrame = new WinningFrame(gameModel.getUserScore());
-        winningFrame.setVisible(true);
-        winningFrame.dispose();
+    public Game getGame() {
+        return game;
     }
 }
 

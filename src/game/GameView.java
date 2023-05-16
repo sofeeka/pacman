@@ -2,8 +2,10 @@ package game;
 
 import game.ghost.GameModel_Ghost;
 import game.ghost.GameView_Ghost;
+import game.ghost.Ghost;
 import game.pacman.GameModel_Pacman;
 import game.pacman.GameView_Pacman;
+import game.pacman.Pacman;
 import game.ui.EndGameFrame;
 
 import javax.swing.*;
@@ -167,11 +169,14 @@ class ViewTable extends JTable
     {
         super.paintComponent(g);
 
-        GameModel_Pacman pacman = gameModel.getPacman();
-        gameView.getPacmanView().render( pacman, this, g, getCellRect(pacman.getY(), pacman.getX(), true));
+        // Paint pacman
+        Pacman pacman = gameModel.getGame().getPacman();
+        pacman.getView().render( pacman.getModel(), this, g, getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), true));
 
-        GameModel_Ghost ghost = gameModel.getGhost();
-        gameView.getGameView_Ghost().render(this, g, getCellRect(ghost.getY(), ghost.getX(), true));
+        // Paint ghosts
+        for( Ghost ghost : gameModel.getGame().getGhosts() ) {
+            ghost.getView().render(this, g, getCellRect(ghost.getModel().getY(), ghost.getModel().getX(), true));
+        }
     }
 
     public ViewTableCellRenderer getTableCellRenderer()
@@ -197,20 +202,18 @@ class GameViewCloseHandler extends WindowAdapter
 
 public class GameView extends JFrame
 {
+    Game game;
+    private final GameModel gameModel;
     private final ViewTable table;
     private final JLabel scoreLabel;
     private final JLabel livesLabel;
     private final JLabel timeLabel;
     private final JLabel pointsLabel;
     private final GameView_Stopwatch stopwatch;
-    private final GameModel gameModel;
-    private final GameView_Pacman gameViewPacman;
-    private final GameView_Ghost gameView_Ghost;
-    GameView(GameModel gameModel)
+    GameView(Game game)
     {
-        this.gameModel = gameModel;
-        gameViewPacman = new GameView_Pacman(this);
-        gameView_Ghost = new GameView_Ghost(gameModel.getGhost(), this);
+        this.game = game;
+        this.gameModel = game.getModel();
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); // DO_NOTHING_ON_CLOSE
 
@@ -267,13 +270,6 @@ public class GameView extends JFrame
     {
         return this.table;
     }
-    public GameView_Pacman getPacmanView() {
-        return gameViewPacman;
-    }
-
-    public GameView_Ghost getGameView_Ghost() {
-        return gameView_Ghost;
-    }
 
     public GameModel getGameModel() {
         return gameModel;
@@ -281,8 +277,6 @@ public class GameView extends JFrame
 
     public void shutDown()
     {
-        gameView_Ghost.shutDown();
-        gameViewPacman.shutDown();
         stopwatch.shutDown();
     }
 }

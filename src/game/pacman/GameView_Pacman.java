@@ -35,6 +35,7 @@ class PacmanIconChanger extends Thread
 
 public class GameView_Pacman
 {
+    Pacman pacman;
     GameView gameView;
     ImageIcon fullSizeIconOpen;
     ImageIcon fullSizeIconClosed;
@@ -47,9 +48,10 @@ public class GameView_Pacman
     int height;
     Game.Direction direction;
 
-    public GameView_Pacman(GameView gameView)
+    public GameView_Pacman(Pacman pacman)
     {
-        this.gameView = gameView;
+        this.pacman = pacman;
+        this.gameView = pacman.getGame().getView();
         fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");
         fullSizeIconClosed = new ImageIcon("images\\pacman_closed.png");
 

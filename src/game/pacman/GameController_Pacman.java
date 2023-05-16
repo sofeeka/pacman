@@ -1,5 +1,6 @@
 package game.pacman;
 
+import game.Game;
 import game.GameController;
 import game.GameModel;
 
@@ -53,21 +54,21 @@ class PacmanMover extends Thread
                 continue;
 
             //
-            gameModel.getPacman().setXY(newX, newY);
+            pacman.setXY(newX, newY);
         }
     }
 }
 
 public class GameController_Pacman
 {
-    GameController gameController;
+    Pacman pacman;
     PacmanMover mover;
 
-    public GameController_Pacman(GameController gameController)
+    public GameController_Pacman(Pacman pacman)
     {
-        this.gameController = gameController;
+        this.pacman = pacman;
 
-        mover = new PacmanMover(gameController.getGameModel().getPacman());
+        mover = new PacmanMover(pacman.getModel());
         mover.start();
     }
 

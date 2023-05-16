@@ -1,6 +1,7 @@
 package ui;
 
 import game.Game;
+import game.GameStarter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,11 +26,7 @@ public class MenuFrame extends JFrame {
 
         if(frame.wasOkClicked())
         {
-            Game game = new Game();
-            game.startNewGame(frame.getDimX(), frame.getDimY());
-
-            //
-
+            GameStarter.startNewGame(frame.getDimX(), frame.getDimY());
         }
     }
     private void handleHighScoresButton()

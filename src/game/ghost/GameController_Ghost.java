@@ -4,22 +4,19 @@ import game.Game;
 import game.GameController;
 import game.GameModel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 class GhostMover extends Thread
 {
-    GameModel_Ghost ghost;
+    GameModel_Ghost m_ghost;
     Game.Direction direction;
     GhostMover(GameModel_Ghost ghost)
     {
-        this.ghost = ghost;
+        this.m_ghost = ghost;
         direction = Game.Direction.STILL;
     }
 
     private boolean canGoInDirection( Game.Direction direction )
     {
-        GameModel gameModel = ghost.getGameModel();
+        GameModel gameModel = m_ghost.getGhost().getGame().getModel();
 
         int shiftX = 0;
         int shiftY = 0;
@@ -34,8 +31,8 @@ class GhostMover extends Thread
         if (shiftX == 0 && shiftY == 0)
             return false;
 
-        int newX = ghost.getX() + shiftX;
-        int newY = ghost.getY() + shiftY;
+        int newX = m_ghost.getX() + shiftX;
+        int newY = m_ghost.getY() + shiftY;
 
         // cannot move outside game board bounds
         if (newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight())
@@ -51,7 +48,7 @@ class GhostMover extends Thread
     @Override
     public void run()
     {
-        GameModel gameModel = ghost.getGameModel();
+        GameModel gameModel = m_ghost.getGhost().getGame().getModel();
 
         final int SLEEP_TIME = 500;
 
@@ -64,9 +61,9 @@ class GhostMover extends Thread
                 return;
             }
 
-            if( ghost.isFrightened() )
+            if( m_ghost.isFrightened() )
             {
-                ghost.decreaseRemainingFrightened( SLEEP_TIME );
+                m_ghost.decreaseRemainingFrightened( SLEEP_TIME );
             }
 
             if (direction == Game.Direction.STILL || Math.random() > 0.75) // continue with the prior move direction with some probability
@@ -99,8 +96,8 @@ class GhostMover extends Thread
             if (shiftX == 0 && shiftY == 0)
                 continue;
 
-            int newX = ghost.getX() + shiftX;
-            int newY = ghost.getY() + shiftY;
+            int newX = m_ghost.getX() + shiftX;
+            int newY = m_ghost.getY() + shiftY;
 
             // cannot move outside game board bounds
             if (newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight())
@@ -111,19 +108,19 @@ class GhostMover extends Thread
                 continue;
 
             //
-            ghost.setXY(newX, newY);
+            m_ghost.setXY(newX, newY);
         }
     }
 }
-public class GameController_Ghosts
+public class GameController_Ghost
 {
-    final GameController gameController;
+    Ghost ghost;
     final GhostMover ghostMover;
 
-    public GameController_Ghosts(GameController gameController)
+    public GameController_Ghost(Ghost ghost)
     {
-        this.gameController = gameController;
-        ghostMover = new GhostMover(gameController.getGameModel().getGhost());
+        this.ghost = ghost;
+        ghostMover = new GhostMover(ghost.getModel());
         ghostMover.start();
     }
 

@@ -3,14 +3,16 @@ package game.pacman;
 import game.*;
 public class GameModel_Pacman
 {
+    private Pacman pacman;
     private final GameModel gameModel;
     private int x;
     private int y;
     private Game.Direction direction;
 
-    public GameModel_Pacman(GameModel gameModel)
+    public GameModel_Pacman(Pacman pacman)
     {
-        this.gameModel = gameModel;
+        this.pacman = pacman;
+        this.gameModel = pacman.getGame().getModel();
 
         Position p = gameModel.getRandromPointPosition();
         this.x = p.getX();
@@ -62,5 +64,9 @@ public class GameModel_Pacman
 
     public GameModel getGameModel() {
         return gameModel;
+    }
+
+    public void shutDown()
+    {
     }
 }

@@ -1,30 +1,13 @@
 package game;
 
+import game.ghost.Ghost;
+import game.pacman.Pacman;
+import game.ui.WinningFrame;
+
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Random;
-
-class GameRunner extends Thread
-{
-    private final int x;
-    private final int y;
-
-    GameRunner( int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
-    @Override
-    public void run()
-    {
-        GameModel gameModel = new GameModel(x, y);
-        GameView gameView = new GameView(gameModel);
-        gameModel.setGameView( gameView );
-
-        GameController gameController = new GameController(gameModel, gameView );
-        gameModel.setGameController( gameController );
-    }
-}
 
 public class Game
 {
@@ -64,24 +47,88 @@ public class Game
         }
     }
 
-    public Game()
+    // MVC
+    private GameModel model;
+    private GameView view;
+    private GameController controller;
+
+    //
+    Pacman pacman;
+    ArrayList<Ghost> ghosts;
+
+    public Game(int x, int y)
     {
+        model = new GameModel(this, x, y);
+        view = new GameView(this);
+        controller = new GameController( this );
+
+        createPacman();
+        createGhosts();
     }
 
-    public void startNewGame(int x, int y)
+    public void stopGame()
     {
-        GameRunner runner = new GameRunner(x, y);
-        SwingUtilities.invokeLater( runner );
+        shutDown();
+
+        view.setVisible(false);
+        view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));
+        view.dispose();
     }
 
-    public static void mySleep(int time)
+    private void createPacman()
     {
-        try
-        {
-            Thread.sleep(time);
-        } catch (InterruptedException e)
-        {
-            //e.printStackTrace();
-        }
+        pacman = new Pacman(this);
+    }
+
+    private void createGhosts()
+    {
+        ghosts = new ArrayList<>();
+
+        ghosts.add( new Ghost(this) );
+    }
+
+    public GameModel getModel() {
+        return model;
+    }
+
+    public GameView getView() {
+        return view;
+    }
+
+    public GameController getController() {
+        return controller;
+    }
+
+    public void userWon()
+    {
+        showWinningFrame();
+        stopGame();
+    }
+
+    private void showWinningFrame()
+    {
+        WinningFrame winningFrame = new WinningFrame(model.getUserScore());
+        winningFrame.setVisible(true);
+        winningFrame.dispose();
+    }
+
+    void shutDown()
+    {
+        pacman.shutDown();
+
+        for( Ghost ghost : ghosts )
+            ghost.shutDown();
+
+        controller.shutDown();
+        view.shutDown();
+        model.shutDown();
+    }
+
+    public Pacman getPacman() {
+        return pacman;
+    }
+
+    public ArrayList<Ghost> getGhosts() {
+        return ghosts;
     }
 }

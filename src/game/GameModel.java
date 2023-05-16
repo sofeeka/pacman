@@ -2,27 +2,26 @@ package game;
 
 import java.awt.event.WindowEvent;
 
+import game.ghost.Ghost;
 import game.maze.*;
 import game.ghost.GameModel_Ghost;
-import game.pacman.GameController_Pacman;
 import game.pacman.GameModel_Pacman;
 
 public class GameModel {
-    GameView gameView;
-    GameController gameController;
+    Game game;
     private int width; // x
     private int height; // y
     private Game.Element[][] gameBoard;
     private int userScore;
     private int lives;
-    private final GameModel_Pacman pacman;
-    private final GameModel_Ghost ghost;
     private final int SCORE_PER_POINT = 100;
     private final int SCORE_PER_POWER_PELLET = 200;
     private final int SCORE_PER_GHOST = 400;
 
-    GameModel(int x, int y)
+    GameModel(Game game, int x, int y)
     {
+        this.game = game;
+
         width = x;
         height = y;
 
@@ -31,22 +30,10 @@ public class GameModel {
 
         userScore = 0;
         lives = 3;
-
-        pacman = new GameModel_Pacman(this);
-        ghost = new GameModel_Ghost(this);
-    }
-
-    void setGameView( GameView gameView )
-    {
-        this.gameView = gameView;
-    }
-
-    public void setGameController(GameController gameController) {
-        this.gameController = gameController;
     }
 
     public GameView getGameView() {
-        return gameView;
+        return game.getView();
     }
 
     private void initGameBoard()
@@ -97,14 +84,6 @@ public class GameModel {
 
     public int getHeight() {
         return height;
-    }
-
-    public GameModel_Pacman getPacman() {
-        return pacman;
-    }
-
-    public GameModel_Ghost getGhost() {
-        return ghost;
     }
 
     public Game.Element getElementAt(int x, int y )
@@ -159,15 +138,23 @@ public class GameModel {
 
     public void modelChanged()
     {
-        if( pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY() )
-        {
-            if( ghost.isFrightened() )
-                ghostEaten( ghost );
-            else
-                pacmanEaten();
+        GameModel_Pacman m_pacman = game.getPacman().getModel();
+
+        for( Ghost ghost : game.ghosts ) {
+            GameModel_Ghost m_ghost = ghost.getModel();
+
+            if (m_pacman.getX() == m_ghost.getX() && m_pacman.getY() == m_ghost.getY()) {
+                if (m_ghost.isFrightened())
+                    ghostEaten(m_ghost);
+                else {
+                    pacmanEaten();
+                    break;
+                }
+            }
         }
 
-        gameView.modelChanged();
+        // Update view
+        getGameView().modelChanged();
     }
 
     public void pointEaten()
@@ -176,7 +163,7 @@ public class GameModel {
 
         if( getRemainingPointsQty() == 0)
         {
-            gameController.userWon();
+            game.userWon();
         }
     }
 
@@ -192,25 +179,27 @@ public class GameModel {
     public void powerPelletEaten()
     {
         this.userScore += SCORE_PER_POWER_PELLET;
-        this.ghost.setAsFrightened();
+
+        // Frighten all ghosts
+        for( Ghost ghost : game.ghosts ) {
+            ghost.getModel().setAsFrightened();
+        }
     }
 
     private void pacmanEaten()
     {
         this.lives--;
         if( this.lives == 0 ) {
-            gameView.setVisible(false);
-            gameView.dispatchEvent(new WindowEvent(gameView, WindowEvent.WINDOW_CLOSING));
-            gameView.dispose();
+            game.stopGame();
             return;
         }
 
         //
-        this.pacman.setDirection(Game.Direction.STILL);
+        this.game.getPacman().getModel().setDirection(Game.Direction.STILL);
 
         // set pacman to a new random position
         Position p = this.getRandromPointPosition();
-        this.pacman.setXY(p.getX(), p.getY() );
+        this.game.getPacman().getModel().setXY(p.getX(), p.getY() );
 
         // set all empty elements to POINT
         this.restartBoard();
@@ -259,4 +248,11 @@ public class GameModel {
             setElementTo(p.getX(), p.getY(), Game.Element.POWER_PELLET);
         }
     }
+
+    public Game getGame() {
+        return game;
+    }
+
+    void shutDown()
+    {}
 }
