@@ -1,7 +1,6 @@
 class GameModel_Pacman
 {
     private final GameModel gameModel;
-
     private int x;
     private int y;
     private Direction direction;
@@ -50,5 +49,9 @@ class GameModel_Pacman
     public void modelChanged()
     {
         gameModel.modelChanged();
+    }
+
+    public GameModel getGameModel() {
+        return gameModel;
     }
 }

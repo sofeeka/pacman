@@ -60,56 +60,6 @@ class PacmanIconChanger extends Thread
         }
     }
 }
-class PacmanMover extends Thread
-{
-    GameModel gameModel;
-
-    PacmanMover(GameModel gameModel )
-    {
-        this.gameModel = gameModel;
-    }
-
-    @Override
-    public void run()
-    {
-        while(true)
-        {
-            try
-            {
-                sleep(200);
-            } catch (Exception e) {}
-
-            int shiftX = 0;
-            int shiftY = 0;
-
-            switch( gameModel.getPacman().getDirection() )
-            {
-                case UP -> shiftY = -1;
-                case DOWN -> shiftY = 1;
-                case LEFT -> shiftX = -1;
-                case RIGHT -> shiftX = 1;
-            }
-
-            if( shiftX == 0 && shiftY == 0 )
-                continue;
-
-            int newX = gameModel.getPacman().getX() + shiftX;
-            int newY = gameModel.getPacman().getY() + shiftY;
-
-            // cannot move outside game board bounds
-            if( newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight() )
-                continue;
-
-            // cannot move to walls
-            if( gameModel.elementIsWall(newX, newY ))
-                continue;
-
-            //
-            gameModel.getPacman().setXY(newX, newY);
-        }
-    }
-}
-
 
 public class GameController
 {
@@ -117,6 +67,7 @@ public class GameController
     private GameView gameView;
     private PacmanMover pacmanMover;
     private PacmanIconChanger pacmanIconChanger;
+    private GameController_Pacman gameController_pacman;
     private GameController_Ghosts gameController_ghosts;
 
     GameController(GameModel gameModel, GameView gameView) {
@@ -125,12 +76,10 @@ public class GameController
 
         gameView.getTable().addKeyListener(new KeysHandler(this));
 
-        pacmanMover = new PacmanMover(gameModel);
-        pacmanMover.start();
-
         pacmanIconChanger = new PacmanIconChanger(gameView, gameModel);
         pacmanIconChanger.start();
 
+        gameController_pacman = new GameController_Pacman(this);
         gameController_ghosts = new GameController_Ghosts(this);
     }
 
