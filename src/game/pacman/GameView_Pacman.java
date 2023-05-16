@@ -52,8 +52,8 @@ public class GameView_Pacman
     {
         this.pacman = pacman;
         this.gameView = pacman.getGame().getView();
-        fullSizeIconOpen = new ImageIcon("images\\pacman_open.png");
-        fullSizeIconClosed = new ImageIcon("images\\pacman_closed.png");
+        fullSizeIconOpen = new ImageIcon("images\\pacman.half.png");
+        fullSizeIconClosed = new ImageIcon("images\\pacman.full.png");
 
         open = true;
         direction = Game.Direction.STILL;
