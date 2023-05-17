@@ -17,33 +17,7 @@ class GhostMover extends Thread
 
     private boolean canGoInDirection( Game.Direction direction )
     {
-        GameModel gameModel = m_ghost.getGhost().getGame().getModel();
-
-        int shiftX = 0;
-        int shiftY = 0;
-
-        switch (direction) {
-            case UP -> shiftY = -1;
-            case DOWN -> shiftY = 1;
-            case LEFT -> shiftX = -1;
-            case RIGHT -> shiftX = 1;
-        }
-
-        if (shiftX == 0 && shiftY == 0)
-            return false;
-
-        int newX = m_ghost.getX() + shiftX;
-        int newY = m_ghost.getY() + shiftY;
-
-        // cannot move outside game board bounds
-        if (newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight())
-            return false;
-
-        // cannot move to walls
-        if (gameModel.elementIsWall(newX, newY))
-            return false;
-
-        return true;
+        return m_ghost.getGhost().getGame().getModel().canGoInDirection(m_ghost.getX(), m_ghost.getY(), direction );
     }
 
     @Override

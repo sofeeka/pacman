@@ -278,6 +278,41 @@ public class GameModel {
         }
     }
 
+    public Position getNewPosInDirection( Position p, Game.Direction direction )
+    {
+        Position newPos = new Position( p );
+
+        int shiftX = 0;
+        int shiftY = 0;
+
+        switch (direction) {
+            case UP    -> shiftY = -1;
+            case DOWN  -> shiftY = 1;
+            case LEFT  -> shiftX = -1;
+            case RIGHT -> shiftX = 1;
+        }
+
+        if (shiftX == 0 && shiftY == 0)
+            return newPos;
+
+        newPos.setXY( p.getX() + shiftX, p.getY() + shiftY );
+        return newPos;
+    }
+    public boolean canGoInDirection( int x, int y, Game.Direction direction )
+    {
+        Position newPos = getNewPosInDirection(new Position( x, y ), direction);
+
+        // cannot move outside game board bounds
+        if (newPos.getX() < 0 || newPos.getX() >= this.getWidth() || newPos.getY() < 0 || newPos.getY() >= this.getHeight())
+            return false;
+
+        // cannot move to walls
+        if (this.elementIsWall(newPos.getX(), newPos.getY()))
+            return false;
+
+        return true;
+    }
+
     private void addScore( int value )
     {
         setUserScore( this.userScore + ( int )( value * scoreMultiplier ) );

@@ -38,13 +38,8 @@ public class GameModel_Pacman
 
         switch( gameModel.getElementAt( x, y ) )
         {
-            case POINT -> {
-                gameModel.pointEaten(x, y);
-            }
-
-            case POWER_PELLET -> {
-                gameModel.powerPelletEaten( x, y );
-            }
+            case POINT        -> gameModel.pointEaten(x, y);
+            case POWER_PELLET -> gameModel.powerPelletEaten( x, y );
         }
 
         gameModel.positionChanged();
