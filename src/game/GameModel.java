@@ -12,6 +12,7 @@ public class GameModel {
     private Game.Element[][] gameBoard;
     private int userScore;
     private int lives;
+    private double scoreMultiplier;
     private final int SCORE_PER_POINT = 100;
     private final int SCORE_PER_POWER_PELLET = 200;
     private final int SCORE_PER_GHOST = 400;
@@ -28,6 +29,7 @@ public class GameModel {
 
         userScore = 0;
         lives = 3;
+        scoreMultiplier = 1;
     }
 
     public GameView getGameView() {
@@ -75,11 +77,9 @@ public class GameModel {
     public int getLives() {
         return lives;
     }
-
     public int getWidth() {
         return width;
     }
-
     public int getHeight() {
         return height;
     }
@@ -88,7 +88,6 @@ public class GameModel {
     {
         return gameBoard[y][x];
     }
-
     public boolean elementIs( int x, int y, Game.Element element )
     {
         return ( getElementAt( x, y ) == element );
@@ -114,10 +113,18 @@ public class GameModel {
     {
         setElementTo(x, y, Game.Element.EMPTY);
     }
-
     public void setElementToPoint( int x, int y)
     {
         setElementTo(x, y, Game.Element.POINT);
+    }
+
+    public void setScoreMultiplier(double scoreMultiplier)
+    {
+        this.scoreMultiplier = scoreMultiplier;
+    }
+
+    public double getScoreMultiplier() {
+        return scoreMultiplier;
     }
 
     public int getRemainingPointsQty()
@@ -157,26 +164,24 @@ public class GameModel {
 
     public void pointEaten()
     {
-        this.userScore += SCORE_PER_POINT;
+        this.userScore += SCORE_PER_POINT * scoreMultiplier;
 
         if( getRemainingPointsQty() == 0)
         {
             game.userWon();
         }
     }
-
     public void ghostEaten( GameModel_Ghost ghost )
     {
-        this.userScore += SCORE_PER_GHOST;
+        this.userScore += SCORE_PER_GHOST * scoreMultiplier;
 
         Position p = this.getRandromPointPosition();
         ghost.setPos( p );
         ghost.setAsNotFrightened();
     }
-
     public void powerPelletEaten()
     {
-        this.userScore += SCORE_PER_POWER_PELLET;
+        this.userScore += SCORE_PER_POWER_PELLET * scoreMultiplier;
 
         // Frighten all ghosts
         for( Ghost ghost : game.ghosts ) {

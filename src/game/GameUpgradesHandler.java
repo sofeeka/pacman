@@ -1,5 +1,7 @@
 package game;
 
+import game.upgrades.UpgradeBasic;
+import game.upgrades.Upgrade_BoostScore;
 import game.upgrades.Upgrade_FreezeGhosts;
 import game.upgrades.Upgrade_SpeedUp;
 
@@ -20,13 +22,27 @@ class GamesUpgrades_Thread extends Thread
                 return;
             }
 
-            Thread thread = new Thread(new Upgrade_SpeedUp(game));
-            thread.start();
-
-            Thread thread1 = new Thread(new Upgrade_FreezeGhosts(game));
-            thread1.start();
-        }
+            UpgradeBasic upgrade = createRandomUpgrade();
+            if (upgrade != null)
+            {
+                Thread thread = new Thread(upgrade);
+                thread.start();
+            }        }
     }
+    private UpgradeBasic createRandomUpgrade()
+    {
+        Game.Upgrade upgrade = Game.Upgrade.getRandomUpgrade();
+
+        switch (upgrade)
+        {
+            case SPEED_UP : return new Upgrade_SpeedUp(game);
+            case FREEZE_GHOSTS : return new Upgrade_FreezeGhosts(game);
+            case BOOST_SCORE : return new Upgrade_BoostScore(game);
+//            default : return null;
+        }
+        return null;
+    }
+
 }
 public class GameUpgradesHandler
 {
@@ -43,4 +59,5 @@ public class GameUpgradesHandler
     {
         thread.interrupt();
     }
+
 }

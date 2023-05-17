@@ -2,7 +2,7 @@ package game.upgrades;
 
 import game.Game;
 
-abstract class UpgradeBasic implements Runnable
+abstract public class UpgradeBasic implements Runnable
 {
     protected Game game;
     UpgradeBasic(Game game)

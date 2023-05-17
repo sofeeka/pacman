@@ -47,6 +47,19 @@ public class Game
         }
     }
 
+    public enum Upgrade {
+        SPEED_UP,
+        FREEZE_GHOSTS,
+        BOOST_SCORE;
+
+        private static final Random RAND = new Random();
+
+        public static Game.Upgrade getRandomUpgrade()  {
+            Game.Upgrade[] upgrades = values();
+            return upgrades[RAND.nextInt(upgrades.length)];
+        }
+    }
+
     // MVC
     private GameModel model;
     private GameView view;
