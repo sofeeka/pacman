@@ -16,14 +16,20 @@ public class EndGameFrame extends JDialog
         setTitle("End Game");
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setBackground(Color.BLACK);
 
         JPanel outerPanel = new JPanel();
         outerPanel.setLayout(new BorderLayout());
 
+        JPanel questionContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel questionLabel = new JLabel("Do you want to save your score?");
+        questionContainer.add(questionLabel, BorderLayout.CENTER);
+
+        outerPanel.add(questionContainer, BorderLayout.NORTH);
+
         JPanel textPanel = new JPanel();
 
         JLabel userLabel = new JLabel("Username: ");
-        userLabel.setBackground(Color.BLACK);
         textPanel.add(userLabel);
 
         JTextField userTextField = new JTextField(10);
@@ -31,11 +37,9 @@ public class EndGameFrame extends JDialog
         textPanel.add(userTextField);
 
         JLabel scoreLabel = new JLabel("Your score: ");
-        scoreLabel.setBackground(Color.BLACK);
         textPanel.add(scoreLabel);
 
         JLabel userScoreLabel = new JLabel(score + "");
-        userScoreLabel.setBackground(Color.BLACK);
         textPanel.add(userScoreLabel);
 
         outerPanel.add(textPanel, BorderLayout.CENTER);
@@ -43,11 +47,11 @@ public class EndGameFrame extends JDialog
 
         JPanel buttonPanel = new JPanel();
 
-        JButton saveButton = new JButton("save");
-        saveButton.setBackground(Color.YELLOW);
-        buttonPanel.add(saveButton);
+        JButton yesButton = new JButton("YES");
+        yesButton.setBackground(Color.YELLOW);
+        buttonPanel.add(yesButton);
 
-        saveButton.addActionListener(event -> {
+        yesButton.addActionListener(event -> {
             try {
 
                 okClicked = true;
@@ -62,11 +66,11 @@ public class EndGameFrame extends JDialog
             dispose();
         });
 
-        JButton exitButton = new JButton("exit");
-        exitButton.setBackground(Color.YELLOW);
-        buttonPanel.add(exitButton);
+        JButton noButton = new JButton("NO");
+        noButton.setBackground(Color.YELLOW);
+        buttonPanel.add(noButton);
 
-        exitButton.addActionListener(event -> dispose());
+        noButton.addActionListener(event -> dispose());
 
         outerPanel.add(buttonPanel, BorderLayout.SOUTH);
 
