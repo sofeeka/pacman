@@ -10,6 +10,7 @@ public class GameView_Stopwatch extends Thread
     GameView_Stopwatch(JLabel timeLabel)
     {
         this.timeLabel = timeLabel;
+        setName( "Game stopwatch" );
     }
     @Override
     public void run()
