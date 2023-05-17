@@ -37,16 +37,17 @@ public class GameModel_Pacman
 
         GameModel gameModel = pacman.getGame().getModel();
 
-        if(gameModel.elementIsPoint(x, y))
+        switch( gameModel.getElementAt( x, y ) )
         {
-            gameModel.setElementToEmpty( x, y );
-            gameModel.pointEaten();
-        }
+            case POINT -> {
+                gameModel.setElementToEmpty( x, y );
+                gameModel.pointEaten();
+            }
 
-        if(gameModel.elementIs(x, y, Game.Element.POWER_PELLET))
-        {
-            gameModel.setElementToEmpty( x, y );
-            gameModel.powerPelletEaten();
+            case POWER_PELLET -> {
+                gameModel.setElementToEmpty( x, y );
+                gameModel.powerPelletEaten();
+            }
         }
 
         gameModel.positionChanged();
