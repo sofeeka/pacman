@@ -18,7 +18,7 @@ public class GameModel_Pacman
         this.pacman = pacman;
         speed = 200;
 
-        pos = pacman.getGame().getModel().getRandromPointPosition();
+        pos = pacman.getGame().getModel().getRandomNonWallPosition();
         direction = Game.Direction.STILL;
         nextDirection = Game.Direction.STILL;
 

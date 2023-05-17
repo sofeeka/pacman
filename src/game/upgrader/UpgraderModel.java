@@ -7,12 +7,12 @@ import game.upgrades.*;
 public class UpgraderModel {
     private final Upgrader upgrader;
 
-    boolean isThrown; // upgrade icon is shown in the game field
+    boolean isDropped; // upgrade icon is shown in the game field
     private Position pos; // location where the upgrade icon is shown
 
     public UpgraderModel(Upgrader upgrader) {
         this.upgrader = upgrader;
-        isThrown = false;
+        isDropped = false;
     }
 
     public Position getPos()
@@ -20,21 +20,21 @@ public class UpgraderModel {
         return this.pos;
     }
 
-    public boolean isThrown()
+    public boolean isDropped()
     {
-        return this.isThrown;
+        return this.isDropped;
     }
-    public void setAsThrown()
+    public void setAsDropped()
     {
-        pos = upgrader.getGame().getModel().getRandromPointPosition();
-        isThrown = true;
+        pos = upgrader.getGame().getModel().getPositionOfRandomGhost();
+        isDropped = true;
 
         modelChanged();
     }
 
     public void setAsEaten() // apply random upgrade
     {
-        isThrown = false;
+        isDropped = false;
 
         UpgradeBasic upgrade = createRandomUpgrade();
         if (upgrade != null)

@@ -42,9 +42,24 @@ public class Game
 
         private static final Random RAND = new Random();
 
-        public static Game.Direction getRandomDirection()  {
+        public static Game.Direction getRandomDirection()
+        {
             Game.Direction[] directions = values();
             return directions[RAND.nextInt(directions.length)];
+        }
+
+        public static Game.Direction getDirectionByDelta(int dX, int dY)
+        {
+            if( dX > 0 )
+                return RIGHT;
+            if( dX < 0 )
+                return LEFT;
+            if( dY > 0 )
+                return DOWN;
+            if( dY < 0 )
+                return UP;
+
+            return STILL;
         }
     }
 

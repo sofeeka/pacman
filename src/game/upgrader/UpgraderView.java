@@ -18,7 +18,7 @@ public class UpgraderView {
 
     public void render( JTable t, Graphics g )
     {
-        if( !upgrader.getModel().isThrown() )
+        if( !upgrader.getModel().isDropped() )
             return;
 
         game.Position pos = upgrader.getModel().getPos();

@@ -15,7 +15,7 @@ public class GameModel_Ghost
         this.ghost = ghost;
         isFrozen = false;
 
-        this.pos = ghost.getGame().getModel().getRandromPointPosition();
+        this.pos = ghost.getGame().getModel().getRandomNonWallPosition();
         this.remainingFrightened = 0;
     }
     public int getX() {

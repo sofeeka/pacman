@@ -1,8 +1,5 @@
 package game.upgrader;
 
-import game.Game;
-import game.upgrades.*;
-
 class GameUpgradeThrower extends Thread
 {
     Upgrader upgrader;
@@ -24,7 +21,7 @@ class GameUpgradeThrower extends Thread
                 }
 
                 // old upgrade still exists, do not throw a new one
-                if (upgrader.getModel().isThrown())
+                if (upgrader.getModel().isDropped())
                     continue;
 
                 // Throw a new upgrade with 25% probability
@@ -32,8 +29,9 @@ class GameUpgradeThrower extends Thread
                     continue;
 
                 //
-                upgrader.getModel().setAsThrown();
-            }        }
+                upgrader.getModel().setAsDropped();
+            }
+        }
     }
 }
 public class UpgraderController {

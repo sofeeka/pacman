@@ -41,23 +41,37 @@ class GhostMover extends Thread
                     continue;
 
 
-                if (m_ghost.isFrightened()) {
+                if (m_ghost.isFrightened() || Math.random() > 0.75) {
                     m_ghost.decreaseRemainingFrightened(SLEEP_TIME);
+
+                    if (direction == Game.Direction.STILL || Math.random() > 0.20) // continue with the prior move direction with some probability
+                        direction = Game.Direction.getRandomDirection();
+
+                    if (!canGoInDirection(direction)) {
+                        if (canGoInDirection(Game.Direction.LEFT))
+                            direction = Game.Direction.LEFT;
+                        else if (canGoInDirection(Game.Direction.UP))
+                            direction = Game.Direction.UP;
+                        else if (canGoInDirection(Game.Direction.RIGHT))
+                            direction = Game.Direction.RIGHT;
+                        else if (canGoInDirection(Game.Direction.DOWN))
+                            direction = Game.Direction.DOWN;
+                    }
+                }
+                else {
+                    Position ghostPos = m_ghost.getPos();
+                    Position pacmanPos = m_ghost.getGhost().getGame().getPacman().getModel().getPos();
+
+                    int deltaX = pacmanPos.getX() - ghostPos.getX();
+                    int deltaY = pacmanPos.getY() - ghostPos.getY();
+
+                    Game.Direction deltaDirection = Game.Direction.getDirectionByDelta(deltaX, 0);
+                    if( canGoInDirection( deltaDirection ))
+                        direction = deltaDirection;
+                    else
+                        direction = Game.Direction.getDirectionByDelta(0,deltaY);
                 }
 
-                if (direction == Game.Direction.STILL || Math.random() > 0.25) // continue with the prior move direction with some probability
-                    direction = Game.Direction.getRandomDirection();
-
-                if (!canGoInDirection(direction)) {
-                    if (canGoInDirection(Game.Direction.LEFT))
-                        direction = Game.Direction.LEFT;
-                    else if (canGoInDirection(Game.Direction.UP))
-                        direction = Game.Direction.UP;
-                    else if (canGoInDirection(Game.Direction.RIGHT))
-                        direction = Game.Direction.RIGHT;
-                    else if (canGoInDirection(Game.Direction.DOWN))
-                        direction = Game.Direction.DOWN;
-                }
 
                 int shiftX = 0;
                 int shiftY = 0;

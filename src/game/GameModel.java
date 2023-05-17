@@ -5,6 +5,8 @@ import game.maze.*;
 import game.ghost.GameModel_Ghost;
 import game.pacman.GameModel_Pacman;
 
+import java.util.ArrayList;
+
 public class GameModel {
     Game game;
     private int width; // x
@@ -169,7 +171,7 @@ public class GameModel {
         }
 
         // Check if pacman ate any upgrade
-        if(game.getUpgrader().getModel().isThrown())
+        if(game.getUpgrader().getModel().isDropped())
         {
             if( m_pacman.getPos().isSame( game.getUpgrader().getModel().getPos() ))
             {
@@ -193,7 +195,7 @@ public class GameModel {
     {
         addScore( SCORE_PER_GHOST );
 
-        Position p = this.getRandromPointPosition();
+        Position p = this.getRandomNonWallPosition();
         ghost.setPos( p );
         ghost.setAsFrightened(2000);
     }
@@ -225,7 +227,7 @@ public class GameModel {
         this.game.getPacman().getModel().setDirection(Game.Direction.STILL);
 
         // set pacman to a new random position
-        Position p = this.getRandromPointPosition();
+        Position p = this.getRandomNonWallPosition();
         this.game.getPacman().getModel().setPos( p );
 
         // set all empty elements to POINT
@@ -240,7 +242,7 @@ public class GameModel {
         getGame().getUpgrader().getModel().setAsEaten();
     }
 
-    public Position getRandromPointPosition()
+    public Position getRandomNonWallPosition()
     {
         while( true ) {
             int x;
@@ -252,6 +254,14 @@ public class GameModel {
                     return new Position(x, y);
             }
         }
+    }
+
+    public Position getPositionOfRandomGhost()
+    {
+        ArrayList< Ghost > arr = getGame().getGhosts();
+        final int i = (int)(Math.random()*arr.size());
+
+        return arr.get(i).getModel().getPos();
     }
 
     void restartBoard()
@@ -273,7 +283,7 @@ public class GameModel {
 
         //
         for( int i = 0; i < pelletsQty; i++ ) {
-            Position p = this.getRandromPointPosition();
+            Position p = this.getRandomNonWallPosition();
             setElementTo(p.getX(), p.getY(), Game.Element.POWER_PELLET);
         }
     }
