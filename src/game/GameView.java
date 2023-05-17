@@ -261,7 +261,6 @@ public class GameView extends JFrame
 
     public void renderModel()
     {
-        scoreLabel.setText( "Score: " + game.getModel().getUserScore() );
         livesLabel.setText( "Lives: " + game.getModel().getLives() );
         pointsLabel.setText("Points left: " + game.getModel().getRemainingPointsQty());
 
@@ -293,5 +292,10 @@ public class GameView extends JFrame
     public void setUpgradeLabelText(String s)
     {
         upgradeLabel.setText(s);
+    }
+
+    public void updateScoreLabel()
+    {
+        scoreLabel.setText( "Score: " + game.getModel().getUserScore() );
     }
 }

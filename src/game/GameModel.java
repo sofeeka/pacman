@@ -178,7 +178,7 @@ public class GameModel {
     }
     public void pointEaten()
     {
-        this.userScore += SCORE_PER_POINT * scoreMultiplier;
+        addScore( SCORE_PER_POINT );
 
         if( getRemainingPointsQty() == 0)
         {
@@ -187,7 +187,7 @@ public class GameModel {
     }
     public void ghostEaten( GameModel_Ghost ghost )
     {
-        this.userScore += SCORE_PER_GHOST * scoreMultiplier;
+        addScore( SCORE_PER_GHOST );
 
         Position p = this.getRandromPointPosition();
         ghost.setPos( p );
@@ -195,7 +195,7 @@ public class GameModel {
     }
     public void powerPelletEaten()
     {
-        this.userScore += SCORE_PER_POWER_PELLET * scoreMultiplier;
+        addScore( SCORE_PER_POWER_PELLET );
 
         // Frighten all ghosts
         for( Ghost ghost : game.getGhosts() ) {
@@ -269,6 +269,16 @@ public class GameModel {
             Position p = this.getRandromPointPosition();
             setElementTo(p.getX(), p.getY(), Game.Element.POWER_PELLET);
         }
+    }
+
+    private void addScore( int value )
+    {
+        setUserScore( this.userScore + ( int )( value * scoreMultiplier ) );
+    }
+    private void setUserScore( int score )
+    {
+        this.userScore = score;
+        game.getView().updateScoreLabel();
     }
 
     public Game getGame() {
