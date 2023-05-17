@@ -7,10 +7,12 @@ public class GameModel_Ghost
     Ghost ghost;
     private Position pos;
     private int remainingFrightened; // milliseconds
+    private boolean isFrozen;
 
     public GameModel_Ghost(Ghost ghost)
     {
         this.ghost = ghost;
+        isFrozen = false;
 
         this.pos = ghost.getGame().getModel().getRandromPointPosition();
         this.remainingFrightened = 0;
@@ -56,6 +58,15 @@ public class GameModel_Ghost
     public void decreaseRemainingFrightened( int ms )
     {
         this.setRemainingFrightened( this.remainingFrightened - ms );
+    }
+
+    public void setAsFrozen(boolean isFrozen)
+    {
+        this.isFrozen = isFrozen;
+    }
+
+    public boolean isFrozen() {
+        return isFrozen;
     }
 
     public void modelChanged()

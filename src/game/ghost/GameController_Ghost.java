@@ -62,6 +62,9 @@ class GhostMover extends Thread
                 return;
             }
 
+            if (m_ghost.isFrozen())
+                continue;
+
             if( m_ghost.isFrightened() )
             {
                 m_ghost.decreaseRemainingFrightened( SLEEP_TIME );

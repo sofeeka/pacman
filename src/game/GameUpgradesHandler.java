@@ -1,5 +1,6 @@
 package game;
 
+import game.upgrades.Upgrade_FreezeGhosts;
 import game.upgrades.Upgrade_SpeedUp;
 
 class GamesUpgrades_Thread extends Thread
@@ -21,6 +22,9 @@ class GamesUpgrades_Thread extends Thread
 
             Thread thread = new Thread(new Upgrade_SpeedUp(game));
             thread.start();
+
+            Thread thread1 = new Thread(new Upgrade_FreezeGhosts(game));
+            thread1.start();
         }
     }
 }
