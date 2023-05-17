@@ -42,9 +42,9 @@ public class GameModel_Ghost
         this.modelChanged();
     }
 
-    public void setAsFrightened()
+    public void setAsFrightened(int time)
     {
-        this.setRemainingFrightened( 5000 ); // 5 sec
+        this.setRemainingFrightened( time ); // 5 sec
     }
 
     public void setAsNotFrightened()
@@ -76,6 +76,8 @@ public class GameModel_Ghost
     }
 
     public void setAsHidden(boolean hidden) {
+        if (!hidden)
+            ghost.getModel().setAsFrightened(2000);
         isHidden = hidden;
     }
 

@@ -195,7 +195,7 @@ public class GameModel {
 
         Position p = this.getRandromPointPosition();
         ghost.setPos( p );
-        ghost.setAsNotFrightened();
+        ghost.setAsFrightened(2000);
     }
     public void powerPelletEaten( int x, int y )
     {
@@ -204,7 +204,7 @@ public class GameModel {
 
         // Frighten all ghosts
         for( Ghost ghost : game.getGhosts() ) {
-            ghost.getModel().setAsFrightened();
+            ghost.getModel().setAsFrightened(5000);
         }
     }
 
