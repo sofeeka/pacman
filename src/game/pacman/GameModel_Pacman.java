@@ -9,7 +9,6 @@ public class GameModel_Pacman
     private Game.Direction direction;
     private int speed; // how many ms it takes to move from one cell to another
 
-
     public GameModel_Pacman(Pacman pacman)
     {
         this.pacman = pacman;
@@ -40,13 +39,11 @@ public class GameModel_Pacman
         switch( gameModel.getElementAt( x, y ) )
         {
             case POINT -> {
-                gameModel.setElementToEmpty( x, y );
-                gameModel.pointEaten();
+                gameModel.pointEaten(x, y);
             }
 
             case POWER_PELLET -> {
-                gameModel.setElementToEmpty( x, y );
-                gameModel.powerPelletEaten();
+                gameModel.powerPelletEaten( x, y );
             }
         }
 

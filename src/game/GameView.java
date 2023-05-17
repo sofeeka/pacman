@@ -163,9 +163,10 @@ class ViewTable extends JTable
     @Override
     protected void paintComponent(Graphics g)
     {
+        // Paint table
         super.paintComponent(g);
 
-        // Paint upgrade
+        // Paint upgrade icon (strawberry)
         Upgrader upgrader = gameView.getGame().getUpgrader();
         upgrader.getView().render( this, g );
 
@@ -222,14 +223,16 @@ class GameViewRepainter extends Thread
                 return; // exit thread
             }
 
-            gameView.getTable().repaint();
+            synchronized( gameView.getGame().getModel() ) {
+                gameView.getTable().repaint();
+            }
         }
     }
 }
 
 public class GameView extends JFrame
 {
-    Game game;
+    private Game game;
     private final ViewTable table;
     private final JLabel scoreLabel;
     private final JLabel livesLabel;

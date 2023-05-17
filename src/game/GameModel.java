@@ -155,11 +155,12 @@ public class GameModel {
         for( Ghost ghost : game.getGhosts() ) {
             GameModel_Ghost m_ghost = ghost.getModel();
 
+            if (m_ghost.isHidden())
+                continue;
+
             if (m_pacman.getX() == m_ghost.getX() && m_pacman.getY() == m_ghost.getY()) {
                 if (m_ghost.isFrightened())
                     ghostEaten(m_ghost);
-                else if (m_ghost.isHidden())
-                    continue;
                 else {
                     pacmanEaten();
                     break;
@@ -176,8 +177,9 @@ public class GameModel {
             }
         }
     }
-    public void pointEaten()
+    public void pointEaten( int x, int y )
     {
+        setElementToEmpty( x, y );
         addScore( SCORE_PER_POINT );
 
         if( getRemainingPointsQty() == 0)
@@ -195,8 +197,9 @@ public class GameModel {
         ghost.setPos( p );
         ghost.setAsNotFrightened();
     }
-    public void powerPelletEaten()
+    public void powerPelletEaten( int x, int y )
     {
+        setElementToEmpty( x, y );
         addScore( SCORE_PER_POWER_PELLET );
 
         // Frighten all ghosts

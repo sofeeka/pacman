@@ -84,7 +84,6 @@ public class GameView_Ghost
 
     synchronized public void changeIcon()
     {
-
         iconIndex++;
 
         if( iconIndex >= fullSizeIcons.size())
