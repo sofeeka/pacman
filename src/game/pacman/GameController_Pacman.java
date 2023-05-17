@@ -1,5 +1,6 @@
 package game.pacman;
 
+import game.Game;
 import game.GameModel;
 import game.Position;
 
@@ -15,45 +16,41 @@ class PacmanMover extends Thread
     @Override
     public void run()
     {
+        final GameModel gameModel = m_pacman.getPacman().getGame().getModel();
+
         while(true)
         {
+            int speed = m_pacman.getSpeed();
+            Game.Direction direction = m_pacman.getDirection();
+            boolean canGoInDirection = gameModel.canGoInDirection(m_pacman.getX(), m_pacman.getY(), direction);
+            Position newPos = gameModel.getNewPosInDirection(m_pacman.getPos(), direction);
+
             try
             {
-                sleep(m_pacman.getSpeed());
+                if( direction == Game.Direction.STILL || !canGoInDirection ){
+                    Thread.sleep( speed );
+                    continue;
+                }
+                else{
+                    // micro shifts
+                    for( int i = 0; i < 10; i++)
+                    {
+                        Thread.sleep( speed / 10 );
+
+                        switch( direction )
+                        {
+                            case LEFT -> m_pacman.setMicroShift( new Position( -i, 0 ) );
+                            case RIGHT -> m_pacman.setMicroShift( new Position( i, 0 ) );
+                            case UP -> m_pacman.setMicroShift( new Position( 0, -i ) );
+                            case DOWN -> m_pacman.setMicroShift( new Position( 0, i ) );
+                        }
+                    }
+                }
             } catch( InterruptedException e ) {
                 return;
             }
 
-            int shiftX = 0;
-            int shiftY = 0;
-
-            switch( m_pacman.getDirection() )
-            {
-                case UP -> shiftY = -1;
-                case DOWN -> shiftY = 1;
-                case LEFT -> shiftX = -1;
-                case RIGHT -> shiftX = 1;
-            }
-
-            if( shiftX == 0 && shiftY == 0 )
-                continue;
-
-            int newX = m_pacman.getX() + shiftX;
-            int newY = m_pacman.getY() + shiftY;
-
-            //
-            GameModel gameModel = m_pacman.getPacman().getGame().getModel();
-
-            // cannot move outside game board bounds
-            if( newX < 0 || newX >= gameModel.getWidth() || newY < 0 || newY >= gameModel.getHeight() )
-                continue;
-
-            // cannot move to walls
-            if( gameModel.elementIsWall(newX, newY ))
-                continue;
-
-            //
-            m_pacman.setPos(new Position(newX, newY));
+            m_pacman.setPos( newPos );
         }
     }
 }

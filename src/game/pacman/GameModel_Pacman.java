@@ -6,6 +6,7 @@ public class GameModel_Pacman
     private final Pacman pacman;
 
     private Position pos;
+    private Position microShift; // shift from current cell in the moving direction to animate movement between cells
     private Game.Direction direction;
     private int speed; // how many ms it takes to move from one cell to another
 
@@ -16,6 +17,8 @@ public class GameModel_Pacman
 
         pos = pacman.getGame().getModel().getRandromPointPosition();
         direction = Game.Direction.STILL;
+
+        microShift = new Position();
     }
 
     public int getX() { return pos.getX(); }
@@ -30,6 +33,7 @@ public class GameModel_Pacman
     public void setPos( Position pos )
     {
         this.pos = pos;
+        this.setMicroShift( new Position( 0, 0 ));
 
         int x = pos.getX();
         int y = pos.getY();
@@ -44,6 +48,17 @@ public class GameModel_Pacman
 
         gameModel.positionChanged();
     }
+
+    synchronized public Position getMicroShift()
+    {
+        return microShift;
+    }
+
+    synchronized public void setMicroShift( Position p )
+    {
+        microShift = p;
+    }
+
 
     public int getSpeed() {
         return speed;

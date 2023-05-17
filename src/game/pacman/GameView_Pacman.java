@@ -2,6 +2,7 @@ package game.pacman;
 
 import game.Game;
 import game.GameView;
+import game.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,7 +99,7 @@ public class GameView_Pacman
     }
     public void render( JTable t, Graphics g )
     {
-        Rectangle cellRect = t.getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), true);
+        Rectangle cellRect = t.getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), false);
 
         if(this.width != cellRect.width || this.height != cellRect.height || pacman.getModel().getDirection() != this.direction || renderingIconOpen == null )
         {
@@ -115,6 +116,10 @@ public class GameView_Pacman
 
         int x = cellRect.x;
         int y = cellRect.y;
+
+        final Position microShift = pacman.getModel().getMicroShift();
+        x += cellRect.width * microShift.getX() / 10;
+        y += cellRect.height * microShift.getY() / 10;
 
         getRenderingIcon().paintIcon(t, g, x, y);
     }
