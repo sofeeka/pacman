@@ -17,7 +17,6 @@ public class HighScore implements Serializable { // todo: відцентуват
         highScores.add(new HighScoreRecord(userName, score));
         saveHighScores();
         Collections.sort(highScores);
-        System.out.println("Record was written.");
     }
 
     private void saveHighScores() {
