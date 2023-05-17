@@ -171,11 +171,11 @@ class ViewTable extends JTable
 
         // Paint pacman
         Pacman pacman = gameView.getGame().getPacman();
-        pacman.getView().render( pacman.getModel(), this, g, getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), true));
+        pacman.getView().render( this, g);
 
         // Paint ghosts
         for( Ghost ghost : gameView.getGame().getGhosts() ) {
-            ghost.getView().render(this, g, getCellRect(ghost.getModel().getY(), ghost.getModel().getX(), true));
+            ghost.getView().render(this, g );
         }
     }
 

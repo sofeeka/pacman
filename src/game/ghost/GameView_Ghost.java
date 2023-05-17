@@ -57,10 +57,12 @@ public class GameView_Ghost
         ghostIconChanger = new GhostIconChanger(this);
         ghostIconChanger.start();
     }
-    synchronized public void render(Component c, Graphics g, Rectangle cellRect)
+    synchronized public void render(JTable t, Graphics g)
     {
         if( iconIndex == -1 ) // frightened ghost is flashing, hidden stays hidden
             return;
+
+        Rectangle cellRect = t.getCellRect(ghost.getModel().getY(), ghost.getModel().getX(), true);
 
         if(this.width != cellRect.width || this.height != cellRect.height || renderingIcons == null) // todo check direction
         {
@@ -77,7 +79,7 @@ public class GameView_Ghost
         int x = cellRect.x;
         int y = cellRect.y;
 
-        getRenderingIcon().paintIcon(c, g, x, y);
+        getRenderingIcon().paintIcon(t, g, x, y);
     }
 
     synchronized public void changeIcon()

@@ -96,26 +96,27 @@ public class GameView_Pacman
 //        return Toolkit.getDefaultToolkit().createImage(rotatedImage.getSource());
         return rotatedImage;
     }
-    public void render(GameModel_Pacman pacman, Component c, Graphics g, Rectangle cellRect)
+    public void render( JTable t, Graphics g )
     {
-        if(this.width != cellRect.width || this.height != cellRect.height || pacman.getDirection() != this.direction || renderingIconOpen == null )
+        Rectangle cellRect = t.getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), true);
+
+        if(this.width != cellRect.width || this.height != cellRect.height || pacman.getModel().getDirection() != this.direction || renderingIconOpen == null )
         {
             Image open = fullSizeIconOpen.getImage();
-            open = rotateImagePerDirection( open, pacman.getDirection());
+            open = rotateImagePerDirection( open, pacman.getModel().getDirection());
             Image resizedOpen = open.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
             renderingIconOpen = new ImageIcon(resizedOpen);
 
             Image closed = fullSizeIconClosed.getImage();
-            closed = rotateImagePerDirection( closed, pacman.getDirection());
+            closed = rotateImagePerDirection( closed, pacman.getModel().getDirection());
             Image resizedClosed = closed.getScaledInstance(cellRect.width, cellRect.height, Image.SCALE_SMOOTH);
             renderingIconClosed = new ImageIcon(resizedClosed);
-
         }
 
         int x = cellRect.x;
         int y = cellRect.y;
 
-        getRenderingIcon().paintIcon(c, g, x, y);
+        getRenderingIcon().paintIcon(t, g, x, y);
     }
 
     public void changeIcon()
