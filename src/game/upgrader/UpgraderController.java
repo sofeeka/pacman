@@ -9,6 +9,7 @@ class GameUpgradeThrower extends Thread
     public GameUpgradeThrower(Upgrader upgrader)
     {
         this.upgrader = upgrader;
+        setName( "Upgrade thrower" );
     }
 
     @Override

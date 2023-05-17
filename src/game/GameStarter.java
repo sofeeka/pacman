@@ -12,6 +12,8 @@ class GameRunner extends Thread
     {
         this.x = x;
         this.y = y;
+
+        setName( "Game runner" );
     }
 
     @Override

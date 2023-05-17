@@ -15,6 +15,7 @@ class PacmanIconChanger extends Thread
     PacmanIconChanger(GameView_Pacman gameView_Pacman )
     {
         this.gameView_Pacman = gameView_Pacman;
+        setName( "Pacman icon changer" );
     }
 
     @Override

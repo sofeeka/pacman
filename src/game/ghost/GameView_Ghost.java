@@ -15,6 +15,7 @@ class GhostIconChanger extends Thread
     GhostIconChanger( GameView_Ghost gameView_Ghost )
     {
         this.gameView_Ghost = gameView_Ghost;
+        setName( "Ghost icons changer" );
     }
 
     @Override

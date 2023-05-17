@@ -13,6 +13,7 @@ class GhostMover extends Thread
     {
         this.m_ghost = ghost;
         direction = Game.Direction.STILL;
+        setName( "Ghost mover" );
     }
 
     private boolean canGoInDirection( Game.Direction direction )

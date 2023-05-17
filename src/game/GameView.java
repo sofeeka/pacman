@@ -210,6 +210,7 @@ class GameViewRepainter extends Thread
     public GameViewRepainter(GameView gameView )
     {
         this.gameView = gameView;
+        setName( "Game view repainter" );
     }
 
     @Override

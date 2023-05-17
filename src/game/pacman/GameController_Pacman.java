@@ -11,6 +11,7 @@ class PacmanMover extends Thread
     PacmanMover( GameModel_Pacman pacman )
     {
         this.m_pacman = pacman;
+        setName( "Pacman mover" );
     }
 
     @Override
