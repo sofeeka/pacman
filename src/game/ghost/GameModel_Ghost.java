@@ -28,6 +28,7 @@ public class GameModel_Ghost
 
     public void setPos(Position pos) {
         this.pos = pos;
+        ghost.getGame().getModel().positionChanged();
         modelChanged();
     }
 

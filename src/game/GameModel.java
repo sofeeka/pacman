@@ -143,6 +143,12 @@ public class GameModel {
 
     public void modelChanged()
     {
+        // Update view
+        getGameView().modelChanged();
+    }
+
+    synchronized public void positionChanged()
+    {
         GameModel_Pacman m_pacman = game.getPacman().getModel();
 
         // Check if pacman ate any frightened ghost or any ghost ate pacman
@@ -153,7 +159,7 @@ public class GameModel {
                 if (m_ghost.isFrightened())
                     ghostEaten(m_ghost);
                 else if (m_ghost.isHidden())
-                        continue;
+                    continue;
                 else {
                     pacmanEaten();
                     break;
@@ -169,11 +175,7 @@ public class GameModel {
                 upgradeEaten();
             }
         }
-
-        // Update view
-        getGameView().modelChanged();
     }
-
     public void pointEaten()
     {
         this.userScore += SCORE_PER_POINT * scoreMultiplier;

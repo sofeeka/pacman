@@ -49,7 +49,7 @@ public class GameModel_Pacman
             gameModel.powerPelletEaten();
         }
 
-        modelChanged();
+        gameModel.positionChanged();
     }
 
     public int getSpeed() {
