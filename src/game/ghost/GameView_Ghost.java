@@ -20,7 +20,7 @@ class GhostIconChanger extends Thread
     @Override
     public void run()
     {
-        while(true)
+        while(!Thread.interrupted())
         {
             try {
                 Thread.sleep(200);

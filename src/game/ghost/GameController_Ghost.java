@@ -27,7 +27,7 @@ class GhostMover extends Thread
 
         final int SLEEP_TIME = 500;
 
-        while(true)
+        while(!Thread.interrupted())
         {
             try
             {

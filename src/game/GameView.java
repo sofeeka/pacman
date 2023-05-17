@@ -215,12 +215,12 @@ class GameViewRepainter extends Thread
     @Override
     public void run()
     {
-        while(true){
+        while(!Thread.interrupted()){
             try {
                 Thread.sleep( 50 );
             }
             catch(InterruptedException e){
-                return; // exit thread
+                return;
             }
 
             synchronized( gameView.getGame().getModel() ) {

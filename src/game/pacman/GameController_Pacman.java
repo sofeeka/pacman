@@ -18,7 +18,7 @@ class PacmanMover extends Thread
     {
         final GameModel gameModel = m_pacman.getPacman().getGame().getModel();
 
-        while(true)
+        while(!Thread.interrupted())
         {
             int speed = m_pacman.getSpeed();
             Game.Direction direction = m_pacman.getDirection();

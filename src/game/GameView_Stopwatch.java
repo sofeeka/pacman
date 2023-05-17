@@ -16,7 +16,7 @@ public class GameView_Stopwatch extends Thread
     {
         startTime = System.currentTimeMillis();
 
-        while(true)
+        while(!Thread.interrupted())
         {
             timeLabel.setText(getTime());
             try
