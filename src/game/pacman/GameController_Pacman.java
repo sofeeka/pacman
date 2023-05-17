@@ -22,9 +22,16 @@ class PacmanMover extends Thread
         while(!Thread.interrupted())
         {
             synchronized (this){
+                if( m_pacman.getNextDirection() != Game.Direction.STILL ) {
+                    if (m_pacman.getPacman().getGame().getModel().canGoInDirection(m_pacman.getPos(), m_pacman.getNextDirection())) {
+                        m_pacman.setDirection( m_pacman.getNextDirection() );
+                        m_pacman.setNextDirection( Game.Direction.STILL );
+                    }
+                }
+
                 int speed = m_pacman.getSpeed();
                 Game.Direction direction = m_pacman.getDirection();
-                boolean canGoInDirection = gameModel.canGoInDirection(m_pacman.getX(), m_pacman.getY(), direction);
+                boolean canGoInDirection = gameModel.canGoInDirection(m_pacman.getPos(), direction);
                 Position newPos = gameModel.getNewPosInDirection(m_pacman.getPos(), direction);
 
                 try {

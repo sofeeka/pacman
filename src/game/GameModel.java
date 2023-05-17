@@ -298,9 +298,9 @@ public class GameModel {
         newPos.setXY( p.getX() + shiftX, p.getY() + shiftY );
         return newPos;
     }
-    public boolean canGoInDirection( int x, int y, Game.Direction direction )
+    public boolean canGoInDirection( Position pos, Game.Direction direction )
     {
-        Position newPos = getNewPosInDirection(new Position( x, y ), direction);
+        Position newPos = getNewPosInDirection(pos, direction);
 
         // cannot move outside game board bounds
         if (newPos.getX() < 0 || newPos.getX() >= this.getWidth() || newPos.getY() < 0 || newPos.getY() >= this.getHeight())

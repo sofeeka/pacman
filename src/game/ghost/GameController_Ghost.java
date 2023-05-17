@@ -18,7 +18,7 @@ class GhostMover extends Thread
 
     private boolean canGoInDirection( Game.Direction direction )
     {
-        return m_ghost.getGhost().getGame().getModel().canGoInDirection(m_ghost.getX(), m_ghost.getY(), direction );
+        return m_ghost.getGhost().getGame().getModel().canGoInDirection(m_ghost.getPos(), direction );
     }
 
     @Override

@@ -8,6 +8,7 @@ public class GameModel_Pacman
     private Position pos;
     private Position microShift; // shift from current cell in the moving direction to animate movement between cells
     private Game.Direction direction;
+    private Game.Direction nextDirection;
     private int speed; // how many ms it takes to move from one cell to another
 
     public final int MICRO_STEPS_QTY = 8;
@@ -19,6 +20,7 @@ public class GameModel_Pacman
 
         pos = pacman.getGame().getModel().getRandromPointPosition();
         direction = Game.Direction.STILL;
+        nextDirection = Game.Direction.STILL;
 
         microShift = new Position();
     }
@@ -80,6 +82,15 @@ public class GameModel_Pacman
 
     public Game.Direction getDirection() {
         return direction;
+    }
+
+    public void setNextDirection(Game.Direction direction)
+    {
+        this.nextDirection = direction;
+    }
+    public Game.Direction getNextDirection()
+    {
+        return this.nextDirection;
     }
 
     public void modelChanged()

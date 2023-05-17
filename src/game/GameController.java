@@ -25,10 +25,10 @@ class KeysHandler extends KeyAdapter
 
         switch (keyCode)
         {
-            case KeyEvent.VK_UP -> m_pacman.setDirection(Game.Direction.UP);
-            case KeyEvent.VK_DOWN -> m_pacman.setDirection(Game.Direction.DOWN);
-            case KeyEvent.VK_LEFT -> m_pacman.setDirection(Game.Direction.LEFT);
-            case KeyEvent.VK_RIGHT -> m_pacman.setDirection(Game.Direction.RIGHT);
+            case KeyEvent.VK_UP -> m_pacman.setNextDirection(Game.Direction.UP);
+            case KeyEvent.VK_DOWN -> m_pacman.setNextDirection(Game.Direction.DOWN);
+            case KeyEvent.VK_LEFT -> m_pacman.setNextDirection(Game.Direction.LEFT);
+            case KeyEvent.VK_RIGHT -> m_pacman.setNextDirection(Game.Direction.RIGHT);
         }
 
         int modifiers = e.getModifiers();

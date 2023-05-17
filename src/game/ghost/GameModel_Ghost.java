@@ -86,6 +86,10 @@ public class GameModel_Ghost
         ghost.getGame().getModel().modelChanged();
     }
 
+    public Position getPos() {
+        return pos;
+    }
+
     public Ghost getGhost() {
         return ghost;
     }
