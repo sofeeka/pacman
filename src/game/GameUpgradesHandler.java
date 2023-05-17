@@ -1,9 +1,6 @@
 package game;
 
-import game.upgrades.UpgradeBasic;
-import game.upgrades.Upgrade_BoostScore;
-import game.upgrades.Upgrade_FreezeGhosts;
-import game.upgrades.Upgrade_SpeedUp;
+import game.upgrades.*;
 
 class GamesUpgrades_Thread extends Thread
 {
@@ -38,6 +35,7 @@ class GamesUpgrades_Thread extends Thread
         {
             case SPEED_UP : return new Upgrade_SpeedUp(game);
             case FREEZE_GHOSTS : return new Upgrade_FreezeGhosts(game);
+            case HIDE_GHOSTS : return new Upgrade_HideGhosts(game);
             case BOOST_SCORE : return new Upgrade_BoostScore(game);
 //            default : return null;
         }

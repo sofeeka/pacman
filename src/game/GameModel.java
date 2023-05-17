@@ -151,6 +151,8 @@ public class GameModel {
             if (m_pacman.getX() == m_ghost.getX() && m_pacman.getY() == m_ghost.getY()) {
                 if (m_ghost.isFrightened())
                     ghostEaten(m_ghost);
+                else if (m_ghost.isHidden())
+                        continue;
                 else {
                     pacmanEaten();
                     break;

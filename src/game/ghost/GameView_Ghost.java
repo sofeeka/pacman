@@ -59,7 +59,7 @@ public class GameView_Ghost
     }
     synchronized public void render(Component c, Graphics g, Rectangle cellRect)
     {
-        if( iconIndex == -1 ) // frightened ghost is flashing
+        if( iconIndex == -1 ) // frightened ghost is flashing, hidden stays hidden
             return;
 
         if(this.width != cellRect.width || this.height != cellRect.height || renderingIcons == null) // todo check direction
@@ -82,11 +82,13 @@ public class GameView_Ghost
 
     synchronized public void changeIcon()
     {
+
         iconIndex++;
+
         if( iconIndex >= fullSizeIcons.size())
             iconIndex = 0;
 
-        if( ghost.getModel().isFrightened() && iconIndex > 0 )
+        if( ghost.getModel().isFrightened() && iconIndex > 0 || ghost.getModel().isHidden())
             iconIndex = -1;
 
         ghost.getGame().getView().renderModel();

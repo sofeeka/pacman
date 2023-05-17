@@ -50,6 +50,7 @@ public class Game
     public enum Upgrade {
         SPEED_UP,
         FREEZE_GHOSTS,
+        HIDE_GHOSTS,
         BOOST_SCORE;
 
         private static final Random RAND = new Random();

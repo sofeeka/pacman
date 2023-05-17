@@ -8,6 +8,7 @@ public class GameModel_Ghost
     private Position pos;
     private int remainingFrightened; // milliseconds
     private boolean isFrozen;
+    private boolean isHidden;
 
     public GameModel_Ghost(Ghost ghost)
     {
@@ -67,6 +68,14 @@ public class GameModel_Ghost
 
     public boolean isFrozen() {
         return isFrozen;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setAsHidden(boolean hidden) {
+        isHidden = hidden;
     }
 
     public void modelChanged()
