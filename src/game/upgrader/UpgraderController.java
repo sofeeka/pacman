@@ -21,34 +21,17 @@ class GameUpgradeThrower extends Thread
                 return;
             }
 
-            //
+            // old upgrade still exists, do not throw a new one
+            if ( upgrader.getModel().isThrown())
+                continue;
 
-            //
+            // Throw a new upgrade with 25% probability
             if( Math.random() > 0.25 )
                 continue;
 
             //
-            UpgradeBasic upgrade = createRandomUpgrade();
-            if (upgrade != null)
-            {
-                Thread thread = new Thread(upgrade);
-                thread.start();
-            }
+            upgrader.getModel().setAsThrown();
         }
-    }
-    private UpgradeBasic createRandomUpgrade()
-    {
-        Game.Upgrade upgrade = Game.Upgrade.getRandomUpgrade();
-
-        switch (upgrade)
-        {
-            case SPEED_UP : return new Upgrade_SpeedUp(game);
-            case FREEZE_GHOSTS : return new Upgrade_FreezeGhosts(game);
-            case HIDE_GHOSTS : return new Upgrade_HideGhosts(game);
-            case BOOST_SCORE : return new Upgrade_BoostScore(game);
-//            default : return null;
-        }
-        return null;
     }
 }
 public class UpgraderController {
@@ -58,7 +41,7 @@ public class UpgraderController {
     public UpgraderController(Upgrader upgrader) {
         this.upgrader = upgrader;
 
-        thrower = new GameUpgradeThrower(game);
+        thrower = new GameUpgradeThrower(upgrader);
         thrower.start();
     }
 

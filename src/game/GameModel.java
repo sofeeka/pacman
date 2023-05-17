@@ -145,7 +145,8 @@ public class GameModel {
     {
         GameModel_Pacman m_pacman = game.getPacman().getModel();
 
-        for( Ghost ghost : game.ghosts ) {
+        // Check if pacman ate any frightened ghost or any ghost ate pacman
+        for( Ghost ghost : game.getGhosts() ) {
             GameModel_Ghost m_ghost = ghost.getModel();
 
             if (m_pacman.getX() == m_ghost.getX() && m_pacman.getY() == m_ghost.getY()) {
@@ -157,6 +158,15 @@ public class GameModel {
                     pacmanEaten();
                     break;
                 }
+            }
+        }
+
+        // Check if pacman ate any upgrade
+        if(game.getUpgrader().getModel().isThrown())
+        {
+            if( m_pacman.getPos().isSame( game.getUpgrader().getModel().getPos() ))
+            {
+                upgradeEaten();
             }
         }
 
@@ -186,7 +196,7 @@ public class GameModel {
         this.userScore += SCORE_PER_POWER_PELLET * scoreMultiplier;
 
         // Frighten all ghosts
-        for( Ghost ghost : game.ghosts ) {
+        for( Ghost ghost : game.getGhosts() ) {
             ghost.getModel().setAsFrightened();
         }
     }
@@ -211,6 +221,11 @@ public class GameModel {
 
         //
         // this.userScore = 0;
+    }
+
+    private void upgradeEaten()
+    {
+        getGame().getUpgrader().getModel().setAsEaten();
     }
 
     public Position getRandromPointPosition()

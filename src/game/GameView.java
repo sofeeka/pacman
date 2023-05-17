@@ -7,6 +7,7 @@ import game.pacman.GameModel_Pacman;
 import game.pacman.GameView_Pacman;
 import game.pacman.Pacman;
 import game.ui.EndGameFrame;
+import game.upgrader.Upgrader;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -166,6 +167,10 @@ class ViewTable extends JTable
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+
+        // Paint upgrade
+        Upgrader upgrader = gameView.getGame().getUpgrader();
+        upgrader.getView().render( this, g );
 
         // Paint pacman
         Pacman pacman = gameView.getGame().getPacman();

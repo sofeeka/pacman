@@ -66,12 +66,11 @@ public class Game
     private GameModel model;
     private GameView view;
     private GameController controller;
-    private GameUpgradesHandler upgradesHandler;
-    private Upgrader upgrader;
 
     //
-    Pacman pacman;
-    ArrayList<Ghost> ghosts;
+    private Pacman pacman;
+    private ArrayList<Ghost> ghosts;
+    private Upgrader upgrader;
 
     public Game(int x, int y)
     {
@@ -110,7 +109,6 @@ public class Game
     void createUpgrader()
     {
         upgrader = new Upgrader(this);
-        upgradesHandler = new GameUpgradesHandler(this);
     }
     public GameModel getModel() {
         return model;
@@ -139,7 +137,7 @@ public class Game
 
     void shutDown()
     {
-        upgradesHandler.shutDown();
+        upgrader.shutDown();
 
         pacman.shutDown();
 
@@ -157,5 +155,9 @@ public class Game
 
     public ArrayList<Ghost> getGhosts() {
         return ghosts;
+    }
+
+    public Upgrader getUpgrader() {
+        return upgrader;
     }
 }

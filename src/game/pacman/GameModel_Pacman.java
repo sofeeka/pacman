@@ -24,9 +24,12 @@ public class GameModel_Pacman
         return pos.getY();
     }
 
+    public Position getPos()
+    {
+        return pos;
+    }
     public void setPos( Position pos )
     {
-
         this.pos = pos;
 
         int x = pos.getX();

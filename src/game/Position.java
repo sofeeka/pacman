@@ -24,4 +24,14 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+    public boolean isSame( Position p )
+    {
+        return( this.x == p.getX() && this.y == p.getY() );
+    }
+
+    public boolean isSame( int x, int y )
+    {
+        return (this.x == x && this.y == y);
+    }
 }
