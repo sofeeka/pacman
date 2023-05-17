@@ -84,7 +84,6 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
         setCellSize(15,15);
     }
 
-
     public void setCellSize( int w, int h)
     {
         this.cellWidth = w;
@@ -92,7 +91,6 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
 
         imageCache.clear();
     }
-
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -140,7 +138,6 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
         }
         return new ImageIcon(path);
     }
-
 }
 class ViewTable extends JTable
 {
@@ -203,7 +200,32 @@ class GameViewCloseHandler extends WindowAdapter
 
         EndGameFrame endGameFrame = new EndGameFrame(userScore);
         endGameFrame.setVisible(true);
-    }}
+    }
+}
+
+class GameViewRepainter extends Thread
+{
+    GameView gameView;
+    public GameViewRepainter(GameView gameView )
+    {
+        this.gameView = gameView;
+    }
+
+    @Override
+    public void run()
+    {
+        while(true){
+            try {
+                Thread.sleep( 50 );
+            }
+            catch(InterruptedException e){
+                return; // exit thread
+            }
+
+            gameView.getTable().repaint();
+        }
+    }
+}
 
 public class GameView extends JFrame
 {
@@ -215,6 +237,7 @@ public class GameView extends JFrame
     private final JLabel pointsLabel;
     private final JLabel upgradeLabel;
     private final GameView_Stopwatch stopwatch;
+    private final GameViewRepainter repainter;
     GameView(Game game)
     {
         this.game = game;
@@ -256,6 +279,9 @@ public class GameView extends JFrame
         stopwatch = new GameView_Stopwatch(timeLabel);
         stopwatch.start();
 
+        repainter = new GameViewRepainter(this);
+        repainter.start();
+
         //
         updateScoreLabel();
         updateLivesLabel();
@@ -267,7 +293,7 @@ public class GameView extends JFrame
 
     public void renderModel()
     {
-        table.repaint();
+//        table.repaint();
     }
 
     public void modelChanged()
@@ -285,7 +311,8 @@ public class GameView extends JFrame
 
     public void shutDown()
     {
-        stopwatch.shutDown();
+        stopwatch.interrupt();
+        repainter.interrupt();
     }
 
     public Game getGame() {
