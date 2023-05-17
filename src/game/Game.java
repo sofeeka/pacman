@@ -99,7 +99,7 @@ public class Game
 
     private void createGhosts()
     {
-        final int ghostsQty = Math.max( getModel().getRemainingPointsQty() / 50, 1 );
+        final int ghostsQty = Math.max( getModel().getRemainingPointsQty() / 30, 2 );
 
         ghosts = new ArrayList<>();
         for( int i = 0; i < ghostsQty; i++ )

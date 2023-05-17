@@ -32,11 +32,11 @@ public class GameModel_Pacman
 
     public Position getPos()
     {
-        return pos;
+        return new Position( pos );
     }
     public void setPos( Position pos )
     {
-        this.pos = pos;
+        this.pos = new Position( pos );
         this.setMicroShift( new Position( 0, 0 ));
 
         int x = pos.getX();

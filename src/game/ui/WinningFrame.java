@@ -11,7 +11,7 @@ public class WinningFrame extends JDialog
 {
     public WinningFrame(int score)
     {
-        setTitle("Winning Frame");
+        setTitle("You Won!");
         setModal( true );
 
         JLabel label = new JLabel("Congratulations!");

@@ -218,6 +218,9 @@ public class GameModel {
             return;
         }
 
+        for(Ghost ghost : this.game.getGhosts() )
+            ghost.getModel().setAsFrightened(2000);
+
         //
         this.game.getPacman().getModel().setDirection(Game.Direction.STILL);
 
@@ -239,19 +242,16 @@ public class GameModel {
 
     public Position getRandromPointPosition()
     {
-        int x;
-        int y = ( int )( Math.random() * ( this.height - 2 ) ) + 1;
+        while( true ) {
+            int x;
+            int y = (int) (Math.random() * (this.height - 2)) + 1;
 
-        while( true )
-        {
-            x = ( int )( Math.random() * ( this.width - 2 ) ) + 1;
-            if( this.elementIsPoint( x, y ) )
-                break;
+            for( int i = 0; i < this.width; i++ ) {
+                x = (int) (Math.random() * (this.width - 2)) + 1;
+                if (!this.elementIsWall(x, y))
+                    return new Position(x, y);
+            }
         }
-
-        Position pos = new Position();
-        pos.setXY( x, y );
-        return pos;
     }
 
     void restartBoard()
