@@ -16,23 +16,24 @@ class GameUpgradeThrower extends Thread
     public void run()
     {
         while(!Thread.interrupted()) {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                return;
-            }
+            synchronized (this){
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    return;
+                }
 
-            // old upgrade still exists, do not throw a new one
-            if ( upgrader.getModel().isThrown())
-                continue;
+                // old upgrade still exists, do not throw a new one
+                if (upgrader.getModel().isThrown())
+                    continue;
 
-            // Throw a new upgrade with 25% probability
-            if( Math.random() > 0.25 )
-                continue;
+                // Throw a new upgrade with 25% probability
+                if (Math.random() > 0.25)
+                    continue;
 
-            //
-            upgrader.getModel().setAsThrown();
-        }
+                //
+                upgrader.getModel().setAsThrown();
+            }        }
     }
 }
 public class UpgraderController {

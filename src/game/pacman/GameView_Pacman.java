@@ -23,15 +23,15 @@ class PacmanIconChanger extends Thread
     {
         while(!Thread.interrupted())
         {
-            try {
-                Thread.sleep(150);
-            }
-            catch(InterruptedException e){
-                return;
-            }
+            synchronized (this){
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    return;
+                }
 
-            gameView_Pacman.changeIcon();
-        }
+                gameView_Pacman.changeIcon();
+            }        }
     }
 }
 
@@ -98,7 +98,7 @@ public class GameView_Pacman
 //        return Toolkit.getDefaultToolkit().createImage(rotatedImage.getSource());
         return rotatedImage;
     }
-    public void render( JTable t, Graphics g )
+    synchronized public void render( JTable t, Graphics g )
     {
         Rectangle cellRect = t.getCellRect(pacman.getModel().getY(), pacman.getModel().getX(), false);
 

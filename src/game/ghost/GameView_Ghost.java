@@ -23,14 +23,16 @@ class GhostIconChanger extends Thread
     {
         while(!Thread.interrupted())
         {
-            try {
-                Thread.sleep(200);
-            }
-            catch(InterruptedException e){
-                return;
-            }
+            synchronized (this){
+                try {
+                    Thread.sleep(200);
+                }
+                catch(InterruptedException e){
+                    return;
+                }
 
-            gameView_Ghost.changeIcon();
+                gameView_Ghost.changeIcon();
+            }
         }
     }
 }

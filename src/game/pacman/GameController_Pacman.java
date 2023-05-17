@@ -21,37 +21,35 @@ class PacmanMover extends Thread
 
         while(!Thread.interrupted())
         {
-            int speed = m_pacman.getSpeed();
-            Game.Direction direction = m_pacman.getDirection();
-            boolean canGoInDirection = gameModel.canGoInDirection(m_pacman.getX(), m_pacman.getY(), direction);
-            Position newPos = gameModel.getNewPosInDirection(m_pacman.getPos(), direction);
+            synchronized (this){
+                int speed = m_pacman.getSpeed();
+                Game.Direction direction = m_pacman.getDirection();
+                boolean canGoInDirection = gameModel.canGoInDirection(m_pacman.getX(), m_pacman.getY(), direction);
+                Position newPos = gameModel.getNewPosInDirection(m_pacman.getPos(), direction);
 
-            try
-            {
-                if( direction == Game.Direction.STILL || !canGoInDirection ){
-                    Thread.sleep( speed );
-                    continue;
-                }
-                else{
-                    // micro shifts
-                    for( int i = 0; i < m_pacman.MICRO_STEPS_QTY; i++)
-                    {
-                        Thread.sleep( speed / m_pacman.MICRO_STEPS_QTY );
+                try {
+                    if (direction == Game.Direction.STILL || !canGoInDirection) {
+                        Thread.sleep(speed);
+                        continue;
+                    } else {
+                        // micro shifts
+                        for (int i = 0; i < m_pacman.MICRO_STEPS_QTY; i++) {
+                            Thread.sleep(speed / m_pacman.MICRO_STEPS_QTY);
 
-                        switch( direction )
-                        {
-                            case LEFT -> m_pacman.setMicroShift( new Position( -i, 0 ) );
-                            case RIGHT -> m_pacman.setMicroShift( new Position( i, 0 ) );
-                            case UP -> m_pacman.setMicroShift( new Position( 0, -i ) );
-                            case DOWN -> m_pacman.setMicroShift( new Position( 0, i ) );
+                            switch (direction) {
+                                case LEFT -> m_pacman.setMicroShift(new Position(-i, 0));
+                                case RIGHT -> m_pacman.setMicroShift(new Position(i, 0));
+                                case UP -> m_pacman.setMicroShift(new Position(0, -i));
+                                case DOWN -> m_pacman.setMicroShift(new Position(0, i));
+                            }
                         }
                     }
+                } catch (InterruptedException e) {
+                    return;
                 }
-            } catch( InterruptedException e ) {
-                return;
-            }
 
-            m_pacman.setPos( newPos );
+                m_pacman.setPos(newPos);
+            }
         }
     }
 }

@@ -204,27 +204,24 @@ class GameViewCloseHandler extends WindowAdapter
     }
 }
 
-class GameViewRepainter extends Thread
-{
+class GameViewRepainter extends Thread {
     GameView gameView;
-    public GameViewRepainter(GameView gameView )
-    {
+
+    public GameViewRepainter(GameView gameView) {
         this.gameView = gameView;
-        setName( "Game view repainter" );
+        setName("Game view repainter");
     }
 
     @Override
-    public void run()
-    {
-        while(!Thread.interrupted()){
-            try {
-                Thread.sleep( 50 );
-            }
-            catch(InterruptedException e){
-                return;
-            }
+    public void run() {
+        synchronized (this) {
+            while (!Thread.interrupted()) {
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException e) {
+                    return;
+                }
 
-            synchronized( gameView.getGame().getModel() ) {
                 gameView.getTable().repaint();
             }
         }

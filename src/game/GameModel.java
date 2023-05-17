@@ -147,7 +147,7 @@ public class GameModel {
         getGameView().modelChanged();
     }
 
-    synchronized public void positionChanged()
+    /*synchronized*/ public void positionChanged()
     {
         GameModel_Pacman m_pacman = game.getPacman().getModel();
 

@@ -10,7 +10,7 @@ public class GameModel_Pacman
     private Game.Direction direction;
     private int speed; // how many ms it takes to move from one cell to another
 
-    public final int MICRO_STEPS_QTY = 10;
+    public final int MICRO_STEPS_QTY = 8;
 
     public GameModel_Pacman(Pacman pacman)
     {
