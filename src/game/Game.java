@@ -3,6 +3,7 @@ package game;
 import game.ghost.Ghost;
 import game.pacman.Pacman;
 import game.ui.WinningFrame;
+import game.upgrader.Upgrader;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -66,6 +67,7 @@ public class Game
     private GameView view;
     private GameController controller;
     private GameUpgradesHandler upgradesHandler;
+    private Upgrader upgrader;
 
     //
     Pacman pacman;
@@ -79,8 +81,7 @@ public class Game
 
         createPacman();
         createGhosts();
-
-        upgradesHandler = new GameUpgradesHandler(this);
+        createUpgrader();
     }
 
     public void stopGame()
@@ -106,6 +107,11 @@ public class Game
             ghosts.add( new Ghost(this) );
     }
 
+    void createUpgrader()
+    {
+        upgrader = new Upgrader(this);
+        upgradesHandler = new GameUpgradesHandler(this);
+    }
     public GameModel getModel() {
         return model;
     }
