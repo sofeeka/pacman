@@ -208,6 +208,7 @@ public class GameView extends JFrame
     private final JLabel livesLabel;
     private final JLabel timeLabel;
     private final JLabel pointsLabel;
+    private final JLabel upgradeLabel;
     private final GameView_Stopwatch stopwatch;
     GameView(Game game)
     {
@@ -222,11 +223,13 @@ public class GameView extends JFrame
         timeLabel = new JLabel();
         livesLabel = new JLabel();
         pointsLabel = new JLabel();
+        upgradeLabel = new JLabel();
 
         upperPanel.add(scoreLabel); //todo align properly (gridBagLayout)
         upperPanel.add(timeLabel);
         upperPanel.add(livesLabel);
         upperPanel.add(pointsLabel);
+        upperPanel.add(upgradeLabel);
 
         upperPanel.setSize(500,50);
 
@@ -280,5 +283,10 @@ public class GameView extends JFrame
 
     public Game getGame() {
         return game;
+    }
+
+    public void setUpgradeLabelText(String s)
+    {
+        upgradeLabel.setText(s);
     }
 }

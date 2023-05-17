@@ -10,6 +10,7 @@ public class Upgrade_BoostScore extends UpgradeBasic
     public Upgrade_BoostScore(Game game)
     {
         super(game);
+        title = "SCORE BOOSTER";
     }
     @Override
     void applyUpgrade()

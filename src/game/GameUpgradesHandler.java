@@ -27,7 +27,8 @@ class GamesUpgrades_Thread extends Thread
             {
                 Thread thread = new Thread(upgrade);
                 thread.start();
-            }        }
+            }
+        }
     }
     private UpgradeBasic createRandomUpgrade()
     {

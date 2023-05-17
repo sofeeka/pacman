@@ -10,6 +10,7 @@ public class Upgrade_SpeedUp extends UpgradeBasic
     public Upgrade_SpeedUp(Game game)
     {
         super(game);
+        title = "SPEED UP";
     }
     @Override
     void applyUpgrade()

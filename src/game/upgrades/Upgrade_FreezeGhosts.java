@@ -12,6 +12,7 @@ public class Upgrade_FreezeGhosts extends UpgradeBasic
     public Upgrade_FreezeGhosts(Game game)
     {
         super(game);
+        title = "FREEZER";
     }
     @Override
     void applyUpgrade()
