@@ -256,14 +256,17 @@ public class GameView extends JFrame
         stopwatch = new GameView_Stopwatch(timeLabel);
         stopwatch.start();
 
+        //
+        updateScoreLabel();
+        updateLivesLabel();
+        updatePointsLeftLabel();
+
+        //
         setVisible(true);
     }
 
     public void renderModel()
     {
-        livesLabel.setText( "Lives: " + game.getModel().getLives() );
-        pointsLabel.setText("Points left: " + game.getModel().getRemainingPointsQty());
-
         table.repaint();
     }
 
@@ -297,5 +300,15 @@ public class GameView extends JFrame
     public void updateScoreLabel()
     {
         scoreLabel.setText( "Score: " + game.getModel().getUserScore() );
+    }
+
+    public void updateLivesLabel()
+    {
+        livesLabel.setText( "Lives: " + game.getModel().getLives() );
+    }
+
+    public void updatePointsLeftLabel()
+    {
+        pointsLabel.setText("Points left: " + game.getModel().getRemainingPointsQty());
     }
 }

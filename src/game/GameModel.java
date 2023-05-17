@@ -184,6 +184,8 @@ public class GameModel {
         {
             game.userWon();
         }
+
+        getGameView().updatePointsLeftLabel();
     }
     public void ghostEaten( GameModel_Ghost ghost )
     {
@@ -206,6 +208,8 @@ public class GameModel {
     private void pacmanEaten()
     {
         this.lives--;
+        game.getView().updateLivesLabel();
+
         if( this.lives == 0 ) {
             game.stopGame();
             return;
