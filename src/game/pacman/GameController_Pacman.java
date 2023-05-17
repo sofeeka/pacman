@@ -34,9 +34,9 @@ class PacmanMover extends Thread
                 }
                 else{
                     // micro shifts
-                    for( int i = 0; i < 10; i++)
+                    for( int i = 0; i < m_pacman.MICRO_STEPS_QTY; i++)
                     {
-                        Thread.sleep( speed / 10 );
+                        Thread.sleep( speed / m_pacman.MICRO_STEPS_QTY );
 
                         switch( direction )
                         {

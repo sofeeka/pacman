@@ -119,8 +119,8 @@ public class GameView_Pacman
         int y = cellRect.y;
 
         final Position microShift = pacman.getModel().getMicroShift();
-        x += cellRect.width * microShift.getX() / 10;
-        y += cellRect.height * microShift.getY() / 10;
+        x += cellRect.width * microShift.getX() / pacman.getModel().MICRO_STEPS_QTY;
+        y += cellRect.height * microShift.getY() / pacman.getModel().MICRO_STEPS_QTY;
 
         getRenderingIcon().paintIcon(t, g, x, y);
     }
