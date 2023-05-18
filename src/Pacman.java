@@ -1,4 +1,4 @@
-import ui.MenuFrame;
+import gui.MenuFrame;
 
 import javax.swing.*;
 

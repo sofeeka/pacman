@@ -6,7 +6,6 @@ import game.GameView;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 class GhostIconChanger extends Thread
 {

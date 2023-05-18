@@ -5,8 +5,6 @@ import game.ghost.Ghost;
 
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
-
 public class Upgrade_FreezeGhosts extends Upgrade_Basic
 {
     public Upgrade_FreezeGhosts(Game game)

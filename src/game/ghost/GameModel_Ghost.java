@@ -6,7 +6,7 @@ public class GameModel_Ghost
 {
     Ghost ghost;
     private Position pos;
-    private int remainingFrightened; // milliseconds
+    private int remainingFrightened;
     private boolean isFrozen;
     private boolean isHidden;
     private boolean isFriendly;
@@ -101,6 +101,7 @@ public class GameModel_Ghost
     public Ghost getGhost() {
         return ghost;
     }
+
     public void shutDown()
     {
     }

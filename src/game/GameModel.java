@@ -63,16 +63,6 @@ public class GameModel {
         restartBoard();
     }
 
-    public void setDimensions(int x, int y)
-    {
-        this.width = x;
-        this.height = y;
-    }
-
-    public Game.Element[][] getGameBoard()
-    {
-        return this.gameBoard;
-    }
     public int getUserScore() {
         return userScore;
     }
@@ -149,7 +139,7 @@ public class GameModel {
         getGameView().modelChanged();
     }
 
-    /*synchronized*/ public void positionChanged()
+    public void positionChanged()
     {
         GameModel_Pacman m_pacman = game.getPacman().getModel();
 
@@ -230,11 +220,6 @@ public class GameModel {
         Position p = this.getRandomNonWallPosition();
         this.game.getPacman().getModel().setPos( p );
 
-        // set all empty elements to POINT
-//        this.restartBoard();
-
-        //
-        // this.userScore = 0;
     }
 
     private void upgradeEaten()

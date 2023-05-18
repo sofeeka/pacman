@@ -1,9 +1,9 @@
-package ui;
+package gui;
 
 import java.io.*;
 import java.util.*;
 
-public class HighScore implements Serializable { // todo: відцентувати, збільшити шрифт тд
+public class HighScore implements Serializable {
     private ArrayList<HighScoreRecord> highScores;
     @Serial
     private static final long serialVersionUID = 8574982327062808366L;

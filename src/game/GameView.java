@@ -1,12 +1,8 @@
 package game;
 
-import game.ghost.GameModel_Ghost;
-import game.ghost.GameView_Ghost;
 import game.ghost.Ghost;
-import game.pacman.GameModel_Pacman;
-import game.pacman.GameView_Pacman;
 import game.pacman.Pacman;
-import game.ui.EndGameFrame;
+import game.gui.EndGameFrame;
 import game.upgrader.Upgrader;
 
 import javax.swing.*;
@@ -16,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 class ViewTableResizer extends ComponentAdapter
 {
@@ -133,7 +130,6 @@ class ViewTableCellRenderer extends DefaultTableCellRenderer
             case WALL -> path = "images\\wall.png";
             case FOOD -> path = "images\\food.png";
             case POWER_PELLET -> path = "images\\pellet.png";
-//            case EMPTY -> path = "images\\black.png"; //todo change picture
             default -> path = "images\\black.png";
         }
         return new ImageIcon(path);
@@ -254,13 +250,11 @@ public class GameView extends JFrame
         pointsLabel = new JLabel();
         upgradeLabel = new JLabel();
 
-        upperPanel.add(scoreLabel); //todo align properly (gridBagLayout)
+        upperPanel.add(scoreLabel);
         upperPanel.add(timeLabel);
         upperPanel.add(livesLabel);
         upperPanel.add(pointsLabel);
         upperPanel.add(upgradeLabel);
-
-//        upperPanel.setSize(500,50);
 
         add(upperPanel, BorderLayout.PAGE_START);
 
@@ -273,7 +267,7 @@ public class GameView extends JFrame
 
         add(tablePanel, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        pack();
+
         setSize(450, 500);
         setLocationRelativeTo(null);
 
@@ -287,7 +281,9 @@ public class GameView extends JFrame
         updateLivesLabel();
         updatePointsLeftLabel();
 
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        if (game.getModel().getHeight() > 20 || game.getModel().getWidth() > 20)
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         setVisible(true);
     }
 
@@ -339,3 +335,43 @@ public class GameView extends JFrame
         pointsLabel.setText("Points left: " + game.getModel().getRemainingPointsQty());
     }
 }
+class GameView_Stopwatch extends Thread
+{
+    long startTime;
+    JLabel timeLabel;
+    GameView_Stopwatch(JLabel timeLabel)
+    {
+        this.timeLabel = timeLabel;
+        setName( "Game stopwatch" );
+    }
+    @Override
+    public void run()
+    {
+        startTime = System.currentTimeMillis();
+
+        while(!Thread.interrupted())
+        {
+            timeLabel.setText(getTime());
+            try
+            {
+                sleep(1000);
+            } catch(InterruptedException e) {
+                return;
+            }
+        }
+    }
+
+    public String getTime()
+    {
+        long timePassed = System.currentTimeMillis() - startTime;
+
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(timePassed);
+        long seconds =
+                TimeUnit.MILLISECONDS.toSeconds(timePassed)
+                        - TimeUnit.MINUTES.toSeconds(minutes);
+
+        String stopwatchTime = String.format("Time: %02d:%02d", minutes, seconds);
+        return stopwatchTime;
+    }
+}
+

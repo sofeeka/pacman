@@ -1,6 +1,6 @@
-package game.ui;
+package game.gui;
 
-import ui.HighScore;
+import gui.HighScore;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,11 +8,8 @@ import java.awt.*;
 public class EndGameFrame extends JDialog
 {
     private String userName;
-    private  boolean okClicked; // todo may be useful to exit the whole game
     public EndGameFrame(int score)
     {
-        okClicked = false;
-
         setTitle("End Game");
         setModal(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -54,7 +51,6 @@ public class EndGameFrame extends JDialog
         yesButton.addActionListener(event -> {
             try {
 
-                okClicked = true;
                 setUserName(userTextField.getText().trim());
                 HighScore highScore = new HighScore();
                 highScore.addUserScore(this.userName, score);
@@ -74,7 +70,6 @@ public class EndGameFrame extends JDialog
 
         outerPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        //todo figure out the size
         pack();
         setLocationRelativeTo(null);
     }

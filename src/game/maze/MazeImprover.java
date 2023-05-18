@@ -8,8 +8,6 @@ public class MazeImprover {
     {
         for( int row = 1; row < gameModel.getHeight() - 2; row++)
         {
-//            int col = gameModel.getWidth() / 2;
-//            int direction = 1;
 
             int col = (int) ( ( gameModel.getWidth() - 2 ) * Math.random() ) + 1;
             int direction = Math.random() > 0.5 ? 1 : -1;

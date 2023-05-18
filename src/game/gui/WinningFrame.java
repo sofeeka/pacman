@@ -1,6 +1,4 @@
-package game.ui;
-
-import com.sun.source.tree.NewClassTree;
+package game.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +22,7 @@ public class WinningFrame extends JDialog
         add(label, BorderLayout.CENTER);
         add(button, BorderLayout.PAGE_END);
 
-//        setSize(300, 100);
         pack();
-        setLocationRelativeTo(null);
 
         button.addActionListener(new ActionListener() {
             @Override

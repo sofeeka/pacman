@@ -1,7 +1,6 @@
 package game.ghost;
 
 import game.Game;
-import game.GameController;
 import game.GameModel;
 import game.Position;
 
@@ -44,7 +43,7 @@ class GhostMover extends Thread
                 if (m_ghost.isFrightened() || Math.random() > 0.75) {
                     m_ghost.decreaseRemainingFrightened(SLEEP_TIME);
 
-                    if (direction == Game.Direction.STILL || Math.random() > 0.20) // continue with the prior move direction with some probability
+                    if (direction == Game.Direction.STILL || Math.random() > 0.20) // continue moving to the same direction with 80% chance
                         direction = Game.Direction.getRandomDirection();
 
                     if (!canGoInDirection(direction)) {
@@ -96,7 +95,6 @@ class GhostMover extends Thread
                 if (gameModel.elementIsWall(newX, newY))
                     continue;
 
-                //
                 m_ghost.setPos(new Position(newX, newY));
             }
         }

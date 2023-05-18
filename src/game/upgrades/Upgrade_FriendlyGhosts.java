@@ -5,8 +5,6 @@ import game.ghost.Ghost;
 
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
-
 public class Upgrade_FriendlyGhosts extends Upgrade_Basic
 {
     public Upgrade_FriendlyGhosts(Game game)

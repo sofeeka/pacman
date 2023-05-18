@@ -1,13 +1,9 @@
 package game;
 
-import game.ghost.GameController_Ghost;
-import game.pacman.GameController_Pacman;
 import game.pacman.GameModel_Pacman;
-import game.ui.WinningFrame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
-import java.awt.event.WindowEvent;
 
 class KeysHandler extends KeyAdapter
 {

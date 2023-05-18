@@ -2,7 +2,7 @@ package game;
 
 import game.ghost.Ghost;
 import game.pacman.Pacman;
-import game.ui.WinningFrame;
+import game.gui.WinningFrame;
 import game.upgrader.Upgrader;
 
 import java.awt.event.WindowEvent;
@@ -17,18 +17,6 @@ public class Game
         POINT,
         POWER_PELLET,
         FOOD;
-
-        private static final Random RAND = new Random();
-
-        public static Element getRandomElement()  {
-            Element[] elements = values();
-            return elements[RAND.nextInt(elements.length)];
-        }
-
-        public String getMessage()
-        {
-            return name();
-        }
     }
 
     public enum Direction
@@ -77,11 +65,10 @@ public class Game
         }
     }
 
-    // MVC
     private GameModel model;
     private GameView view;
     private GameController controller;
-    
+
     private Pacman pacman;
     private ArrayList<Ghost> ghosts;
     private Upgrader upgrader;
@@ -138,6 +125,7 @@ public class Game
 
     public void userWon()
     {
+        getView().dispose();
         showWinningFrame();
         stopGame();
     }
@@ -145,8 +133,8 @@ public class Game
     private void showWinningFrame()
     {
         WinningFrame winningFrame = new WinningFrame(model.getUserScore());
+        winningFrame.setLocationRelativeTo(null);
         winningFrame.setVisible(true);
-        winningFrame.dispose();
     }
 
     void shutDown()

@@ -1,6 +1,5 @@
-package ui;
+package gui;
 
-import game.Game;
 import game.GameStarter;
 
 import java.awt.*;
@@ -36,6 +35,7 @@ public class MenuFrame extends JFrame {
     private void handleExitButton()
     {
         dispose();
+        System.exit(0); //todo
     }
 
     private void initMenuFrame()
@@ -78,7 +78,7 @@ public class MenuFrame extends JFrame {
         exitButton.setBackground(Color.YELLOW);
 
         GridBagConstraints buttonsConstraints = new GridBagConstraints();
-        // insets todo
+
         buttonsConstraints.anchor = GridBagConstraints.PAGE_START;
         buttonsConstraints.fill = GridBagConstraints.HORIZONTAL;
         buttonsConstraints.insets = new java.awt.Insets(10,10,10,10);
@@ -101,8 +101,6 @@ public class MenuFrame extends JFrame {
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JOptionPane.showMessageDialog(Menu.this, "New Game button clicked");
-                // todo:
                 handleNewGameButton();
             }
         });
@@ -117,7 +115,6 @@ public class MenuFrame extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo :
                 handleExitButton();
             }
         });
@@ -125,10 +122,6 @@ public class MenuFrame extends JFrame {
         getContentPane().add(outerPanel);
 
         setSize(600, 400);
-
-//        pack();
-//        setLocationRelativeTo(null);
-//        setVisible(true);
 
     }
 

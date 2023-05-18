@@ -1,4 +1,4 @@
-package ui;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,7 +87,8 @@ public class NewGameFrame extends JDialog {
                 }
             } catch (sizeException e)
             {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Wrong Size", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, e.getMessage(),
+                                    "Wrong Size", JOptionPane.ERROR_MESSAGE);
 
                 dispose();
                 return;
@@ -103,10 +104,8 @@ public class NewGameFrame extends JDialog {
             dispose();
         });
 
-        //todo add gridBagLayout
         outerPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        //todo figure out the size
         pack();
     }
 }

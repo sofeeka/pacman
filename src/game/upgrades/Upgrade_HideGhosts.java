@@ -5,7 +5,7 @@ import game.ghost.Ghost;
 
 import java.util.ArrayList;
 
-public class Upgrade_HideGhosts extends UpgradeBasic
+public class Upgrade_HideGhosts extends Upgrade_Basic
 {
     public Upgrade_HideGhosts(Game game)
     {

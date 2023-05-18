@@ -1,11 +1,8 @@
 package game.upgrades;
 
 import game.Game;
-import game.GameModel;
 
-import static java.lang.Thread.sleep;
-
-public class Upgrade_SpeedUp extends UpgradeBasic
+public class Upgrade_SpeedUp extends Upgrade_Basic
 {
     public Upgrade_SpeedUp(Game game)
     {
