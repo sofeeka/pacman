@@ -1,11 +1,8 @@
 package game.upgrades;
 
 import game.Game;
-import game.ghost.Ghost;
 
-import java.util.ArrayList;
-
-public class Upgrade_BoostScore extends UpgradeBasic
+public class Upgrade_BoostScore extends Upgrade_Basic
 {
     public Upgrade_BoostScore(Game game)
     {

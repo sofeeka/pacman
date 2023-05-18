@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 
-public class Upgrade_FreezeGhosts extends Upgrade_Basic
+public class Upgrade_FriendlyGhosts extends Upgrade_Basic
 {
-    public Upgrade_FreezeGhosts(Game game)
+    public Upgrade_FriendlyGhosts(Game game)
     {
         super(game);
-        title = "FREEZER";
+        title = "FRIENDS";
     }
     @Override
     void applyUpgrade()
@@ -20,7 +20,7 @@ public class Upgrade_FreezeGhosts extends Upgrade_Basic
         ArrayList<Ghost> ghosts = game.getGhosts();
 
         for(Ghost ghost : ghosts )
-            ghost.getModel().setAsFrozen(true);
+            ghost.getModel().setAsFriendly(true);
 
         try{
             Thread.sleep(5000);
@@ -30,7 +30,7 @@ public class Upgrade_FreezeGhosts extends Upgrade_Basic
         }
 
         for(Ghost ghost : ghosts )
-            ghost.getModel().setAsFrozen(false);
+            ghost.getModel().setAsFriendly(false);
 
     }
 }

@@ -260,7 +260,7 @@ public class GameView extends JFrame
         upperPanel.add(pointsLabel);
         upperPanel.add(upgradeLabel);
 
-        upperPanel.setSize(500,50);
+//        upperPanel.setSize(500,50);
 
         add(upperPanel, BorderLayout.PAGE_START);
 
@@ -283,12 +283,11 @@ public class GameView extends JFrame
         repainter = new GameViewRepainter(this);
         repainter.start();
 
-        //
         updateScoreLabel();
         updateLivesLabel();
         updatePointsLeftLabel();
 
-        //
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
     }
 

@@ -5,7 +5,6 @@ import game.pacman.Pacman;
 import game.ui.WinningFrame;
 import game.upgrader.Upgrader;
 
-import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Random;
@@ -67,7 +66,8 @@ public class Game
         SPEED_UP,
         FREEZE_GHOSTS,
         HIDE_GHOSTS,
-        BOOST_SCORE;
+        BOOST_SCORE,
+        FRIENDLY_GHOST;
 
         private static final Random RAND = new Random();
 
@@ -81,8 +81,7 @@ public class Game
     private GameModel model;
     private GameView view;
     private GameController controller;
-
-    //
+    
     private Pacman pacman;
     private ArrayList<Ghost> ghosts;
     private Upgrader upgrader;

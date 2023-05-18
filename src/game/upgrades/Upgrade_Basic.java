@@ -2,11 +2,11 @@ package game.upgrades;
 
 import game.Game;
 
-abstract public class UpgradeBasic implements Runnable
+abstract public class Upgrade_Basic implements Runnable
 {
     protected Game game;
     protected String title;
-    UpgradeBasic(Game game)
+    Upgrade_Basic(Game game)
     {
         this.game = game;
     }

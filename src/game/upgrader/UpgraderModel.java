@@ -36,7 +36,7 @@ public class UpgraderModel {
     {
         isDropped = false;
 
-        UpgradeBasic upgrade = createRandomUpgrade();
+        Upgrade_Basic upgrade = createRandomUpgrade();
         if (upgrade != null)
         {
             Thread thread = new Thread(upgrade);
@@ -44,7 +44,7 @@ public class UpgraderModel {
         }
     }
 
-    private UpgradeBasic createRandomUpgrade()
+    private Upgrade_Basic createRandomUpgrade()
     {
         Game.Upgrade upgradeType = Game.Upgrade.getRandomUpgrade();
 
@@ -56,6 +56,7 @@ public class UpgraderModel {
             case FREEZE_GHOSTS : return new Upgrade_FreezeGhosts(game);
             case HIDE_GHOSTS : return new Upgrade_HideGhosts(game);
             case BOOST_SCORE : return new Upgrade_BoostScore(game);
+            case FRIENDLY_GHOST : return new Upgrade_FriendlyGhosts(game);
 //            default : return null;
         }
 

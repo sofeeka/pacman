@@ -9,6 +9,7 @@ public class GameModel_Ghost
     private int remainingFrightened; // milliseconds
     private boolean isFrozen;
     private boolean isHidden;
+    private boolean isFriendly;
 
     public GameModel_Ghost(Ghost ghost)
     {
@@ -28,6 +29,10 @@ public class GameModel_Ghost
 
     public void setPos(Position pos) {
         this.pos = pos;
+
+        if ( ghost.getModel().isFriendly && ghost.getGame().getModel().elementIsPoint(pos.getX(), pos.getY()))
+            ghost.getGame().getModel().pointEaten(pos.getX(), pos.getY());
+
         ghost.getGame().getModel().positionChanged();
         modelChanged();
     }
@@ -44,12 +49,7 @@ public class GameModel_Ghost
 
     public void setAsFrightened(int time)
     {
-        this.setRemainingFrightened( time ); // 5 sec
-    }
-
-    public void setAsNotFrightened()
-    {
-        this.setRemainingFrightened( 0 ); // 5 sec
+        this.setRemainingFrightened( time );
     }
 
     public boolean isFrightened()
@@ -79,6 +79,14 @@ public class GameModel_Ghost
         if (!hidden)
             ghost.getModel().setAsFrightened(2000);
         isHidden = hidden;
+    }
+
+    public boolean isFriendly() {
+        return isFriendly;
+    }
+
+    public void setAsFriendly(boolean friendly) {
+        isFriendly = friendly;
     }
 
     public void modelChanged()

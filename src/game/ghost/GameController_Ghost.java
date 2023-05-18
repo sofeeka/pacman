@@ -66,12 +66,11 @@ class GhostMover extends Thread
                     int deltaY = pacmanPos.getY() - ghostPos.getY();
 
                     Game.Direction deltaDirection = Game.Direction.getDirectionByDelta(deltaX, 0);
-                    if( canGoInDirection( deltaDirection ))
+                    if( canGoInDirection( deltaDirection ) && deltaX != 0)
                         direction = deltaDirection;
                     else
                         direction = Game.Direction.getDirectionByDelta(0,deltaY);
                 }
-
 
                 int shiftX = 0;
                 int shiftY = 0;
